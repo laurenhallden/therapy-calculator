@@ -81,9 +81,10 @@
     <!-- Applying your health insurance -->
     <section>
       <p>OK! That brought your cost down to <span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong" id="insurance-baserate-span"></span> per session averaged out. Less scary, right?</p>
-      <p>One more thing to check: are you elligible for a Flexible Spending Account through your job?</p>
-      <button class="next-step" id="step-four-yes">Yes</button>
-      <button class="next-step" id="step-four-no">No</button>
+      <p>One more thing to check: tax deductions. You might have these if you use a Health Savings Account, or if you're elligible for a Flexible Spending Account.</p>
+      <button class="next-step" id="step-four-yes-fsa">I have an FSA</button>
+      <button class="next-step" id="step-four-yes-hsa">I have an HSA</button>
+      <button class="next-step" id="step-four-no">Nope, skip this</button>
     </section>
 
     <!-- Getting your FSA contribution -->
@@ -145,9 +146,10 @@
       applyInsurance(deductible,coinsurance);
     });
 
-    // Check FSA
-    $("#step-four-yes").click(function(){setFSA()});
-    $("#step-five-no").click(function(){});
+    // Check FSA or HSA
+    $("#step-four-yes-fsa").click(function(){setFSA()});
+    $("#step-four-yes-hsa").click(function(){});
+    $("#step-four-no").click(function(){});
 
     // Set FSA
     $("#step-five-yes").click(function(){
