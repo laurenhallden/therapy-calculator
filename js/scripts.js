@@ -1,5 +1,6 @@
 function stepOne(income) {
-	// See if a sliding scale payment
+	// See if a sliding scale payment applies
+	// These ranges are estimates based on a few sliding scales available online
 	if (income > 90000 ) {
 		var baserate = 125;
 	}
@@ -23,11 +24,13 @@ function stepOne(income) {
 	setBaseRate(baserate);
 }
 
+// Set a base per-session rate based on income
 function setBaseRate(baserate){
 	console.log("baserate:" + baserate);
 	console.log("yearly:" + baserate * 48);
 	$("#baserate-span").html(baserate);
 	window.globalSessionRate = baserate;
+	// Extrapolate a yearly cost
 	$("#yearly-cost-span").html(baserate * 48);
 	window.globalYearlyCost = baserate * 48;
 }
@@ -36,9 +39,11 @@ function getInsurance() {
 	console.log("we would show the insurance section");
 }
 
+// Apply out-of-netork insurance benefits
 function applyInsurance(deductible,coinsurance) {
 	// If therapy costs more than your deductible...
 	if (globalYearlyCost > deductible) {
+		console.log("what");
 		var coinsuranceRate = coinsurance/100;
 		var coinsuranceCost = ((globalYearlyCost-deductible)*(coinsuranceRate)); // ...apply coinsurance to the remainder
 		yearlyCostWithInsurance = (coinsuranceCost+deductible);
@@ -47,8 +52,13 @@ function applyInsurance(deductible,coinsurance) {
 		console.log("yearly with insurance:" + yearlyCostWithInsurance);
 		// For now, let's report how much insurance lowers your yearly cost and session rate:
 		$("#insurance-yearly-span").html(yearlyCostWithInsurance);
-		$("#insurance-baserate-span").html(yearlyCostWithInsurance/48);
-		window.globalSessionRate = (yearlyCostWithInsurance/48);
+		var sessionRateWithInsurance = (yearlyCostWithInsurance/48);
+		// Round the session rate to a whole number
+		sessionRateWithInsurance = Math.round(sessionRateWithInsurance);
+		sessionRateWithInsurance = parseInt(sessionRateWithInsurance);
+		console.log(sessionRateWithInsurance);
+		$("#insurance-baserate-span").html(sessionRateWithInsurance);
+		window.globalSessionRate = sessionRateWithInsurance;
 		window.globalYearlyCost = yearlyCostWithInsurance;
 	}
 	else {
@@ -58,14 +68,13 @@ function applyInsurance(deductible,coinsurance) {
 	}
 }
 
-
 function setFSA() {
 	// Check to see if the yearly cost of therapy is less than the max allowed FSA contribution
 	if (yearlyCostWithInsurance > 2600) {
-		$("#fsa-field").html(2600);
+		$("#fsa-field").val(2600);
 	}
 	else {
-		$("#fsa-field").html(yearlyCostWithInsurance);
+		$("#fsa-field").val(yearlyCostWithInsurance);
 	}
 }
 
@@ -106,9 +115,12 @@ function getFSA(fsaAmount) {
 		var baseTaxes = 0;
 		var amountOver = 0;
 	}
+	// This is a little simplistic, but we're checking what you would pay in taxes normally...
 	var taxesOwed = ((globalIncome - amountOver)*taxRate)+baseTaxes;
 	console.log((globalIncome - amountOver)*taxRate);
 	console.log("taxes owed" + taxesOwed)
+	// ...and then lowering your income by your FSA contribution, and checking again
+	fsaAmount = parseInt(fsaAmount);
 	var taxesOwedWithFSA = ((globalIncome - fsaAmount - amountOver)*taxRate)+baseTaxes;
 	console.log("taxes owed with fsa" + taxesOwedWithFSA);
 	var taxDiscount = taxesOwed-taxesOwedWithFSA;
@@ -118,25 +130,15 @@ function getFSA(fsaAmount) {
 	window.globalTaxDiscount = taxDiscount;
 	globalYearlyCost = yearlyCostWithFsa;
 	globalSessionRate = (globalYearlyCost/48);
+	// Round the session rate to a whole number
+	globalSessionRate = Math.round(globalSessionRate);
 	$("#tax-discount-span").html(globalTaxDiscount);
-
 }
 
+// We're done! Let's report our findings:
 function getSummary() {
-	// We're done! Let's report our findings:
-	console.log("testing");
 	$("#final-session-rate").html(globalSessionRate);
 	$("#final-yearly-cost").html(globalYearlyCost);
 	$("#insurance-saved").html(globalInsuranceDiscount);
 	$("#taxes-saved").html(globalTaxDiscount);
 }
-
-
-
-
-//Clients with an annual income would pay	the following per session
-//$100,000 or more	$125
-//$80,000 – $99,999	$100
-//$50,000 – $79,999	$80
-//$30,000 – $49,999	$60
-//$29,000 or below	$2/every thousand
