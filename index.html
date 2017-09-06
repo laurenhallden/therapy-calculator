@@ -16,6 +16,62 @@
 </head>
 
 <body>
+  <div class="container">
+    <section>
+      <div class="intro">
+        <h1>How much can I expect to pay for therapy?</h1>
+        <p class="subhead">*in 2017 America</p>
+        <p>I know the idea of budgeting for  therapist is stressful, but it might not cost as much as you think! I'll try to get you some answers. First: how much money does your household make in a year?</p>
+        <input type="text" id="income-field">
+        <p class="helper">I'm not going to share it with anyone, don't worry. I just need it to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
+        <button class="next-step" id="step-one">Next step</button>
+      </div>
+    </section>
+
+    <section>
+      <div id="sliding-scale-div"></div>
+      <p>I'll estimate that each session might cost <span class="strong" id="baserate-span"></span>.</p>
+      <p>If you see your therapist once a week, that's <span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
+      <p>But don't worry&mdash;let's see if we can lower that. Do you have insurance?</p>
+      <button class="next-step" id="step-two-yes">Yes</button>
+      <button class="next-step" id="step-two-no">No</button>
+    </section>
+
+    <section>
+      <h2>Great. I need to know a few things about your plan.</h2>
+      <p>This can be tricky, so I made some guesses for you. Change anything that looks wrong:</p>
+      Remaining Deductible:
+      $<input type="text" id="deductible-field" value="500">
+      Coinsurance Rate:
+      <input type="text" id="coinsurance-field" value="30">
+      <button class="next-step" id="step-three">Looks good!</button>
+    </section>
+
+    <section>
+      <p>OK! That brought your cost down to <span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong" id="insurance-baserate-span"></span> per session averaged out. Less scary, right?</p>
+      <p>One more thing to check: are you elligible for a Flexible Spending Account through your job?</p>
+      <button class="next-step" id="step-four-yes">Yes</button>
+      <button class="next-step" id="step-four-no">No</button>
+    </section>
+
+    <section>
+      <p>Cool. Let's assume you can put $<span id="fsa-field"></span> in your FSA, and see how much that lowers your costs.</p>
+      <button class="next-step" id="step-five-yes">Check it out</button>
+      <button class="next-step" id="step-five-no">Skip it</button>
+    </section>
+
+    <section>
+      <p>Guess what? You just saved <span id="tax-discount-span"></span> on your taxes.</p>
+      <button class="next-step" id="final-step">Here's your final summary:</button>
+    </section>
+
+    <section>
+      <p>Your session rate: <span id="final-session-rate"></span></p>
+      <p>A year of therapy might cost you <span id="final-yearly-cost"></span>, but you'll have saved <span id="insurance-saved"></span> by using your insurance and <span id="taxes-saved"></span> on your taxes by using your FSA.</p>
+    </section>
+
+
+  </div> <!-- end container -->
 	<!-- JS -->
 	<script
 		src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -23,5 +79,48 @@
 		crossorigin="anonymous">
   </script>
   <script src="js/scripts.js"></script>
+  <!-- Button functions -->
+  <script>
+    // Calculate baserate
+    $("#step-one").click(function(){
+      var income = $.trim($("#income-field").val());
+      if( income.length > 0 ) {
+        income = income.replace(/\,/g,''); // strip out any commas, etc.
+        income = parseInt(income,10);
+        window.globalIncome = income;
+        stepOne(income);
+        console.log("income:" + income);
+      }
+      else {
+        console.log("empty");
+      }
+    });
+
+    // Check insurance
+    $("#step-two-yes").click(function(){getInsurance()});
+    $("#step-two-no").click(function(){});
+
+    // Apply insurance
+    $("#step-three").click(function(){
+      var deductible = $.trim($("#deductible-field").val());
+      deductible = parseInt(deductible,10); // these need to be parsed to add them, steamline??
+      var coinsurance = $.trim($("#coinsurance-field").val());
+      coinsurance = parseInt(coinsurance,10);
+      applyInsurance(deductible,coinsurance);
+    });
+
+    $("#step-four-yes").click(function(){setFSA()});
+    $("#step-five-no").click(function(){});
+
+    $("#step-five-yes").click(function(){
+      var fsaAmount = $("#fsa-field").html()
+      fsaAmount = parseInt(fsaAmount,10);
+      getFSA(fsaAmount);
+    });
+    $("#step-five-no").click(function(){});
+
+    $("#final-step").click(function(){getSummary()});
+
+  </script>
 </body>
 </html>

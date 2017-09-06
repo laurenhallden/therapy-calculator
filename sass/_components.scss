@@ -1,3 +1,73 @@
-body {
-	background: red;
+/* ===================
+Main Layout
+====================*/
+
+html, body {
+	font-size: 16px;
+}
+
+/* Content container */
+.container {
+	width: 40rem;
+	margin: 0 auto;
+}
+
+section {
+	padding: 3rem 10px;
+}
+
+section+section {
+	border-top: 1px solid $light-gray;
+}
+
+
+/* ===================
+Type
+====================*/
+
+h1 {
+	font-size: 3rem;
+	line-height: 3rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	line-height: 2rem;
+	margin-bottom: 1rem;
+}
+
+p {
+	margin-bottom: 1rem;
+	line-height: 1.4;
+}
+
+p.subhead {
+	margin: 1rem 0;
+}
+
+p.helper {
+	color: $mid-gray;
+}
+
+/* ===================
+Form elements
+====================*/
+
+input {
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+	border: 2px solid $mid-gray;
+}
+
+button {
+	padding: 0.5rem;
+	background: green;
+	color: $white;
+	border: 2px solid green;
+
+	&:hover {
+		background: $black;
+		border: 2px solid $black;
+		cursor: pointer;
+	}
 }

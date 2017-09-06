@@ -2,7 +2,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 5, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,60 +24,143 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
 
-/* line 1, ../sass/_variables.scss */
-body {
-  background: red;
+/* ===================
+Breakpoints
+====================*/
+/* ===================
+Colors
+====================*/
+/* ===================
+Fonts
+====================*/
+/* ===================
+Shadows
+====================*/
+/* ===================
+Main Layout
+====================*/
+/* line 5, ../sass/_components.scss */
+html, body {
+  font-size: 16px;
 }
 
-/* line 1, ../sass/_components.scss */
-body {
-  background: red;
+/* Content container */
+/* line 10, ../sass/_components.scss */
+.container {
+  width: 40rem;
+  margin: 0 auto;
+}
+
+/* line 15, ../sass/_components.scss */
+section {
+  padding: 3rem 10px;
+}
+
+/* line 19, ../sass/_components.scss */
+section + section {
+  border-top: 1px solid #b3b3b2;
+}
+
+/* ===================
+Type
+====================*/
+/* line 28, ../sass/_components.scss */
+h1 {
+  font-size: 3rem;
+  line-height: 3rem;
+}
+
+/* line 33, ../sass/_components.scss */
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* line 39, ../sass/_components.scss */
+p {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* line 44, ../sass/_components.scss */
+p.subhead {
+  margin: 1rem 0;
+}
+
+/* line 48, ../sass/_components.scss */
+p.helper {
+  color: #999999;
+}
+
+/* ===================
+Form elements
+====================*/
+/* line 56, ../sass/_components.scss */
+input {
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 2px solid #999999;
+}
+
+/* line 62, ../sass/_components.scss */
+button {
+  padding: 0.5rem;
+  background: green;
+  color: #fff;
+  border: 2px solid green;
+}
+/* line 68, ../sass/_components.scss */
+button:hover {
+  background: #000;
+  border: 2px solid #000;
+  cursor: pointer;
 }
 
 /* line 1, ../sass/_calculator.scss */
-body {
-  background: red;
+span.strong {
+  font-weight: bold;
 }

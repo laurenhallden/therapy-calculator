@@ -1,3 +1,44 @@
-body {
-	background: red;
-}
+/* ===================
+Breakpoints
+====================*/
+
+$break-mobile-small:    "screen and (max-width: 380px)";
+$break-mobile:          "screen and (max-width: 568px)";
+$break-mobile-large:    "screen and (max-width: 767px)";
+$break-ipad-portrait:	"screen and (max-width: 800px)";
+$break-ipad-large:		"screen and (max-width: 992px)";
+$break-ipad-landscape:	"screen and (max-width: 1025px)";
+$break-laptop:			"screen and (max-width: 1200px)";
+$break-laptop-lg:		"screen and (max-width: 1440px)";
+$break-desktop:         "screen and (max-width: 1600px)";
+$break-largest:			"screen and (min-width: 1600px)";
+
+
+/* ===================
+Colors
+====================*/
+
+$white: #fff;
+$black: #000;
+
+$whisper-gray: #f7f8f8;
+$light-gray: #b3b3b2;
+$mid-gray: #999999;
+$dark-gray: #555555;
+
+
+/* ===================
+Fonts
+====================*/
+
+$freight: "freight-text-pro",serif;
+$helvetica: "Helvetica Neue",Helvetica,Arial,sans-serif;
+
+
+/* ===================
+Shadows
+====================*/
+
+$high-float: 1px 1px 10px rgba(0, 0, 0, 0.3);
+$medium-float: 1px 1px 5px rgba(0,0,0,0.2);
+$low-float: 0 0 2px rgba(0,0,0,0.2);
