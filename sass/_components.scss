@@ -3,7 +3,11 @@ Main Layout
 ====================*/
 
 html, body {
-	font-size: 16px;
+	font-size: 17px;
+	background: $blue-green;
+	font-weight: 400;
+    font-style: normal;
+    font-family: georgia,"times new roman",times,serif;
 }
 
 /* Content container */
@@ -13,11 +17,23 @@ html, body {
 }
 
 section {
-	padding: 3rem 10px;
+	padding: 3rem;
+	height: 80vh;
+	display: block;
+	opacity: 1;
+	background: $white;
+	box-shadow: $medium-float;
+	border-radius: 0.5rem;
+	color: $text-black;
+
+	&.hidden {
+		display: none;
+		opacity: 0;
+	}
 }
 
 section+section {
-	border-top: 1px solid $light-gray;
+	margin-top: 4rem;
 }
 
 
@@ -31,9 +47,10 @@ h1 {
 }
 
 h2 {
-	font-size: 1.5rem;
+	font-size: 1.4rem;
 	line-height: 2rem;
 	margin-bottom: 1rem;
+	font-weight: 600;
 }
 
 p {
@@ -47,27 +64,52 @@ p.subhead {
 
 p.helper {
 	color: $mid-gray;
+	font-size: 0.9rem;
 }
+
+span.strong {
+	font-weight: bold;
+	color: $blue;
+}
+
 
 /* ===================
 Form elements
 ====================*/
 
 input {
+	font-size: 1rem;
+	color: $dark-gray;
 	padding: 0.5rem;
 	margin-bottom: 1rem;
-	border: 2px solid $mid-gray;
+	border: 1px solid $mid-gray;
 }
 
 button {
-	padding: 0.5rem;
-	background: green;
+	padding: 0.5rem 20px;
+	font-size: 0.9rem;
+	background: $green;
 	color: $white;
-	border: 2px solid green;
+	border: 2px solid $green;
 
 	&:hover {
 		background: $black;
 		border: 2px solid $black;
 		cursor: pointer;
+	}
+}
+
+
+/* ===================
+Page elements
+====================*/
+
+.intro {
+	color: $white;
+	padding: 4rem 0 2rem;
+	text-align: center;
+
+	p { 
+		color: rgba(255,255,255,0.6);
 	}
 }

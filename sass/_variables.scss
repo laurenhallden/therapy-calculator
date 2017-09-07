@@ -20,12 +20,16 @@ Colors
 
 $white: #fff;
 $black: #000;
+$text-black: #444;
 
 $whisper-gray: #f7f8f8;
 $light-gray: #b3b3b2;
 $mid-gray: #999999;
 $dark-gray: #555555;
 
+$blue-green: #218898;
+$blue: #257dab;
+$green: #0ea257;
 
 /* ===================
 Fonts
@@ -40,5 +44,5 @@ Shadows
 ====================*/
 
 $high-float: 1px 1px 10px rgba(0, 0, 0, 0.3);
-$medium-float: 1px 1px 5px rgba(0,0,0,0.2);
+$medium-float: 2px 2px 10px rgba(0,0,0,0.4);
 $low-float: 0 0 2px rgba(0,0,0,0.2);

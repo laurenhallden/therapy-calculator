@@ -33,10 +33,11 @@ function setBaseRate(baserate){
 	// Extrapolate a yearly cost
 	$("#yearly-cost-span").html(baserate * 48);
 	window.globalYearlyCost = baserate * 48;
+	$("#section-2").toggleClass("hidden");
 }
 
 function getInsurance() {
-	console.log("we would show the insurance section");
+	$("#section-3").toggleClass("hidden");
 }
 
 // Apply out-of-netork insurance benefits

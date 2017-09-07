@@ -17,19 +17,21 @@
 
 <body>
   <div class="container">
-    <section>
-      <div class="intro">
-        <h1>How much can I expect to pay for therapy?</h1>
-        <p class="subhead">*in 2017 America</p>
-        <p>Hey there! I know the idea of budgeting for therapist is stressful, but it might not cost as much as you think! I'll try to get you some answers. First: how much money does your household make in a year?</p>
-        <input type="text" id="income-field">
-        <p class="helper">I'm not going to share it with anyone, don't worry. I just need to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
-        <button class="next-step" id="step-one">Next step</button>
-      </div>
+  <div class="intro">
+    <h1>How much can I expect to pay for therapy?</h1>
+    <p class="subhead">*in 2017 America</p>
+  </div>
+
+    <section id="section-1">
+      <h2>Hey! I'm glad you're here.</h2>
+      <p>I know the idea of budgeting for therapist is stressful, but it might not cost as much as you think. I'll try to get you some answers. First: how much money does your household make in a year?</p>
+      <input type="text" id="income-field">
+      <p class="helper">I'm not going to share it with anyone, don't worry. I just need to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
+      <button class="next-step" id="step-one">Next step</button>
     </section>
 
     <!-- Your per session rate -->
-    <section>
+    <section id="section-2" class="hidden">
       <div id="sliding-scale-div"></div>
       <p>I'll estimate that each session might cost <span class="strong" id="baserate-span"></span>.</p>
       <p>-----slider----</p>
@@ -40,7 +42,7 @@
     </section>
 
     <!-- Getting your health insurance -->
-    <section>
+    <section id="section-3" class="hidden">
       <h2>Great!</h2>
       <p>This is the only tricky part: you'll need to check the details of your plan for your mental health benefits. You might be able to find this out by logging into your plan online, but you can also call your insurance's help line. They'll explain what they cover. Ask them:</p>
       <ul>
@@ -55,7 +57,7 @@
     </section>
 
     <!-- Getting your in-network benefits -->
-    <section>
+    <section id="section-4" class="hidden">
       <h2>Nice!</h2>
       <p>Let's apply your insurance and see if that lowers your costs. What's your copay?</p>
       <input type="text" id="copay-field" value="40">
@@ -66,7 +68,7 @@
     </section>
 
     <!-- Getting your out-of-network benefits -->
-    <section>
+    <section id="section-5" class="hidden">
       <h2>Not a problem</h2>
       <p>Let's see if the coverage you have will be helpful. I entered some example amounts here for you, but you should adjust them.</p>
       <p>Deductible:</p>
@@ -79,7 +81,7 @@
     </section>
 
     <!-- Applying your health insurance -->
-    <section>
+    <section id="section-6" class="hidden">
       <p>OK! That brought your cost down to <span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong" id="insurance-baserate-span"></span> per session averaged out. Less scary, right?</p>
       <p>One more thing to check: tax deductions. You might have these if you use a Health Savings Account, or if you're elligible for a Flexible Spending Account.</p>
       <button class="next-step" id="step-four-yes-fsa">I have an FSA</button>
@@ -88,19 +90,19 @@
     </section>
 
     <!-- Getting your FSA contribution -->
-    <section>
+    <section id="section-8" class="hidden">
       <p>Cool. Let's assume you can put $<input id="fsa-field" value=""></span> in your FSA, and see how much that lowers your costs.</p>
       <button class="next-step" id="step-five-yes">Check it out</button>
       <button class="next-step" id="step-five-no">Skip it</button>
     </section>
 
     <!-- Applying your FSA contribution -->
-    <section>
+    <section id="section-8" class="hidden">
       <p>Guess what? You just saved <span id="tax-discount-span"></span> on your taxes.</p>
       <button class="next-step" id="final-step">Here's your final summary:</button>
     </section>
 
-    <section>
+    <section id="section-9" class="hidden">
       <p>Your session rate: <span id="final-session-rate"></span></p>
       <p>A year of therapy might cost you <span id="final-yearly-cost"></span>, but you'll have saved <span id="insurance-saved"></span> by using your insurance and <span id="taxes-saved"></span> on your taxes by using your FSA.</p>
     </section>
