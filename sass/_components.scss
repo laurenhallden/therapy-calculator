@@ -8,6 +8,10 @@ html, body {
 	font-weight: 400;
     font-style: normal;
     font-family: georgia,"times new roman",times,serif;
+    	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
 }
 
 /* Content container */
@@ -57,7 +61,7 @@ section+section {
 }
 
 .padded-top {
-	padding-top: calc(30px + 1rem);
+	padding-top: calc(10px + 1rem);
 }
 
 /* ===================
@@ -96,13 +100,24 @@ p.help-text {
 	}
 }
 
+a {
+	color: $blue-green;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
 em {
 	font-style: italic;
 }
 
 span.strong {
 	font-weight: bold;
-	color: $blue;
+	color: $green;
+	font-size: 1.3rem;
+    font-family: $helvetica;
 }
 
 strong {
@@ -148,12 +163,25 @@ label {
 	font-family: $helvetica;
 	font-weight: bold;
 	color: $text-black;
-	margin: 30px 0 10px;
 	display: block;
 }
 
-input {
+form label span {
+	margin-bottom: 10px;
+}
+
+form label {
+	padding: 20px 0 0;
+	
+	/* This keeps our fields from jumping when we show and hide them */
+	height: 105px;
+}
+
+input,
+[type='text'],
+[type='number'] {
 	font-size: 1rem;
+	font-family: $helvetica;
 	color: $dark-gray;
 	padding: 0.5rem;
 	margin-bottom: 1rem;
@@ -176,6 +204,15 @@ button,
 	border: 2px solid $green;
 	margin-top: 30px;
 	text-decoration: none;
+
+	&.outline {
+		background: transparent;
+		color: $green;
+
+		&:hover {
+			color: $white;
+		}
+	}
 
 	&:hover {
 		background: $black;
@@ -225,5 +262,16 @@ Specific sections
 
 	a {
 		color: $blue-green;
+		text-decoration: underline;
 	}
+}
+
+/* 6 */
+
+/* We want this hidden in case the person doesn't have insurance */
+#insurance-results {
+	display: none;
+	border-bottom: 1px solid $border-gray;
+	padding-bottom: 2rem;
+	margin-bottom: 2rem;
 }
