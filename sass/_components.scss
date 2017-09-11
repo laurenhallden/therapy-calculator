@@ -190,12 +190,14 @@ button,
 Page elements
 ====================*/
 
-.intro {
+.intro,
+.footer {
 	color: $white;
 	padding: 4rem 0 2rem;
 	text-align: center;
 
-	p { 
+	p,
+	p a { 
 		color: rgba(255,255,255,0.6);
 	}
 }
