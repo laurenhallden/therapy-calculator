@@ -107,38 +107,41 @@ section {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
   border-radius: 0.5rem;
   color: #444;
+  display: block;
+  opacity: 1;
+  border: 1px solid black;
 }
-/* line 28, ../sass/_components.scss */
+/* line 31, ../sass/_components.scss */
 section.hidden {
   border: 1px solid red;
 }
 
-/* line 33, ../sass/_components.scss */
+/* line 36, ../sass/_components.scss */
 section + section {
   margin-top: 4rem;
 }
 
 /* Responsive Columns */
-/* line 38, ../sass/_components.scss */
+/* line 41, ../sass/_components.scss */
 .col {
   display: inline-block;
   vertical-align: top;
   padding: 10px;
 }
-/* line 43, ../sass/_components.scss */
+/* line 46, ../sass/_components.scss */
 .col.col-8 {
   width: 73%;
 }
-/* line 47, ../sass/_components.scss */
+/* line 50, ../sass/_components.scss */
 .col.col-4 {
   width: 24%;
 }
-/* line 51, ../sass/_components.scss */
+/* line 54, ../sass/_components.scss */
 .col.middle {
   vertical-align: middle;
 }
 
-/* line 56, ../sass/_components.scss */
+/* line 59, ../sass/_components.scss */
 .padded-top {
   padding-top: calc(30px + 1rem);
 }
@@ -146,13 +149,13 @@ section + section {
 /* ===================
 Type
 ====================*/
-/* line 64, ../sass/_components.scss */
+/* line 67, ../sass/_components.scss */
 h1 {
   font-size: 3rem;
   line-height: 3rem;
 }
 
-/* line 69, ../sass/_components.scss */
+/* line 72, ../sass/_components.scss */
 h2 {
   font-size: 1.4rem;
   line-height: 2rem;
@@ -160,66 +163,66 @@ h2 {
   font-weight: 600;
 }
 
-/* line 76, ../sass/_components.scss */
+/* line 79, ../sass/_components.scss */
 p {
   margin-bottom: 1rem;
   line-height: 1.4;
 }
 
-/* line 81, ../sass/_components.scss */
+/* line 84, ../sass/_components.scss */
 p.subhead {
   margin: 1rem 0;
 }
 
-/* line 85, ../sass/_components.scss */
+/* line 88, ../sass/_components.scss */
 p.help-text {
   color: #999999;
   font-size: 0.85rem;
   font-style: normal;
   line-height: 1.25;
 }
-/* line 91, ../sass/_components.scss */
+/* line 94, ../sass/_components.scss */
 p.help-text a {
   color: #999999;
 }
 
-/* line 96, ../sass/_components.scss */
+/* line 99, ../sass/_components.scss */
 span.strong {
   font-weight: bold;
   color: #257dab;
 }
 
-/* line 101, ../sass/_components.scss */
+/* line 104, ../sass/_components.scss */
 strong {
   font-weight: bold;
 }
 
-/* line 105, ../sass/_components.scss */
+/* line 108, ../sass/_components.scss */
 ul {
   list-style-type: disc;
   list-style-position: inside;
 }
 
-/* line 109, ../sass/_components.scss */
+/* line 112, ../sass/_components.scss */
 ol {
   list-style-type: decimal;
   list-style-position: inside;
 }
 
-/* line 113, ../sass/_components.scss */
+/* line 116, ../sass/_components.scss */
 ul, ol {
   margin-bottom: 1rem;
   line-height: 1.4;
 }
 
-/* line 117, ../sass/_components.scss */
+/* line 120, ../sass/_components.scss */
 ul ul, ol ul {
   list-style-type: circle;
   list-style-position: inside;
   margin-left: 15px;
 }
 
-/* line 122, ../sass/_components.scss */
+/* line 125, ../sass/_components.scss */
 ol ol, ul ol {
   list-style-type: lower-latin;
   list-style-position: inside;
@@ -229,14 +232,14 @@ ol ol, ul ol {
 /* ===================
 Form elements
 ====================*/
-/* line 132, ../sass/_components.scss */
+/* line 135, ../sass/_components.scss */
 form,
 input {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #444;
 }
 
-/* line 138, ../sass/_components.scss */
+/* line 141, ../sass/_components.scss */
 form label,
 form label span,
 label {
@@ -247,7 +250,7 @@ label {
   display: block;
 }
 
-/* line 148, ../sass/_components.scss */
+/* line 151, ../sass/_components.scss */
 input {
   font-size: 1rem;
   color: #555555;
@@ -256,12 +259,12 @@ input {
   border: 1px solid #b3b3b2;
   background: #f7f8f8;
 }
-/* line 156, ../sass/_components.scss */
+/* line 159, ../sass/_components.scss */
 input.focus {
   border: 1px solid #eb0162;
 }
 
-/* line 161, ../sass/_components.scss */
+/* line 164, ../sass/_components.scss */
 button,
 .button {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -272,8 +275,9 @@ button,
   color: #fff;
   border: 2px solid #0ea257;
   margin-top: 30px;
+  text-decoration: none;
 }
-/* line 172, ../sass/_components.scss */
+/* line 176, ../sass/_components.scss */
 button:hover,
 .button:hover {
   background: #000;
@@ -281,7 +285,7 @@ button:hover,
   cursor: pointer;
 }
 
-/* line 179, ../sass/_components.scss */
+/* line 183, ../sass/_components.scss */
 .error {
   color: #eb0162;
   font-size: 0.8rem;
@@ -290,13 +294,13 @@ button:hover,
 /* ===================
 Page elements
 ====================*/
-/* line 189, ../sass/_components.scss */
+/* line 193, ../sass/_components.scss */
 .intro {
   color: #fff;
   padding: 4rem 0 2rem;
   text-align: center;
 }
-/* line 194, ../sass/_components.scss */
+/* line 198, ../sass/_components.scss */
 .intro p {
   color: rgba(255, 255, 255, 0.6);
 }
@@ -305,7 +309,7 @@ Page elements
 Specific sections
 ====================*/
 /* 1 */
-/* line 206, ../sass/_components.scss */
+/* line 210, ../sass/_components.scss */
 .disclaimer {
   background-color: rgba(31, 126, 161, 0.075);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -315,7 +319,7 @@ Specific sections
   line-height: 1.25;
   color: #1f7ea3;
 }
-/* line 215, ../sass/_components.scss */
+/* line 219, ../sass/_components.scss */
 .disclaimer a {
   color: #1f7ea3;
 }

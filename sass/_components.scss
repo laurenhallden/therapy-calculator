@@ -24,6 +24,9 @@ section {
 	box-shadow: $medium-float;
 	border-radius: 0.5rem;
 	color: $text-black;
+	display: block;
+	opacity: 1;
+	border: 1px solid black;
 
 	&.hidden {
 		border: 1px solid red;
@@ -168,6 +171,7 @@ button,
 	color: $white;
 	border: 2px solid $green;
 	margin-top: 30px;
+	text-decoration: none;
 
 	&:hover {
 		background: $black;
