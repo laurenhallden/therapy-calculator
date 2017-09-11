@@ -34,7 +34,7 @@
           <strong>A small disclaimer:</strong> I'm not a tax or insurance professional. I'm just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consult an expert before making decisions that impact your finances and health.
         </div>
       </p>
-      <p>The first question is an awkward one: how much money does your household make in a year?</p>
+      <p>The first question is an awkward one (sorry!): how much money does your household make in a year?</p>
       <form id="form-1" class="section-form" data-abide novalidate>
         <label><span>Your household income</span>
           <input id="income-field" type="text" aria-describedby="exampleHelpText" required pattern="number">
@@ -84,14 +84,14 @@
       <form>
         <label><span>Your therapy appointments are</span>
           <select>
-            <option value="husker">Covered or partially covered</option>
-            <option value="starbuck">Not covered</option>
+            <option value="covered">Covered or partially covered</option>
+            <option value="not-covered">Not covered</option>
           </select>
         </label>
         <label><span>And your therapist is</span>
           <select>
-            <option value="husker">In-network</option>
-            <option value="starbuck">Out-of-network</option>
+            <option value="in-network">In-network</option>
+            <option value="out-of-network">Out-of-network</option>
           </select>
         </label>
         <button class="next-step" id="step-two-yes">Next step</button>
@@ -134,12 +134,21 @@
 
     <!-- Applying your health insurance -->
     <section id="section-6" class="hidden">
-      <h2>Insurance results.</h2>
-      <p>Okay! That brought your cost down to <span class="strong">$</span><span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong">$</span><span class="strong" id="insurance-baserate-span"></span> per session averaged out. Less scary, right?</p>
-      <p>Another thing to check: <strong>tax deductions</strong>. You might have these if you use a Health Savings Account (HSA), or if you're elligible for a Flexible Spending Account (FSA).</p>
-      <button class="next-step" id="step-four-yes-hsa">I have an HSA</button>
-      <button class="next-step" id="step-four-yes-fsa">I have an FSA</button>
-      <button class="next-step" id="step-four-no">Nope, skip this</button>
+      <h2>Let's try something else.</h2>
+      <!--<p>Okay! That brought your cost down to <span class="strong">$</span><span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong">$</span><span class="strong" id="insurance-baserate-span"></span> per session averaged out. Less scary, right?</p> -->
+      <p>Another thing to check: <strong>tax deductions</strong>.</p>
+      <p>I know, thinking about taxes is kinda terrible, but deductions can help you out! Taxes come into play if you're elligible for a Flexible Spending Account (FSA) or a Health Savings Account (HSA). You <em>may</em> even be able to deduct your therapy bills directly.</p>
+      <form>
+        <label><span>You have:</span>
+          <select>
+            <option value="fsa">A Flexbile Spending Account</option>
+            <option value="hsa">A Health Savings Account</option>
+            <option value="no-tax-plan">Neither</option>
+          </select>
+        </label>
+        <button class="next-step" id="step-four-yes">Check deductions</button>
+        <button class="next-step" id="step-four-no">Nope, skip this</button>
+      </form>
     </section>
 
     <!-- Getting your FSA contribution -->
