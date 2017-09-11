@@ -2,7 +2,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 5, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,45 +24,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -85,7 +85,7 @@ Main Layout
 /* line 5, ../sass/_components.scss */
 html, body {
   font-size: 17px;
-  background: #218898;
+  background: #1f7ea3;
   font-weight: 400;
   font-style: normal;
   font-family: georgia,"times new roman",times,serif;
@@ -101,7 +101,6 @@ html, body {
 /* line 19, ../sass/_components.scss */
 section {
   padding: 3rem;
-  height: 80vh;
   display: block;
   opacity: 1;
   background: #fff;
@@ -109,27 +108,51 @@ section {
   border-radius: 0.5rem;
   color: #444;
 }
-/* line 29, ../sass/_components.scss */
+/* line 28, ../sass/_components.scss */
 section.hidden {
-  display: none;
-  opacity: 0;
+  border: 1px solid red;
 }
 
-/* line 35, ../sass/_components.scss */
+/* line 33, ../sass/_components.scss */
 section + section {
   margin-top: 4rem;
+}
+
+/* Responsive Columns */
+/* line 38, ../sass/_components.scss */
+.col {
+  display: inline-block;
+  vertical-align: top;
+  padding: 10px;
+}
+/* line 43, ../sass/_components.scss */
+.col.col-8 {
+  width: 73%;
+}
+/* line 47, ../sass/_components.scss */
+.col.col-4 {
+  width: 24%;
+}
+/* line 51, ../sass/_components.scss */
+.col.middle {
+  vertical-align: middle;
+}
+
+/* line 56, ../sass/_components.scss */
+.padded-top {
+  padding-top: calc(30px + 1rem);
 }
 
 /* ===================
 Type
 ====================*/
-/* line 44, ../sass/_components.scss */
+/* line 64, ../sass/_components.scss */
 h1 {
   font-size: 3rem;
   line-height: 3rem;
 }
 
-/* line 49, ../sass/_components.scss */
+/* line 69, ../sass/_components.scss */
 h2 {
   font-size: 1.4rem;
   line-height: 2rem;
@@ -137,66 +160,162 @@ h2 {
   font-weight: 600;
 }
 
-/* line 56, ../sass/_components.scss */
+/* line 76, ../sass/_components.scss */
 p {
   margin-bottom: 1rem;
   line-height: 1.4;
 }
 
-/* line 61, ../sass/_components.scss */
+/* line 81, ../sass/_components.scss */
 p.subhead {
   margin: 1rem 0;
 }
 
-/* line 65, ../sass/_components.scss */
-p.helper {
+/* line 85, ../sass/_components.scss */
+p.help-text {
   color: #999999;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  font-style: normal;
+  line-height: 1.25;
+}
+/* line 91, ../sass/_components.scss */
+p.help-text a {
+  color: #999999;
 }
 
-/* line 70, ../sass/_components.scss */
+/* line 96, ../sass/_components.scss */
 span.strong {
   font-weight: bold;
   color: #257dab;
 }
 
+/* line 101, ../sass/_components.scss */
+strong {
+  font-weight: bold;
+}
+
+/* line 105, ../sass/_components.scss */
+ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+/* line 109, ../sass/_components.scss */
+ol {
+  list-style-type: decimal;
+  list-style-position: inside;
+}
+
+/* line 113, ../sass/_components.scss */
+ul, ol {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* line 117, ../sass/_components.scss */
+ul ul, ol ul {
+  list-style-type: circle;
+  list-style-position: inside;
+  margin-left: 15px;
+}
+
+/* line 122, ../sass/_components.scss */
+ol ol, ul ol {
+  list-style-type: lower-latin;
+  list-style-position: inside;
+  margin-left: 15px;
+}
+
 /* ===================
 Form elements
 ====================*/
-/* line 80, ../sass/_components.scss */
+/* line 132, ../sass/_components.scss */
+form,
+input {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #444;
+}
+
+/* line 138, ../sass/_components.scss */
+form label,
+form label span,
+label {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  color: #444;
+  margin: 30px 0 10px;
+  display: block;
+}
+
+/* line 148, ../sass/_components.scss */
 input {
   font-size: 1rem;
   color: #555555;
   padding: 0.5rem;
   margin-bottom: 1rem;
-  border: 1px solid #999999;
+  border: 1px solid #b3b3b2;
+  background: #f7f8f8;
+}
+/* line 156, ../sass/_components.scss */
+input.focus {
+  border: 1px solid #eb0162;
 }
 
-/* line 88, ../sass/_components.scss */
-button {
+/* line 161, ../sass/_components.scss */
+button,
+.button {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
   padding: 0.5rem 20px;
   font-size: 0.9rem;
   background: #0ea257;
   color: #fff;
   border: 2px solid #0ea257;
+  margin-top: 30px;
 }
-/* line 95, ../sass/_components.scss */
-button:hover {
+/* line 172, ../sass/_components.scss */
+button:hover,
+.button:hover {
   background: #000;
   border: 2px solid #000;
   cursor: pointer;
 }
 
+/* line 179, ../sass/_components.scss */
+.error {
+  color: #eb0162;
+  font-size: 0.8rem;
+}
+
 /* ===================
 Page elements
 ====================*/
-/* line 107, ../sass/_components.scss */
+/* line 189, ../sass/_components.scss */
 .intro {
   color: #fff;
   padding: 4rem 0 2rem;
   text-align: center;
 }
-/* line 112, ../sass/_components.scss */
+/* line 194, ../sass/_components.scss */
 .intro p {
   color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===================
+Specific sections
+====================*/
+/* 1 */
+/* line 206, ../sass/_components.scss */
+.disclaimer {
+  background-color: rgba(31, 126, 161, 0.075);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding: 15px;
+  font-size: 0.85rem;
+  border-radius: 3px;
+  line-height: 1.25;
+  color: #1f7ea3;
+}
+/* line 215, ../sass/_components.scss */
+.disclaimer a {
+  color: #1f7ea3;
 }

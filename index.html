@@ -8,6 +8,10 @@
   <meta name="description" content="Therapy Calculator">
   <meta name="author" content="Lauren Hallden">
 
+  <!-- Form css -->
+  <link rel="stylesheet" href="css/foundation.css" />
+  <link rel="stylesheet" href="css/app.css">
+
   <link rel="stylesheet" href="stylesheets/screen.css">
 
   <!--[if lt IE 9]>
@@ -24,68 +28,117 @@
 
     <section id="section-1">
       <h2>Hey! I'm glad you're here.</h2>
-      <p>I know the idea of budgeting for therapist is stressful, but it might not cost as much as you think. I'll try to get you some answers. First: how much money does your household make in a year?</p>
-      <input type="text" id="income-field">
-      <p class="helper">I'm not going to share it with anyone, don't worry. I just need to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
-      <button class="next-step" id="step-one">Next step</button>
+      <p>I know the idea of budgeting for therapy is stressful, but it may not cost as much as you think. I'll try to get you some answers.</p>
+      <p>
+        <div class="disclaimer">
+          <strong>A small disclaimer:</strong> I'm not a tax or insurance professional. I'm just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consult an expert before making decisions that impact your finances and health.
+        </div>
+      </p>
+      <p>The first question is an awkward one: how much money does your household make in a year?</p>
+      <form id="form-1" class="section-form" data-abide novalidate>
+        <label><span>Your household income</span>
+          <input id="income-field" type="text" aria-describedby="exampleHelpText" required pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        </label>
+        <p class="help-text"> I won't share it with anyone, don't worry. I just need to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
+        <button class="button next-step">Next step</button>
+      </form>
     </section>
 
     <!-- Your per session rate -->
     <section id="section-2" class="hidden">
-      <div id="sliding-scale-div"></div>
-      <p>I'll estimate that each session might cost <span class="strong" id="baserate-span"></span>.</p>
-      <p>-----slider----</p>
-      <p>If you see your therapist once a week, that's <span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
-      <p>But don't worry just yet&mdash;let's see if we can lower that. Do you have health insurance? Some therapists don't accept it, but you may still be able to get some money.</p>
-      <button class="next-step" id="step-two-yes">Yes, let's check</button>
-      <button class="next-step" id="step-two-no">Nope, no insurance</button>
+      <div id="sliding-scale-div"><h2>Your per-session rate</h2></div>
+      <p>I'd estimate that each session might cost you <span class="strong">$</span><span class="strong" id="baserate-span"></span>. But if you already have someone in mind and you know what they charge, you can adjust your rate.</p>
+      <div class="col col-8 middle">
+        <label>Set your rate to:</label>
+        <div class="slider" data-slider data-options="start: 20; end: 150; step: 5;">
+          <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="sliderOutput1"></span>
+          <span class="slider-fill" data-slider-fill></span>
+        </div>
+      </div>
+      <div class="col col-4 middle padded-top">
+        <input type="number" id="sliderOutput1">
+      </div>
+
+      <div id="accordion"></div>
+
+      <p>If you see your therapist once a week, that's <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
+      <p>But don't worry just yet&mdash;let's see if we can lower that. Do you have health insurance? Some therapists don't accept it, but you may still be able to get some money back.</p>
+      <a class="button next-step" href="#section-3" id="step-two-yes">Yes, let's check</a>
+      <a class="button next-step" href="#section-6" id="step-two-no">Nope, no insurance</a>
     </section>
 
     <!-- Getting your health insurance -->
     <section id="section-3" class="hidden">
-      <h2>Great!</h2>
-      <p>This is the only tricky part: you'll need to check the details of your plan for your mental health benefits. You might be able to find this out by logging into your plan online, but you can also call your insurance's help line. They'll explain what they cover. Ask them:</p>
+      <h2>Great! Now for the tricky part:</h2>
+      <p>We're gonna need some details on your plan's mental health benefits. You can check online, or call your insurance company's help line to have a real person explain everything. You'll want to know:</p>
       <ul>
-        <li>Whether therapy delivered in an office setting is covered by your plan</li>
-        <li>If so, what is your <strong>copayment</strong> for an in-network provider</li>
-        <li>What is the <strong>coinsurance rate</strong> for an out-of-network provider</li>
-        <li>What is your current <strong>deductible</strong></li>
+        <li>Is therapy delivered in an office setting covered by your plan?</li>
+        <li>If your plan has a preferred network, what's your <strong>copayment</strong> for an in-network provider?</li>
+        <li>What is the <strong>coinsurance rate</strong> for an out-of-network provider?</li>
+        <li>What is your current <strong>deductible</strong>?</li>
       </ul>
-      <p>When you're ready, let's walk through the options:</p>
-      <p>---therapy is covered or not----</p>
-      <p>---therapist is in network or not----</p>
+      <p>When you're ready, let's walk through the options.</p>
+      <form>
+        <label><span>Your therapy appointments are</span>
+          <select>
+            <option value="husker">Covered or partially covered</option>
+            <option value="starbuck">Not covered</option>
+          </select>
+        </label>
+        <label><span>And your therapist is</span>
+          <select>
+            <option value="husker">In-network</option>
+            <option value="starbuck">Out-of-network</option>
+          </select>
+        </label>
+        <button class="next-step" id="step-two-yes">Next step</button>
+      </form>
     </section>
 
     <!-- Getting your in-network benefits -->
     <section id="section-4" class="hidden">
       <h2>Nice!</h2>
-      <p>Let's apply your insurance and see if that lowers your costs. What's your copay?</p>
-      <input type="text" id="copay-field" value="40">
-      <p>If you have a deductible, enter it here:</p>
-      <input type="text" id="deductible-field-innetwork">
-      <p class="helper">You can enter your yearly deducible, or if your deductible is pretty high and you don't typically reach it in a year, enter the amount you don't use up.</p>
-      <button class="next-step" id="">Apply it!</button>
+      <p>Let's apply your insurance and see if that lowers your costs.</p>
+      <form>
+        <label><span>Your copay for therapy:</span>
+          <input type="text" id="copay-field">
+        </label>
+        <p class="help-text">This is probably the same as what you'd pay to see a specialist.</p>
+        <label><span>Your deductible:</span>
+          <input type="text" id="deductible-field-innetwork">
+        </label>
+        <p class="help-text">You may not have one, but if you do, enter it here.</p>
+        <button class="next-step" id="">Apply it!</button>
+      </form>
     </section>
 
     <!-- Getting your out-of-network benefits -->
     <section id="section-5" class="hidden">
-      <h2>Not a problem</h2>
+      <h2>Not a problem.</h2>
       <p>Let's see if the coverage you have will be helpful. I entered some example amounts here for you, but you should adjust them.</p>
-      <p>Deductible:</p>
-      <input type="text" id="deductible-field-outofnetwork" value="500">
-      <p class="helper">You can enter your yearly deducible, or if your deductible is pretty high and you don't typically reach it in a year, enter the amount you don't use up.</p>
-      <p>Coinsurance Rate:</p>
-      <p class="helper">Enter the percentage you are responsible for. For example, after you hit your deductible your insurance may cover 70% of your costs, so your coinsurance is 30%</p>
-      <input type="text" id="coinsurance-field" value="30">
-      <button class="next-step" id="step-three">Looks good!</button>
+      <form>
+        <label><span>Your deductible:</span>
+          <input type="text" id="deductible-field-outofnetwork" value="1000">
+        </label>
+        <p class="help-text">You can enter your yearly deducible, or if your deductible is pretty high and you don't typically reach it in a year, enter the amount you don't use up.</p>
+        <label><span>Your coinsurance rate:</span>
+          <input type="text" id="coinsurance-field" value="30">
+        </label>
+        <p class="help-text">Enter the percentage you are responsible for. For example, after you hit your deductible, your insurance may cover 70% of your costs, so your coinsurance rate is 30%</p>
+        <button class="next-step" id="step-three">Looks good!</button>
+      </form>
     </section>
 
     <!-- Applying your health insurance -->
     <section id="section-6" class="hidden">
-      <p>OK! That brought your cost down to <span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong" id="insurance-baserate-span"></span> per session averaged out. Less scary, right?</p>
-      <p>One more thing to check: tax deductions. You might have these if you use a Health Savings Account, or if you're elligible for a Flexible Spending Account.</p>
-      <button class="next-step" id="step-four-yes-fsa">I have an FSA</button>
+      <h2>Insurance results.</h2>
+      <p>Okay! That brought your cost down to <span class="strong">$</span><span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong">$</span><span class="strong" id="insurance-baserate-span"></span> per session averaged out. Less scary, right?</p>
+      <p>Another thing to check: <strong>tax deductions</strong>. You might have these if you use a Health Savings Account (HSA), or if you're elligible for a Flexible Spending Account (FSA).</p>
       <button class="next-step" id="step-four-yes-hsa">I have an HSA</button>
+      <button class="next-step" id="step-four-yes-fsa">I have an FSA</button>
       <button class="next-step" id="step-four-no">Nope, skip this</button>
     </section>
 
@@ -98,7 +151,7 @@
 
     <!-- Applying your FSA contribution -->
     <section id="section-8" class="hidden">
-      <p>Guess what? You just saved <span id="tax-discount-span"></span> on your taxes.</p>
+      <p>Guess what? I think you can save <span id="tax-discount-span"></span> on your taxes.</p>
       <button class="next-step" id="final-step">Here's your final summary:</button>
     </section>
 
@@ -110,33 +163,48 @@
 
   </div> <!-- End container -->
 	<!-- JS -->
-	<script
-		src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-		crossorigin="anonymous">
-  </script>
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/vendor/what-input.js"></script>
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/vendor/smooth-scroll.js"></script>
   <script src="js/scripts.js"></script>
 
   <!-- All our button functions -->
   <script>
+    // Start with the assumption that we see a therapist once a week;
+    // 48 times a year
+    $( document ).ready(function() {
+        window.globalNumberOfSessions = 48;
+    });
+
+    // Stop forms from posting on form submit
+    $(".section-form").on("valid invalid submit", function(e){
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
     // Calculate baserate
-    $("#step-one").click(function(){
+    $("#form-1").on('formvalid.zf.abide', function(e) {
+      console.log("valid trigger");
       var income = $.trim($("#income-field").val());
-      if( income.length > 0 ) {
-        income = income.replace(/\,/g,''); // strip out any commas, etc.
-        income = parseInt(income,10);
-        window.globalIncome = income;
-        stepOne(income);
-        console.log("income:" + income);
+      window.globalIncome = income;
+      stepOne(income);
+      console.log("income:" + income);
+    });
+
+    $('.slider').on('changed.zf.slider', function() {
+      var yearlyCostValue = $.trim($('#yearly-cost-span').html());
+      if (yearlyCostValue =='') {
       }
       else {
-        console.log("empty");
+        var currentSliderValue = $('#sliderOutput1').val();
+        var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
+        $('#yearly-cost-span').html(updatedYearlyCost);
       }
     });
 
     // Check insurance
-    $("#step-two-yes").click(function(){getInsurance()});
-    $("#step-two-no").click(function(){});
 
     // Apply insurance
     $("#step-three").click(function(){
