@@ -128,7 +128,7 @@ function applyInsurance(deductible,coinsurance){
 		// The deductible on this insurance is too high to help
 		// That sucks; let's be sympathetic
 		console.log('insurance does not help');
-		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
 	}
 	var location = "#section-6";
 	scrollTo(location);
@@ -245,7 +245,7 @@ function checkItemized(){
 }
 
 function getItemized() {
-	
+
 }
 
 function setHSA(){

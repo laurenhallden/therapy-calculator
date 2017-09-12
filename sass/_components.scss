@@ -174,7 +174,6 @@ Form elements
 
 form,
 input {
-	font-family: $helvetica;
 	color: $text-black;
 }
 
@@ -191,6 +190,15 @@ label {
 	display: block;
 }
 
+.form-error,
+.help-text {
+	font-family: $helvetica;
+}
+
+form {
+	display: inline-block;
+}
+
 form label span {
 	margin-bottom: 10px;
 }
@@ -198,8 +206,8 @@ form label span {
 form label {
 	padding: 20px 0 0;
 	
-	/* This keeps our fields from jumping when we show and hide them */
-	height: 105px;
+	/* This keeps our fields from jumping when we show and hide them
+	height: 105px;*/
 }
 
 input,

@@ -35,14 +35,14 @@
         </div>
       </p>
       <p>The first question is an awkward one (sorry!): how much money does your household make in a year?</p>
-      <form id="form-1" class="section-form" data-abide novalidate>
+      <form id="income-form" class="section-form" data-abide novalidate>
         <label><span>Your household income:</span>
-          <input id="income-field" type="text" aria-describedby="exampleHelpText" required pattern="number">
+          <input id="income-field" type="text" aria-describedby="income-help-text" required pattern="number">
           <span class="form-error">
             Enter a number.
           </span>
         </label>
-        <p class="help-text"> I won’t share it with anyone, don’t worry. I just need to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
+        <p class="help-text" id="income-help-text"> I won’t share it with anyone, don’t worry. I just need to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
         <button class="button next-step">Next step</button>
       </form>
     </section>
@@ -102,16 +102,22 @@
     <section id="section-4" class="hidden">
       <h2>Nice!</h2>
       <p>Let’s apply your insurance and see if that lowers your costs.</p>
-      <form>
+      <form id="in-network-form" class="section-form" data-abide novalidate>
         <label><span>Your copay for therapy:</span>
-          <input type="text" id="copay-field">
+          <input type="text" id="copay-field" aria-describedby="copay-help-text" required pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
         </label>
-        <p class="help-text">This is probably the same as what you’d pay to see a specialist.</p>
+        <p class="help-text" id="copay-help-text">This is probably the same as what you’d pay to see a specialist.</p>
         <label><span>Your deductible:</span>
-          <input type="text" id="deductible-field-innetwork">
+          <input type="text" id="deductible-field-innetwork" aria-describedby="deductible-help-text-innetwork" required pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
         </label>
-        <p class="help-text">You may not have one, but if you do, enter it here.</p>
-        <a class="button next-step" id="step-four">Apply it!</a>
+        <p class="help-text" id="deductible-help-text-innetwork">You may not have one, but if you do, enter it here.</p>
+        <button class="next-step" id="step-four">Apply it!</button>
       </form>
     </section>
 
@@ -119,16 +125,22 @@
     <section id="section-5" class="hidden">
       <h2>Not a problem.</h2>
       <p>The coverage you have may still be helpful. Let’s check. I entered some example amounts here for you, but you should adjust them.</p>
-      <form>
+      <form id="outof-network-form" class="section-form" data-abide novalidate>
         <label><span>Your deductible:</span>
-          <input type="text" id="deductible-field-outofnetwork" value="1000">
+          <input type="text" id="deductible-field-outofnetwork" value="1000" aria-describedby="deductible-help-text-outofnetwork" required pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
         </label>
-        <p class="help-text">You can enter your yearly deducible. (Or if you know you don’t typically reach it in a year, you can enter the amount you don’t use up.)</p>
+        <p class="help-text" id="deductible-help-text-outofnetwork">You can enter your yearly deducible. (Or if you know you don’t typically reach it in a year, you can enter the amount you don’t use up.)</p>
         <label><span>Your co-insurance rate:</span>
-          <input type="text" id="coinsurance-field" value="30">
+          <input type="text" id="coinsurance-field" value="30" aria-describedby="coinsurance-help-text" required pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
         </label>
-        <p class="help-text">Enter the percentage you are responsible for. For example, after you hit your deductible, your insurance may cover 70% of your costs, so your co-insurance rate is 30%</p>
-        <a class="button next-step" id="step-five">Looks good!</a>
+        <p class="help-text" id="coinsurance-help-text">Enter the percentage you are responsible for. For example, after you hit your deductible, your insurance may cover 70% of your costs, so your co-insurance rate is 30%</p>
+        <button class="next-step" id="step-five">Looks good!</a>
       </form>
     </section>
 
@@ -139,7 +151,7 @@
         <p id="insurance-results">That brought your cost down to <span class="strong">$</span><span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong">$</span><span class="strong" id="insurance-baserate-span"></span> per session averaged out. Getting less scary?</p>
       </div>
       <p>There’s another thing to check: <strong>tax deductions</strong>.</p>
-      <p>I know, thinking about taxes right now is kinda terrible. But deductions might help lower you costs more than you might guess! Taxes come into play if you’re eligible for a <a target="_blank" href="https://www.healthcare.gov/have-job-based-coverage/flexible-spending-accounts/">Flexible Spending Account</a> (FSA) or a <a target="_blank" href="https://www.healthcare.gov/glossary/health-savings-account-HSA">Health Savings Account</a> (HSA). You <em>may</em> even be able to deduct your therapy bills directly.</p>
+      <p>I know, thinking about taxes right now is kinda terrible. But deductions might make a big difference. Taxes come into play if you’re eligible for a <a target="_blank" href="https://www.healthcare.gov/have-job-based-coverage/flexible-spending-accounts/">Flexible Spending Account</a> (FSA) or a <a target="_blank" href="https://www.healthcare.gov/glossary/health-savings-account-HSA">Health Savings Account</a> (HSA). You <em>may</em> even be able to deduct your therapy bills directly.</p>
       <form>
         <label><span>Let’s see what happens if you have:</span>
           <select id="tax-vehicle">
@@ -148,7 +160,7 @@
             <option value="no-tax-vehicle">Neither</option>
           </select>
         </label>
-        <a class="button next-step" id="step-six-yes">Check deductions</a>
+        <button class="next-step" id="step-six-yes">Check deductions</button>
         <a class ="button next-step outline" id="step-six-no" href="#section-9">Nope, skip the taxes stuff</a>
       </form>
     </section>
@@ -158,10 +170,17 @@
       <h2>Set your FSA contribution.</h2>
       <p>The more you contribute here, the more you can lower your tax burden. But the maximum allowed is <strong>$2,600</strong>.</p>
       <p>If you’re already contributing, you may not have enough room left to add the full amount of therapy to your FSA. In that case, take the maximum if you can.</p>
-      <p>Otherwise, let’s assume you can put <input type="number" id="fsa-field" value=""></span> more in your FSA, and see how much that lowers your costs.</p>
-      <!-- Would be nice to set a max limit here -->
-      <a class="button next-step" id="step-seven-yes">Check it out</a>
-      <a class="button next-step outline" id="step-seven-no">Skip it</a>
+      <p>Otherwise, let’s assume you can bump up your FSA contribution by:</p>
+      <form id="fsa-form" class="section-form" data-abide novalidate>
+          <input id="fsa-field" type="text" value="" required pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        <!-- Would be nice to set a max limit here -->
+        <p>We’ll see how much that lowers your costs.</p>
+        <button class="next-step" id="step-seven-yes">Check it out</button>
+        <a class="button next-step outline" id="step-seven-no">Nevermind, skip it</a>
+      </form>
     </section>
 
     <!-- Getting your FSA contribution -->
@@ -244,7 +263,7 @@
     });
 
     // Calculate baserate
-    $("#form-1").on('formvalid.zf.abide', function(e){
+    $("#income-form").on('formvalid.zf.abide', function(e){
       var income = $.trim($("#income-field").val());
       window.globalIncome = income;
       stepOne(income);
@@ -271,7 +290,7 @@
     });
 
     // Apply in-network insurance
-    $("#step-four").click(function(){
+    $("#in-network-form").on('formvalid.zf.abide', function(e){
       var copay = $.trim($("#copay-field").val());
       copay = parseInt(copay,10);
       console.log(copay);
@@ -281,7 +300,7 @@
     });
 
     // Apply out-of-network insurance
-    $("#step-five").click(function(){
+    $("#outof-network-form").on('formvalid.zf.abide', function(e){
       var deductible = $.trim($("#deductible-field-outofnetwork").val());
       deductible = parseInt(deductible,10);
       console.log(deductible);
@@ -312,9 +331,16 @@
     });
 
     // Set FSA
-    $("#step-seven-yes").click(function(){
+    $("#fsa-form").on('formvalid.zf.abide', function(e){
       var fsaAmount = $("#fsa-field").val();
       getFSA(fsaAmount);
+    });
+
+    // Skip forward if they decide not to use an FSA
+    $("#step-seven-no").click(function(){
+        var location = "#section-10";
+        scrollTo(location);
+        checkItemized();
     });
 
     // Get final summary!

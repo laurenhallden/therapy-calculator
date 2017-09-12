@@ -273,16 +273,15 @@ Form elements
 /* line 175, ../sass/_components.scss */
 form,
 input {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #444;
 }
 
-/* line 181, ../sass/_components.scss */
+/* line 180, ../sass/_components.scss */
 label {
   line-height: 1.4;
 }
 
-/* line 185, ../sass/_components.scss */
+/* line 184, ../sass/_components.scss */
 form label,
 form label span,
 label {
@@ -292,19 +291,30 @@ label {
   display: block;
 }
 
-/* line 194, ../sass/_components.scss */
+/* line 193, ../sass/_components.scss */
+.form-error,
+.help-text {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* line 198, ../sass/_components.scss */
+form {
+  display: inline-block;
+}
+
+/* line 202, ../sass/_components.scss */
 form label span {
   margin-bottom: 10px;
 }
 
-/* line 198, ../sass/_components.scss */
+/* line 206, ../sass/_components.scss */
 form label {
   padding: 20px 0 0;
-  /* This keeps our fields from jumping when we show and hide them */
-  height: 105px;
+  /* This keeps our fields from jumping when we show and hide them
+  height: 105px;*/
 }
 
-/* line 205, ../sass/_components.scss */
+/* line 213, ../sass/_components.scss */
 input,
 [type='text'],
 [type='number'] {
@@ -316,18 +326,18 @@ input,
   border: 1px solid #b3b3b2;
   background: #f7f8f8;
 }
-/* line 216, ../sass/_components.scss */
+/* line 224, ../sass/_components.scss */
 input.focus,
 [type='text'].focus,
 [type='number'].focus {
   border: 1px solid #eb0162;
 }
 
-/* line 221, ../sass/_components.scss */
+/* line 229, ../sass/_components.scss */
 .radio-button {
   display: block;
 }
-/* line 224, ../sass/_components.scss */
+/* line 232, ../sass/_components.scss */
 .radio-button [type='radio'],
 .radio-button label {
   display: inline-block;
@@ -335,12 +345,12 @@ input.focus,
   margin-bottom: 1em;
 }
 
-/* line 234, ../sass/_components.scss */
+/* line 242, ../sass/_components.scss */
 fieldset legend {
   margin-bottom: 2em;
 }
 
-/* line 239, ../sass/_components.scss */
+/* line 247, ../sass/_components.scss */
 button,
 .button {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -353,18 +363,18 @@ button,
   margin-top: 30px;
   text-decoration: none;
 }
-/* line 251, ../sass/_components.scss */
+/* line 259, ../sass/_components.scss */
 button.outline,
 .button.outline {
   background: transparent;
   color: #0ea257;
 }
-/* line 255, ../sass/_components.scss */
+/* line 263, ../sass/_components.scss */
 button.outline:hover,
 .button.outline:hover {
   color: #fff;
 }
-/* line 260, ../sass/_components.scss */
+/* line 268, ../sass/_components.scss */
 button:hover,
 .button:hover {
   background: #000;
@@ -372,7 +382,7 @@ button:hover,
   cursor: pointer;
 }
 
-/* line 267, ../sass/_components.scss */
+/* line 275, ../sass/_components.scss */
 .error {
   color: #eb0162;
   font-size: 0.8rem;
@@ -381,14 +391,14 @@ button:hover,
 /* ===================
 Page elements
 ====================*/
-/* line 277, ../sass/_components.scss */
+/* line 285, ../sass/_components.scss */
 .intro,
 .footer {
   color: #fff;
   padding: 4em 0 2em;
   text-align: center;
 }
-/* line 283, ../sass/_components.scss */
+/* line 291, ../sass/_components.scss */
 .intro p,
 .intro p a,
 .footer p,
@@ -400,7 +410,7 @@ Page elements
 Specific sections
 ====================*/
 /* 1 */
-/* line 296, ../sass/_components.scss */
+/* line 304, ../sass/_components.scss */
 .disclaimer {
   background-color: rgba(31, 126, 161, 0.075);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -411,7 +421,7 @@ Specific sections
   color: #1f7ea3;
   margin: 30px 0;
 }
-/* line 306, ../sass/_components.scss */
+/* line 314, ../sass/_components.scss */
 .disclaimer a {
   color: #1f7ea3;
   text-decoration: underline;
@@ -419,7 +429,7 @@ Specific sections
 
 /* 6 */
 /* We want this hidden in case the person doesn't have insurance */
-/* line 315, ../sass/_components.scss */
+/* line 323, ../sass/_components.scss */
 #insurance-results,
 #tax-results {
   display: none;
@@ -428,7 +438,7 @@ Specific sections
   margin-bottom: 2em;
 }
 
-/* line 323, ../sass/_components.scss */
+/* line 331, ../sass/_components.scss */
 p.border-bottom {
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 2em;
@@ -436,7 +446,7 @@ p.border-bottom {
 }
 
 /* Final summary */
-/* line 330, ../sass/_components.scss */
+/* line 338, ../sass/_components.scss */
 #but,
 #insurance-saved,
 #taxes-saved,
