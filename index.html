@@ -31,7 +31,7 @@
       <p>I know the idea of budgeting for therapy is stressful, but it may not cost as much as you think. I’ll try to get you some answers.</p>
       <p>
         <div class="disclaimer">
-          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consult an expert before making decisions that impact your finances and health.
+          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consult an expert before making decisions that impact your finances and health. Also, this calculator doesn’t cover Medicare and Medicaid just yet. I’m working on it though!
         </div>
       </p>
       <p>The first question is an awkward one (sorry!): how much money does your household make in a year?</p>
@@ -77,7 +77,7 @@
       <ul>
         <li>Is therapy delivered in an office setting covered by your plan?</li>
         <li>If your plan has a preferred network, what's your <strong>copayment</strong> for an in-network provider?</li>
-        <li>What is the <strong>coinsurance rate</strong> for an out-of-network provider?</li>
+        <li>What is the <strong>co-insurance rate</strong> for an out-of-network provider?</li>
         <li>What is your current <strong>deductible</strong>?</li>
       </ul>
       <p>When you’re ready, let’s walk through the options.</p>
@@ -124,10 +124,10 @@
           <input type="text" id="deductible-field-outofnetwork" value="1000">
         </label>
         <p class="help-text">You can enter your yearly deducible. (Or if you know you don’t typically reach it in a year, you can enter the amount you don’t use up.)</p>
-        <label><span>Your coinsurance rate:</span>
+        <label><span>Your co-insurance rate:</span>
           <input type="text" id="coinsurance-field" value="30">
         </label>
-        <p class="help-text">Enter the percentage you are responsible for. For example, after you hit your deductible, your insurance may cover 70% of your costs, so your coinsurance rate is 30%</p>
+        <p class="help-text">Enter the percentage you are responsible for. For example, after you hit your deductible, your insurance may cover 70% of your costs, so your co-insurance rate is 30%</p>
         <a class="button next-step" id="step-five">Looks good!</a>
       </form>
     </section>
@@ -136,14 +136,14 @@
     <section id="section-6" class="hidden">
       <div class="variable-content">
         <h2>Okay! Let’s try something else.</h2>
-        <p id="insurance-results">That brought your cost down to <span class="strong">$</span><span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong">$</span><span class="strong" id="insurance-baserate-span"></span> per session averaged out. Getting less scary already.</p>
+        <p id="insurance-results">That brought your cost down to <span class="strong">$</span><span class="strong" id="insurance-yearly-span"></span> per year, or about <span class="strong">$</span><span class="strong" id="insurance-baserate-span"></span> per session averaged out. Getting less scary?</p>
       </div>
       <p>There’s another thing to check: <strong>tax deductions</strong>.</p>
-      <p>I know, thinking about taxes is kinda terrible. But deductions can help! Taxes come into play if you’re eligible for a <a target="_blank" href="https://www.healthcare.gov/have-job-based-coverage/flexible-spending-accounts/">Flexible Spending Account</a> (FSA) or a <a target="_blank" href="https://www.healthcare.gov/glossary/health-savings-account-HSA">Health Savings Account</a> (HSA). You <em>may</em> even be able to deduct your therapy bills directly.</p>
+      <p>I know, thinking about taxes right now is kinda terrible. But deductions might help lower you costs more than you might guess! Taxes come into play if you’re eligible for a <a target="_blank" href="https://www.healthcare.gov/have-job-based-coverage/flexible-spending-accounts/">Flexible Spending Account</a> (FSA) or a <a target="_blank" href="https://www.healthcare.gov/glossary/health-savings-account-HSA">Health Savings Account</a> (HSA). You <em>may</em> even be able to deduct your therapy bills directly.</p>
       <form>
         <label><span>Let’s see what happens if you have:</span>
           <select id="tax-vehicle">
-            <option value="fsa">A Flexbile Spending Account</option>
+            <option value="fsa">A Flexible Spending Account</option>
             <option value="hsa">A Health Savings Account</option>
             <option value="no-tax-vehicle">Neither</option>
           </select>
@@ -156,9 +156,9 @@
     <!-- Getting your FSA contribution -->
     <section id="section-7" class="hidden">
       <h2>Set your FSA contribution.</h2>
-      <p>The more you contribute here, the more you can lower your tax burden. But the maximum allowed <strong>$2,600</strong>.</p>
+      <p>The more you contribute here, the more you can lower your tax burden. But the maximum allowed is <strong>$2,600</strong>.</p>
       <p>If you’re already contributing, you may not have enough room left to add the full amount of therapy to your FSA. In that case, take the maximum if you can.</p>
-      <p>Otherwise, let’s assume you can put <input type="number" id="fsa-field" value=""></span> in your FSA, and see how much that lowers your costs.</p>
+      <p>Otherwise, let’s assume you can put <input type="number" id="fsa-field" value=""></span> more in your FSA, and see how much that lowers your costs.</p>
       <!-- Would be nice to set a max limit here -->
       <a class="button next-step" id="step-seven-yes">Check it out</a>
       <a class="button next-step outline" id="step-seven-no">Skip it</a>
@@ -170,29 +170,50 @@
       <p>I need to research this.</p>
     </section>
 
-    <!-- Getting your FSA contribution -->
-    <section id="section-9" class="hidden">
-      <h2>Itemized deductions.</h2>
-      <p>I need to research this.</p>
-    </section>
-
     <!-- Applying your tax contributions -->
     <section id="section-10" class="hidden">
-      <h2>Guess what?</h2>
-      <p>I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes.</p>
-      <p>Let's get you a sumary of all my recommendations:</p>
+      <div class="variable-content">
+        <h2>Let’s talk taxes.</h2>
+        <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes by using your___.</p>
+      </div>
+      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income, you may be able to deduct them. (Your Adjusted Gross income is your household income minus any other deductions, like student loan payments or mortgage interest).</p>
+      <p>A few things to know:</p>
+      <ul class="ul-padded">
+        <li>This only applies to therapy that <a target="_blank" href="https://turbotax.intuit.com/tax-tools/tax-tips/Tax-Deductions-and-Credits/-Can-I-Claim-Medical-Expenses-on-My-Taxes-/INF14196.html">counts as medical care</a>, so you should talk to your therapist during your intake about your diagnosis. Things like marriage counseling may not count.</li>
+        <li>I can’t know what all of your deductions might be, but I can tell you this: without additional deductions, your therapy bills are <strong><span id="income-percentage"></span>%</strong> of your income.</li>
+      </ul>
+        <fieldset>
+          <legend>So, you tell me: I’ll keep doing the math assuming either...</legend>
+          <div class="radio-button">
+            <input type="radio" name="itemized-deductions" value="Yes" id="yes-deduction">
+            <label for="take-deduction">You want to take the medical deduction</label>
+          </div>
+          <div class="radio-button">
+            <input type="radio" name="itemized-deductions" value="No" id="no-deduction" checked="checked">
+            <label for="take-deduction">The medical deduction probably won’t apply to you</label>
+          </div>
+        </fieldset>
       <a class="button next-step" id="final-step">Get your final summary</a>
     </section>
 
     <section id="section-11" class="hidden">
-      <h2>We’re all done.</h2>
+      <h2>We’re all done!</h2>
       <p>Here are my final estimations:</p>
-      <p>Your session rate: <span id="final-session-rate"></span></p>
-      <p>A year of therapy might cost you <span id="final-yearly-cost"></span>, but you’ll have saved <span id="insurance-saved"></span> by using your insurance and <span id="taxes-saved"></span> on your taxes by using your FSA.</p>
+      <p>Averaged over a year, each therapy session could cost you: <span class="strong">$</span><span class="strong" id="final-session-rate"></span></p>
+      <p>A year of therapy could cost you: <span class="strong">$</span><span class="strong" <span id="final-yearly-cost"></span>
+      <p id="but">
+        But you’ll have saved 
+        <span id="insurance-saved"><strong>$<span id="the-insurance-saved"></span></strong> by using your insurance</span>
+        <span id="and"> and </span>
+        <span id="taxes-saved"><strong>$<span id="the-taxes-saved"></span></strong> on your taxes</span>.
+      </p>
+      <label id="summary-tips-label">A few practical tips based on your situation:</label>
+      <ul id="summary-tips" class="ul-padded">
+      <ul>
     </section>
 
     <div class="footer">
-      <p>Want to help make this better?</p>
+      <p>Wanna help make this better?</p>
       <p><a href="https://github.com/laurenhallden/therapy-calculator">Contribute on GitHub</a></p>
     </div>
 
@@ -208,10 +229,12 @@
 
   <!-- All our button functions -->
   <script>
-    // Start with the assumption that we see a therapist once a week;
-    // 48 times a year
+    // Start with a bunch of assumptions and zeros until told otherwise
     $( document ).ready(function(){
-        window.globalNumberOfSessions = 48;
+        window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
+        window.globalInsuranceDiscount = 0;
+        window.globalTaxDiscount = 0;
+        window.globalTrackingReceipts = "no";
     });
 
     // Stop forms from posting on form submit
@@ -277,8 +300,9 @@
         setHSA();
       }
       else {
-        var location = "#section-9";
+        var location = "#section-10";
         scrollTo(location);
+        checkItemized();
       }
     });
 
@@ -294,7 +318,15 @@
     });
 
     // Get final summary!
-    $("#final-step").click(function(){getSummary()});
+    $("#final-step").click(function(){
+      var itemizedYesNo = $('#itemized-deductions :selected').val();
+       if (itemizedYesNo == 'Yes') {
+        getItemized();
+       }
+       else {
+        getSummary();
+       }
+    });
 
   </script>
 </body>

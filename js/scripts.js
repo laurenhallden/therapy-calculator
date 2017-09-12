@@ -40,7 +40,7 @@ function stepOne(income){
 	});
 }
 
-// Set a base per-session rate based on income
+// Set a base per-session rate based on their income
 function setBaseRate(baserate){
 	console.log("baserate:" + baserate);
 	console.log("yearly:" + baserate * globalNumberOfSessions);
@@ -68,7 +68,7 @@ function checkInsurance(coveredYesNo, networkYesNo){
 	scrollTo(location); // Send me there
 }
 
-// Show and hide additional insurance options based on your coverage status
+// Show and hide additional insurance options based on their coverage status
 $("#covered-or-not").on('change', function(){
 	var coveredYesNo = $('#covered-or-not :selected').val();
     if (coveredYesNo == "not-covered") {
@@ -79,14 +79,16 @@ $("#covered-or-not").on('change', function(){
 	}
 });
 
-//Apply in-network insurance benefits
+// Apply in-network insurance benefits
 function applyNetworkInsurance(copay,deductible){
 	console.log("working on this copay thing");
 	if (globalYearlyCost > deductible){
-		var sessionsToHitDeductible = (deductible/globalSessionRate);
+		var sessionsToHitDeductible = (deductible/globalSessionRate); // how many sessions to hit their deductible?
+		sessionsToHitDeductible = Math.ceil(sessionsToHitDeductible); // we want the upper limit of the session it takes
 		var sessionsRemaining = (globalNumberOfSessions - sessionsToHitDeductible);
 		sessionsRemaining = Math.round(sessionsRemaining);
 		yearlyCostWithInsurance = ((sessionsRemaining * copay) + deductible);
+		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
 		console.log("yearly cost with insurance: " + yearlyCostWithInsurance);
 		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
@@ -96,7 +98,7 @@ function applyNetworkInsurance(copay,deductible){
 	else {
 		// The deductible on this insurance is too high to help
 		// That sucks; let's be sympathetic
-		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn't save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
 	}
 	var location = "#section-6";
 	scrollTo(location);
@@ -104,31 +106,36 @@ function applyNetworkInsurance(copay,deductible){
 
 // Apply out-of-netork insurance benefits
 function applyInsurance(deductible,coinsurance){
-	// If therapy costs more than your deductible...
+	// If therapy costs more than their deductible...
 	if (globalYearlyCost > deductible) {
 		var coinsuranceRate = coinsurance/100;
 		var coinsuranceCost = ((globalYearlyCost-deductible)*(coinsuranceRate)); // ...apply coinsurance to the remainder
 		yearlyCostWithInsurance = (coinsuranceCost+deductible);
-		// Let's store the actual amount insurance saves you so we can report on it later
+		// Let's store the actual amount insurance saves them so we can report on it later
 		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
 		console.log('yearly with insurance:' + yearlyCostWithInsurance);
 		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#insurance-results').show();
 		$('#section-6 h2').html("Making progress!");
+		// Send a tip to the final summary list
+		$("#summary-tips-label").show();
+		$("#summary-tips").append("<li>To use your insurance, you’ll need to save your receipts and submit insurance claims.</li>");
+		$("#summary-tips").append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
+		window.globalTrackingReceipts = "yes"; // For the tips section at the end, we need to know if this person is submitting receipts
 	}
 	else {
 		// The deductible on this insurance is too high to help
 		// That sucks; let's be sympathetic
 		console.log('insurance does not help');
-		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn't save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
 	}
 	var location = "#section-6";
 	scrollTo(location);
 }
 
 function setInsurance(yearlyCostWithInsurance){
-	// Let's report how much insurance lowers your yearly cost and session rate:
+	// Let's report how much insurance lowers their yearly cost and session rate:
 	$('#insurance-yearly-span').html(yearlyCostWithInsurance);
 	var sessionRateWithInsurance = (yearlyCostWithInsurance/globalNumberOfSessions);
 	// Round the session rate to a whole number
@@ -142,13 +149,13 @@ function setInsurance(yearlyCostWithInsurance){
 
 function setFSA(){
 	// Check to see if the yearly cost of therapy is less than the max allowed FSA contribution
-	if (yearlyCostWithInsurance > 2600){
+	if (globalYearlyCost > 2600){
 		$('#fsa-field').val(2600);
 	}
 	else {
-		$('#fsa-field').val(yearlyCostWithInsurance);
+		$('#fsa-field').val(globalYearlyCost);
 	}
-	var location = "#section-10";
+	var location = "#section-7";
 	scrollTo(location);
 }
 
@@ -189,13 +196,14 @@ function getFSA(fsaAmount){
 		var baseTaxes = 0;
 		var amountOver = 0;
 	}
-	// This is a little simplistic, but we're checking what you would pay in taxes normally...
+	// This is a little simplistic, but we're checking what they would pay in taxes normally...
 	var taxesOwed = ((globalIncome - amountOver)*taxRate)+baseTaxes;
 	console.log(fsaAmount);
 	console.log('taxes owed: ' + taxesOwed);
 	console.log(globalIncome);
-	// ...and then lowering your income by your FSA contribution, and checking again
+	// ...and then lowering their income by your FSA contribution, and checking again
 	var taxesOwedWithFSA = ((globalIncome - fsaAmount - amountOver)*taxRate)+baseTaxes;
+	taxesOwedWithFSA = Math.round(taxesOwedWithFSA);
 	console.log('taxes owed with fsa: ' + taxesOwedWithFSA);
 	var taxDiscount = taxesOwed-taxesOwedWithFSA;
 	var yearlyCostWithFsa = (globalYearlyCost - taxDiscount);
@@ -207,6 +215,37 @@ function getFSA(fsaAmount){
 	// Round the session rate to a whole number
 	globalSessionRate = Math.round(globalSessionRate);
 	$('#tax-discount-span').html(globalTaxDiscount);
+	var location = "#section-10";
+	// Send a tip to the final summary list
+	$("#summary-tips-label").show();
+	if (globalTrackingReceipts == "yes"){ // If this person is submitting manual claims, give this tip
+		$("#summary-tips").append("<li>After your insurance claims are processed, you can pay for the remaining balance with your FSA. Yep, it's a two-step process. You can send them the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
+	}
+	else { // if not, give this one
+		$("#summary-tips").append("<li>To use your Flexible Spending Account, you’ll need to save your receipts and submit claims with your FSA.</li>");
+		$("#summary-tips").append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
+	}
+	scrollTo(location);
+	setTaxResults();
+	checkItemized();
+}
+
+// Change the content of the tax results div based on their tax savings
+function setTaxResults() {
+	$('#section-10 .variable-content h2').html("<h2>Guess what?</h2>");
+	$('#section-10 #additional-taxes').html("another"); // changing a word based on whether we have multiple tax tips
+	$('#section-10 .variable-content #tax-results').show();
+}
+
+// Let's check what percentage of their yearly income is their therapy bills
+function checkItemized(){
+	var percentageOfIncome = globalYearlyCost/globalIncome*100;
+	percentageOfIncome = percentageOfIncome.toFixed(2); // round to 2 decimal places
+	$('#income-percentage').html(percentageOfIncome);
+}
+
+function getItemized() {
+	
 }
 
 function setHSA(){
@@ -218,9 +257,22 @@ function setHSA(){
 function getSummary() {
 	$('#final-session-rate').html(globalSessionRate);
 	$('#final-yearly-cost').html(globalYearlyCost);
-	$('#insurance-saved').html(globalInsuranceDiscount);
-	$('#taxes-saved').html(globalTaxDiscount);
-
+		if ((globalInsuranceDiscount>0) || (globalTaxDiscount>0)) {
+		$('#but').show();
+	}
+	if (globalInsuranceDiscount>0) {
+		console.log("there's an insurance discount");
+		$('#insurance-saved').show();
+		$('#the-insurance-saved').html(globalInsuranceDiscount);
+	}
+	if (globalTaxDiscount>0) {
+		console.log("there's a tax discount");
+		$('#taxes-saved').show();
+		$('#the-taxes-saved').html(globalTaxDiscount);
+	}
+	if ((globalInsuranceDiscount>0) && (globalTaxDiscount>0)) {
+		$('#and').show();
+	}
 	var location = "#section-11";
 	scrollTo(location);
 }

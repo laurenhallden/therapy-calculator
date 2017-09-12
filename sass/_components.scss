@@ -26,7 +26,7 @@ section {
 	opacity: 1;
 	background: $white;
 	box-shadow: $medium-float;
-	border-radius: 0.5rem;
+	border-radius: 0.5em;
 	color: $text-black;
 	display: block;
 	opacity: 1;
@@ -38,7 +38,7 @@ section {
 }
 
 section+section {
-	margin-top: 4rem;
+	margin-top: 4em;
 }
 
 /* Responsive Columns */
@@ -81,7 +81,7 @@ h2 {
 }
 
 p {
-	margin-bottom: 1rem;
+	margin-bottom: 1em;
 	line-height: 1.4;
 }
 
@@ -128,23 +128,44 @@ ul {
    list-style-type: disc; 
    list-style-position: inside; 
 }
+
 ol { 
    list-style-type: decimal; 
    list-style-position: inside; 
 }
-ul, ol {
-	margin-bottom: 1rem;
+
+ul,
+ol {
+	margin-bottom: 1em;
 	line-height: 1.4;
+	padding-left: 1em;
 }
-ul ul, ol ul { 
+
+ul ul,
+ol ul { 
    list-style-type: circle; 
    list-style-position: inside; 
    margin-left: 15px; 
 }
-ol ol, ul ol { 
+
+ol ol,
+ul ol { 
    list-style-type: lower-latin; 
    list-style-position: inside; 
    margin-left: 15px; 
+}
+
+ul li,
+ol li {
+	list-style-position: inside;
+	text-indent: -1.3em;
+	padding-left: 1em;
+}
+
+.ul-padded {
+	li {
+		margin-bottom: 1em;
+	}
 }
 
 /* ===================
@@ -155,6 +176,10 @@ form,
 input {
 	font-family: $helvetica;
 	color: $text-black;
+}
+
+label {
+	line-height: 1.4;
 }
 
 form label,
@@ -193,11 +218,29 @@ input,
 	}
 }
 
+.radio-button {
+	display: block;
+
+	[type='radio'],
+	label {
+		display:inline-block;
+		vertical-align: middle;
+		margin-bottom: 1em;
+	}
+}
+
+fieldset {
+
+	legend {
+		margin-bottom: 2em;
+	}
+}
+
 button,
 .button {
 	font-family: $helvetica;
 	font-weight: bold;
-	padding: 0.5rem 20px;
+	padding: 0.5em 20px;
 	font-size: 0.9rem;
 	background: $green;
 	color: $white;
@@ -234,7 +277,7 @@ Page elements
 .intro,
 .footer {
 	color: $white;
-	padding: 4rem 0 2rem;
+	padding: 4em 0 2em;
 	text-align: center;
 
 	p,
@@ -269,9 +312,25 @@ Specific sections
 /* 6 */
 
 /* We want this hidden in case the person doesn't have insurance */
-#insurance-results {
+#insurance-results,
+#tax-results {
 	display: none;
 	border-bottom: 1px solid $border-gray;
-	padding-bottom: 2rem;
-	margin-bottom: 2rem;
+	padding-bottom: 2em;
+	margin-bottom: 2em;
+}
+
+p.border-bottom {
+	border-bottom: 1px solid $border-gray;
+	padding-bottom: 2em;
+	margin-bottom: 2em;
+}
+
+/* Final summary */
+#but,
+#insurance-saved,
+#taxes-saved,
+#and,
+#summary-tips-label {
+	display: none;
 }
