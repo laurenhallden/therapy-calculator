@@ -14,6 +14,15 @@ html, body {
 	transition: all 0.3s ease-out;
 }
 
+.top-bar {
+	position: fixed;
+	z-index: 5;
+	padding: 0.25em;
+	height: 1em;
+	width: 80%;
+	margin: 0 auto;
+}
+
 /* Content container */
 .container {
 	width: 40rem;
@@ -42,6 +51,14 @@ section+section {
 }
 
 /* Responsive Columns */
+
+.col-wrapper {
+	margin: 30px 0 20px;
+	padding: 10px 0;
+	border-top: 1px solid $border-gray;
+	border-bottom: 1px solid $border-gray;
+}
+
 .col {
 	display: inline-block;
 	vertical-align: top;
@@ -195,10 +212,6 @@ label {
 	font-family: $helvetica;
 }
 
-form {
-	display: inline-block;
-}
-
 form label span {
 	margin-bottom: 10px;
 }
@@ -216,14 +229,23 @@ input,
 	font-size: 1rem;
 	font-family: $helvetica;
 	color: $dark-gray;
-	padding: 0.5rem;
+	padding: 0.75em;
 	margin-bottom: 1rem;
 	border: 1px solid $light-gray;
 	background: $whisper-gray;
+	height: auto;
 
 	&.focus {
 		border: 1px solid $red;
 	}
+}
+
+select {
+	height: auto;
+	padding: 0.75em;
+	background-position: right 0em center;
+	cursor: pointer;
+	background-color: $whisper-gray;
 }
 
 .radio-button {
@@ -234,6 +256,11 @@ input,
 		display:inline-block;
 		vertical-align: middle;
 		margin-bottom: 1em;
+		cursor: pointer;
+	}
+	label {
+		/* I know, I know */
+		cursor: default !important;
 	}
 }
 
@@ -248,28 +275,40 @@ button,
 .button {
 	font-family: $helvetica;
 	font-weight: bold;
-	padding: 0.5em 20px;
+	padding: 1em 25px;
 	font-size: 0.9rem;
-	background: $green;
+	background-color: $green;
 	color: $white;
 	border: 2px solid $green;
 	margin-top: 30px;
 	text-decoration: none;
+    -webkit-transition: all 0.15s ease-in-out;
+    -moz-transition: all 0.15s ease-in-out;
+    transition: all 0.15s ease-in-out;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
 	&.outline {
-		background: transparent;
+		background-color: transparent;
 		color: $green;
+		border: 2px solid $green;
 
 		&:hover {
-			color: $white;
+			background-color: transparent;
+			color: $hover-green;
+			border: 2px solid $hover-green;
 		}
 	}
 
 	&:hover {
-		background: $black;
-		border: 2px solid $black;
+		background-color: $hover-green;
+		border: 2px solid $hover-green;
 		cursor: pointer;
 	}
+}
+
+.button+.button {
+	margin-left: 0.5em;
 }
 
 .error {
@@ -339,6 +378,7 @@ p.border-bottom {
 #insurance-saved,
 #taxes-saved,
 #and,
-#summary-tips-label {
+#summary-tips-label,
+#itemized-tax-results {
 	display: none;
 }
