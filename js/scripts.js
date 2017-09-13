@@ -1,6 +1,12 @@
+// This is complicated but I'll try to comment it out so you know what's going on!
+
+// ************************************************
+// Section ONE: see if a sliding scale payment applies
+// ************************************************
+
 function stepOne(income){
-	// See if a sliding scale payment applies
-	// These ranges are estimates based on a few sliding scales available online
+	// The following ranges are estimates based on a few sliding scales available online,
+	// and my own therapist's sliding scale
 	if (income > 90000 ){
 		var baserate = 125;
 	}
@@ -23,7 +29,7 @@ function stepOne(income){
 		baserate = Math.round(baserate);
 	}
 	if (baserate < 20){
-		var baserate = 20; // 20 is the lower limit
+		var baserate = 20; // set 20 as the lower limit; you probably won't pay less than that
 	}
 	setBaseRate(baserate);
 
@@ -31,7 +37,7 @@ function stepOne(income){
 	var location = "#section-2";
 	scrollTo(location);
 
-	// Initialize the baserate slider
+	// Initialize the baserate slider in section two
 	var $slider = new Foundation.Slider($('.slider'), {
 	  initialStart : baserate,
 	  start: 20,
@@ -40,33 +46,22 @@ function stepOne(income){
 	});
 }
 
-// Set a base per-session rate based on their income
+
+// ************************************************
+// Section TWO: Set a basic per-session rate based on their income
+// ************************************************
+
 function setBaseRate(baserate){
-	//console.log("baserate:" + baserate);
-	//console.log("yearly:" + baserate * globalNumberOfSessions);
 	$('#baserate-span').html(baserate);
-	window.globalSessionRate = baserate;
-	// Extrapolate a yearly cost
-	$('#yearly-cost-span').html(baserate * globalNumberOfSessions);
-	window.globalYearlyCost = baserate * globalNumberOfSessions;
-	$('#section-2').toggleClass('hidden');
+	window.globalSessionRate = baserate; // we're going to push variables we'll need later to the DOM
+	window.globalYearlyCost = (baserate * globalNumberOfSessions);
+	$('#yearly-cost-span').html(globalYearlyCost); // Extrapolate a yearly cost
 }
 
-// Which insurance section are we going to?
-function checkInsurance(coveredYesNo, networkYesNo){
-	if (coveredYesNo == "covered") {
-		if (networkYesNo == "in-network") {
-			var location = "#section-4";
-		}
-		else {
-			var location = "#section-5";
-		}
-	}
-	else {
-		var location = "#section-6";
-	}
-	scrollTo(location); // Send me there
-}
+
+// ************************************************
+// Section THREE: Which insurance section should we take them to?
+// ************************************************
 
 // Show and hide additional insurance options based on their coverage status
 $("#covered-or-not").on('change', function(){
@@ -79,16 +74,34 @@ $("#covered-or-not").on('change', function(){
 	}
 });
 
-// Apply in-network insurance benefits
+function checkInsurance(coveredYesNo, networkYesNo){
+	if (coveredYesNo == "covered") {
+		if (networkYesNo == "in-network") {
+			var location = "#section-4";
+		}
+		else {
+			var location = "#section-5";
+		}
+	}
+	else {
+		var location = "#section-6";
+	}
+	scrollTo(location); // Send me to the section they selected
+}
+
+
+// ************************************************
+// Section FOUR: Calculate their in-network benefits
+// ************************************************
+
 function applyNetworkInsurance(copay,deductible){
-	if (globalYearlyCost > deductible){
+	if (globalYearlyCost > deductible){ // If their deductible isn't too high...
 		var sessionsToHitDeductible = (deductible/globalSessionRate); // how many sessions to hit their deductible?
 		sessionsToHitDeductible = Math.ceil(sessionsToHitDeductible); // we want the upper limit of the session it takes
 		var sessionsRemaining = (globalNumberOfSessions - sessionsToHitDeductible);
 		sessionsRemaining = Math.round(sessionsRemaining);
 		yearlyCostWithInsurance = ((sessionsRemaining * copay) + deductible);
 		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
-		//console.log("yearly cost with insurance: " + yearlyCostWithInsurance);
 		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#insurance-results').show();
@@ -100,19 +113,27 @@ function applyNetworkInsurance(copay,deductible){
 		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
 	}
 	var location = "#section-6";
-	scrollTo(location);
+	scrollTo(location);  // Moving on!
 }
 
-// Apply out-of-netork insurance benefits
-function applyInsurance(deductible,coinsurance){
-	// If therapy costs more than their deductible...
-	if (globalYearlyCost > deductible) {
+
+// ************************************************
+// Section FIVE: Calculate their out-of-netork insurance benefits
+// ************************************************
+
+function applyInsurance(deductible,coinsurance,approvedAmount){
+	if (globalYearlyCost > deductible){  // If their deductible isn't too high...
+		var yearlyCostForInsurancePurposes = globalYearlyCost
+		var approvedDifference = 0;
+		if(approvedAmount < globalSessionRate) { // If insurance puts a cap on their session amount...
+			approvedDifference = (globalSessionRate - approvedAmount)*globalNumberOfSessions;
+			yearlyCostForInsurancePurposes = (approvedAmount * globalNumberOfSessions); //... their insurance only thinks it has to pay this much
+		}
 		var coinsuranceRate = coinsurance/100;
-		var coinsuranceCost = ((globalYearlyCost-deductible)*(coinsuranceRate)); // ...apply coinsurance to the remainder
-		yearlyCostWithInsurance = (coinsuranceCost+deductible);
+		var coinsuranceCost = ((yearlyCostForInsurancePurposes-deductible)*(coinsuranceRate)); // ...apply coinsurance to the remainder
+		yearlyCostWithInsurance = (coinsuranceCost+deductible+approvedDifference);
 		// Let's store the actual amount insurance saves them so we can report on it later
 		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
-		//console.log('yearly with insurance:' + yearlyCostWithInsurance);
 		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#insurance-results').show();
@@ -126,25 +147,32 @@ function applyInsurance(deductible,coinsurance){
 	else {
 		// The deductible on this insurance is too high to help
 		// That sucks; let's be sympathetic
-		// console.log('insurance does not help');
 		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
 	}
 	var location = "#section-6";
-	scrollTo(location);
+	scrollTo(location); // Moving on!
 }
+
+
+// ************************************************
+// Section SIX: Reporting on the insurance results
+// ************************************************
 
 function setInsurance(yearlyCostWithInsurance){
 	// Let's report how much insurance lowers their yearly cost and session rate:
 	$('#insurance-yearly-span').html(yearlyCostWithInsurance);
 	var sessionRateWithInsurance = (yearlyCostWithInsurance/globalNumberOfSessions);
-	// Round the session rate to a whole number
-	sessionRateWithInsurance = Math.round(sessionRateWithInsurance);
+	sessionRateWithInsurance = Math.round(sessionRateWithInsurance); // Round the session rate to a whole number
 	sessionRateWithInsurance = parseInt(sessionRateWithInsurance);
-	//console.log(sessionRateWithInsurance);
 	$('#insurance-baserate-span').html(sessionRateWithInsurance);
 	window.globalSessionRate = sessionRateWithInsurance;
 	window.globalYearlyCost = yearlyCostWithInsurance;
 }
+
+
+// ************************************************
+// Section SEVEN and EIGHT: How much can they put in an FSA or HSA?
+// ************************************************
 
 function setFSA(){
 	// Check to see if the yearly cost of therapy is less than the max allowed FSA contribution
@@ -155,8 +183,30 @@ function setFSA(){
 		$('#fsa-field').val(globalYearlyCost);
 	}
 	var location = "#section-7";
+	scrollTo(location); // Moving on!
+}
+
+
+function setHSA(){
+	// Check to see if the yearly cost of therapy is less than the max allowed HSA contribution
+	if (globalYearlyCost > 6750){ // This is a little simplistic -- I'm only checking the family max contribution
+		$('#hsa-field').val(6750);
+	}
+	else {
+		$('#hsa-field').val(globalYearlyCost);
+	}
+	var location = "#section-8";
 	scrollTo(location);
 }
+
+
+// ************************************************
+// Section NINE: Doing Yer Taxes and reporting the results
+// ************************************************
+
+
+// Let's figure out how much a tax deduction would save them */
+// This function is used by FSA, HSA and Itemized Deductions
 
 function doTaxes(contribution,fromWhere){
 	// Apply some marginal tax rates, yo!
@@ -198,24 +248,18 @@ function doTaxes(contribution,fromWhere){
 
 	// This is a little simplistic, but we're checking what they would pay in taxes normally...
 	var taxesOwed = ((globalIncome - amountOver)*taxRate)+baseTaxes;
-	//console.log(contribution);
-	//console.log('taxes owed: ' + taxesOwed);
-	//console.log(globalIncome);
 
 	// ...and then lowering their income by their pre-tax contribution amount, and checking again
 	window.globalIncome = (globalIncome - contribution); // we'll need this later
 	var taxesOwedWithContribution = ((globalIncome - amountOver)*taxRate)+baseTaxes;
 	taxesOwedWithContribution = Math.round(taxesOwedWithContribution);
-	//console.log('taxes owed with contribution: ' + taxesOwedWithContribution);
 	var taxDiscount = taxesOwed-taxesOwedWithContribution;
 	var yearlyCostWithContribution = (globalYearlyCost - taxDiscount);
-	//console.log('yearly cost with contribution' + yearlyCostWithContribution);
-	//console.log('tax discount' + taxDiscount);
 	window.globalTaxDiscount = taxDiscount;
 	globalYearlyCost = yearlyCostWithContribution;
 	globalSessionRate = (globalYearlyCost/globalNumberOfSessions);
 	globalSessionRate = Math.round(globalSessionRate); // Round the session rate to a whole number
-	reportTaxes(fromWhere);
+	reportTaxes(fromWhere); // Depending on where they came from, report results as shown below
 }
 
 function reportTaxes(fromWhere){
@@ -251,7 +295,6 @@ function reportTaxes(fromWhere){
 	}
 	$("#summary-tips-label").show();
 	scrollTo(location);
-	console.log(location);
 }
 
 // Change the content of the tax results div based on their tax savings
@@ -268,26 +311,22 @@ function checkItemized(){
 	$('#income-percentage').html(percentageOfIncome);
 }
 
-function setHSA(){
-	// Check to see if the yearly cost of therapy is less than the max allowed HSA contribution
-	if (globalYearlyCost > 6750){ // This is a little simplistic -- I'm only checking the family max contribution
-		$('#hsa-field').val(6750);
-	}
-	else {
-		$('#hsa-field').val(globalYearlyCost);
-	}
-	var location = "#section-8";
-	scrollTo(location);
-}
 
-// If itemized deductions are requested, go back through the tax loop above
+// ************************************************
+// Section TEN: If itemized deductions are requested, go back through the tax loop above
+// ************************************************
+
 function getItemized() {
 	var contribution = globalYearlyCost;
 	var fromWhere = "itemized";
 	doTaxes(contribution,fromWhere);
 }
 
-// We're done! Let's report our findings:
+
+// ************************************************
+// Section ELEVEN: We're done! Let's report our findings:
+// ************************************************
+
 function getSummary() {
 	$('#final-session-rate').html(globalSessionRate);
 	$('#final-yearly-cost').html(globalYearlyCost);
@@ -295,12 +334,10 @@ function getSummary() {
 		$('#but').show();
 	}
 	if (globalInsuranceDiscount>0) {
-		//console.log("there's an insurance discount");
 		$('#insurance-saved').show();
 		$('#the-insurance-saved').html(globalInsuranceDiscount);
 	}
 	if (globalTaxDiscount>0) {
-		//console.log("there's a tax discount");
 		$('#taxes-saved').show();
 		$('#the-taxes-saved').html(globalTaxDiscount);
 	}

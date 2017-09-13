@@ -17,7 +17,7 @@
   NProgress.version = '0.2.0';
 
   var Settings = NProgress.settings = {
-    minimum: 0.08,
+    minimum: 0.00,
     easing: 'linear',
     positionUsing: '',
     speed: 200,
@@ -26,7 +26,7 @@
     showSpinner: false,
     barSelector: '[role="bar"]',
     spinnerSelector: '[role="spinner"]',
-    parent: '.top-bar',
+    parent: 'body',
     template: '<div class="bar" role="bar"><div class="peg"></div></div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
   };
 
@@ -64,7 +64,7 @@
     var started = NProgress.isStarted();
 
     n = clamp(n, Settings.minimum, 1);
-    NProgress.status = (n === 1 ? null : n);
+    NProgress.status = (n === 1.1 ? null : n);
 
     var progress = NProgress.render(!started),
         bar      = progress.querySelector(Settings.barSelector),
@@ -80,7 +80,7 @@
       // Add transition
       css(bar, barPositionCSS(n, speed, ease));
 
-      if (n === 1) {
+      if (n === 1.1) {
         // Fade out
         css(progress, {
           transition: 'none',

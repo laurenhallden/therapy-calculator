@@ -21,14 +21,20 @@
 </head>
 
 <body>
-  <div class="top-bar"></div>
+
+  <!-- Script that checks which section is visible so we cna update teh progress bar -->
+  <script type="text/javascript" src="https://unpkg.com/onscreen/dist/on-screen.umd.min.js"></script>
+  <script type="text/javascript">
+      var os = new OnScreen();
+  </script>
+
   <div class="container">
   <div class="intro">
     <h1>How much can I expect to pay for therapy?</h1>
     <p class="subhead">*in 2017 America</p>
   </div>
 
-    <section id="section-1">
+    <section id="section-0">
       <h2>Hey! I’m glad you’re here.</h2>
       <p>I know the idea of budgeting for therapy is stressful, but it may not cost as much as you think. I’ll try to get you some answers.</p>
       <p>
@@ -82,6 +88,7 @@
         <li>Is therapy delivered in an office setting covered by your plan?</li>
         <li>If your plan has a preferred network, what's your <strong>copayment</strong> for an in-network provider?</li>
         <li>What is the <strong>co-insurance rate</strong> for an out-of-network provider?</li>
+        <li>What is the <strong>approved amount</strong> for each therapy session?</li>
         <li>What is your current <strong>deductible</strong>?</li>
       </ul>
       <p>When you’re ready, let’s walk through the options.</p>
@@ -136,14 +143,21 @@
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="deductible-help-text-outofnetwork">You can enter your yearly deducible. (Or if you know you don’t typically reach it in a year, you can enter the amount you don’t use up.)</p>
+        <p class="help-text" id="deductible-help-text-outofnetwork">You can enter your yearly deducible, or if you want to get specific, enter the amount you typically have left after your existing medical expenses. (It might be zero!)</p>
         <label><span>Your co-insurance rate:</span>
           <input type="text" id="coinsurance-field" value="30" aria-describedby="coinsurance-help-text" required pattern="number">
           <span class="form-error">
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="coinsurance-help-text">Enter the percentage you are responsible for. For example, after you hit your deductible, your insurance may cover 70% of your costs, so your co-insurance rate is 30%</p>
+        <p class="help-text" id="coinsurance-help-text">Your coiinsurance rate is the percentage that you have to pay for each session after you’ve met your deductibe. For example, your insurance may cover 70% of each session, so your co-insurance would be 30%.</p>
+        <label><span>Your plan's approved amount for each therapy session:</span>
+          <input type="text" id="approved-amount-field" value="" aria-describedby="approved-amount-help-text" pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        </label>
+        <p class="help-text" id="approved-amount-help-text">This is annoying, but your insurance can put a limit on what they think an hour of therapy <em>should</em> cost. For example, your therapist may charge you $100 an hour, but your insurance may decide this service is only worth $80. If you know you have an approved amount limit, enter it here. Otherwise we’ll assume you don’t.</p>
         <button class="button next-step" id="step-five">Looks good!</a>
       </form>
     </section>
@@ -266,6 +280,21 @@
     <div class="footer">
       <p>Wanna help make this better?</p>
       <p><a href="https://github.com/laurenhallden/therapy-calculator">Contribute on GitHub</a></p>
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <h3>How does this work?</h3>
+        <p>This is a calculator that walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
+        <h3>Do you save my data?<h3>
+        <p>Nope. None of the forms here send any of your numbers anywhere beyond this page. They only use them to do some math.</p>
+        <h3>Is this calculator correct?</h3>
+        <p>Like I mentioned in the disclaimer, I'm not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn't necessarily what you're stuck paying...and then I kept researching insurance and tax deduction combinations...and many hours later this calculator was born.</p>
+        <p>Please think of this is an exploration into your options, and hop on the phone to talk to your insurance and tax professionals for verified expert advice.</p>
+        <p>If you think something could be improved about this project, drop me an email at _____. You can also see and contribute directly to this project's code--it's open source.</p>
+        <h3>Should I go to therapy?</h3>
+        <p>That's a big question, and it's completely up to you and your doctors! They'll give you better advice than I can. But clearly, I'm a fan.</p>
+        <h3>This is still too expensive. Do I have other options?</h3>
+        <p><a target="_blank" href="https://www.buzzfeed.com/annaborges/affordable-therapy">This article on BuzzFeed</a> actually does a great job of walking you through some creative options for getting your fees lowered; from pro-bono therapy, to Employee Assistance Programs. You have lots of options.</p>
+      </div>
     </div>
 
 
@@ -289,6 +318,13 @@
         window.globalTrackingReceipts = "no";
     });
 
+    // Update progress bar based on current section
+    os.on('enter', 'section', (element, event) => {
+        var id = $(element).attr('id').replace(/section-/, '');
+        var progress = (id/10.99);
+        NProgress.set(progress);
+    });
+
     // Stop forms from posting on form submit
     $(".section-form").on("valid invalid submit", function(e){
       e.stopPropagation();
@@ -301,7 +337,6 @@
       window.globalIncome = income;
       stepOne(income);
       console.log("income:" + income);
-      NProgress.set(0.09);
     });
 
     // Update baserate based on slider
@@ -346,7 +381,7 @@
     $("#in-network-form").on('formvalid.zf.abide', function(e){
       var copay = $.trim($("#copay-field").val());
       copay = parseInt(copay,10);
-      console.log(copay);
+      //console.log(copay);
       var deductible = $.trim($("#deductible-field-innetwork").val());
       deductible = parseInt(deductible,10);
       applyNetworkInsurance(copay,deductible);
@@ -354,12 +389,20 @@
 
     // Apply out-of-network insurance
     $("#outof-network-form").on('formvalid.zf.abide', function(e){
-      var deductible = $.trim($("#deductible-field-outofnetwork").val());
+      var deductible = $("#deductible-field-outofnetwork").val();
       deductible = parseInt(deductible,10);
-      console.log(deductible);
-      var coinsurance = $.trim($("#coinsurance-field").val());
+      //console.log(deductible);
+      var coinsurance = $("#coinsurance-field").val();
       coinsurance = parseInt(coinsurance,10);
-      applyInsurance(deductible,coinsurance);
+      if ($("#approved-amount-field").val() != "") {
+        var approvedAmount = $("#approved-amount-field").val();
+      }
+      else {
+        var approvedAmount = 1000; // Just pick a random high number
+      }
+      approvedAmount = parseInt(approvedAmount,10);
+      console.log(approvedAmount);
+      applyInsurance(deductible,coinsurance,approvedAmount);
     });
 
     // Check FSA or HSA...
@@ -383,7 +426,7 @@
       getSummary();
     });
 
-    // Set FSA
+    // Do the FSA math
     $("#fsa-form").on('formvalid.zf.abide', function(e){
       var contribution = $("#fsa-field").val();
       var fromWhere = "fsa";
@@ -397,7 +440,7 @@
         checkItemized();
     });
 
-    // Set HSA
+    // Do the HSA math
     $("#hsa-form").on('formvalid.zf.abide', function(e){
       var contribution = $("#hsa-field").val();
       var fromWhere = "hsa";
@@ -411,7 +454,7 @@
         checkItemized();
     });
 
-    // Get final summary!
+    // Get the final summary!
     $("#step-9").click(function(){
       var itemizedYesNo = $('#yes-deduction:checked').val();
       console.log(itemizedYesNo);
