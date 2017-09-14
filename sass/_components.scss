@@ -30,15 +30,20 @@ section {
 	color: $text-black;
 	display: block;
 	opacity: 1;
-	border: 1px solid black;
 
 	&.hidden {
-		border: 1px solid red;
+		display: none;
+		opacity: 0;
 	}
 }
 
 section+section {
 	margin-top: 4em;
+}
+
+section h2 {
+	margin-top: -100px;
+	padding-top: 100px;
 }
 
 /* Responsive Columns */
@@ -63,13 +68,13 @@ section+section {
 		width: 24%;
 	}
 
+	&.col-2 {
+		width: 49%;
+	}
+
 	&.middle {
 		vertical-align: middle;
 	}
-}
-
-.padded-top {
-	padding-top: calc(10px + 1rem);
 }
 
 /* ===================
@@ -86,6 +91,16 @@ h2 {
 	line-height: 2rem;
 	margin-bottom: 1rem;
 	font-weight: 600;
+}
+
+h3 {
+	font-family: $helvetica;
+	color: $white;
+	opacity: 0.6;
+	font-weight: 700;
+	line-height: 1.4;
+	margin-bottom: 0.5em;
+	font-size: 1.1rem;
 }
 
 p {
@@ -322,6 +337,10 @@ Page elements
 	p a { 
 		color: rgba(255,255,255,0.6);
 	}
+
+	a {
+		text-decoration: underline;
+	}
 }
 
 
@@ -377,4 +396,38 @@ hr {
 #summary-tips-label,
 #itemized-tax-results {
 	display: none;
+}
+
+/* FAQ */
+
+.faq {
+	.faq-wrapper {
+		display: flex;
+		margin-top: 2em;
+
+		.faq-col {
+			width: 50%;
+			text-align: left;
+
+			div {
+				margin: 0 20px 2em;
+			}
+		}
+
+		.repo-link {
+			font-family: $helvetica;
+			font-weight: 700;
+
+			span, i {
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+			i {
+				margin-right: 10px;
+				font-size: 2rem;
+			}
+		}
+		
+	}
 }

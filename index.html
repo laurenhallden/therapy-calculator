@@ -8,11 +8,11 @@
   <meta name="description" content="Therapy Calculator">
   <meta name="author" content="Lauren Hallden">
 
-  <!-- Form css -->
+  <!-- All our css -->
   <link rel="stylesheet" href="css/foundation.css" />
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/nprogress.css">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="stylesheets/screen.css">
 
   <!--[if lt IE 9]>
@@ -22,7 +22,7 @@
 
 <body>
 
-  <!-- Script that checks which section is visible so we cna update teh progress bar -->
+  <!-- Script that checks which section is visible so we can update the progress bar -->
   <script type="text/javascript" src="https://unpkg.com/onscreen/dist/on-screen.umd.min.js"></script>
   <script type="text/javascript">
       var os = new OnScreen();
@@ -61,23 +61,29 @@
       <p>I’d estimate that each session might cost you <span class="strong">$</span><span class="strong" id="baserate-span"></span>. But if you already have someone in mind and you know what they charge, you can adjust your rate.</p>
 
       <!-- Slider -->
-      <div class="col-wrapper">
-        <div class="col col-8 middle">
-          <label>Set your rate to:</label>
-          <div class="slider" data-slider data-options="start: 20; end: 150; step: 5;">
-            <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="sliderOutput1"></span>
-            <span class="slider-fill" data-slider-fill></span>
+      <form id="slider-form" data-abide novalidate>
+        <div class="col-wrapper">
+          <div class="col col-8 middle">
+            <label>Set your rate to:</label>
+            <div class="slider" data-slider data-options="start: 20; end: 150; step: 5;">
+              <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="sliderOutput1"></span>
+              <span class="slider-fill" data-slider-fill></span>
+            </div>
+          </div>
+          <div class="col col-4 middle">
+            <label>
+              <input type="number" id="sliderOutput1" required pattern="number">
+              <span class="form-error">
+                Enter a number.
+              </span>
+              </label>
           </div>
         </div>
-        <div class="col col-4 middle padded-top">
-          <input type="number" id="sliderOutput1">
-        </div>
-      </div>
-
-      <p>If you see your therapist once a week, that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
-      <p>But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don't accept it, but you may still be able to get some money back.</p>
-      <button class="button next-step step-two" id="step-two-yes">Yes, let’s check</button>
-      <button class="button next-step outline step-two" id="step-two-no">Nope, no insurance</a>
+        <p>If you see your therapist once a week, that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
+        <p>But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don't accept it, but you may still be able to get some money back.</p>
+        <button class="button next-step step-two" id="step-two-yes">Yes, let’s check</button>
+        <button class="button next-step outline step-two" id="step-two-no">Nope, no insurance</button>
+      </form>
     </section>
 
     <!-- Getting your health insurance -->
@@ -190,7 +196,7 @@
           </select>
         </label>
         <button class="button next-step" id="step-six-yes">Check deductions</button>
-        <a class ="button next-step outline" id="step-six-no" href="#section-9">Nope, skip the taxes stuff</a>
+        <a class ="button next-step outline" id="step-six-no" href="#section-11">Nope, skip the taxes stuff</a>
       </form>
     </section>
 
@@ -242,7 +248,7 @@
     <section id="section-9" class="hidden">
       <div class="variable-content">
         <h2>Let’s keep talking taxes (sorry!)</h2>
-        <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes by using your___.</p>
+        <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes<span id="used-what"></span>.</p>
       </div>
       <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income in 2017 (or 7.5% if you're over 65), you may be able to deduct them.</p>
       <p>Your Adjusted Gross income is your household income minus any other deductions, like student loan payments or mortgage interest.</p>
@@ -289,22 +295,40 @@
     </section>
 
     <div class="footer">
-      <p>Wanna help make this better?</p>
-      <p><a href="https://github.com/laurenhallden/therapy-calculator">Contribute on GitHub</a></p>
       <div class="faq">
         <h2>Frequently asked questions</h2>
-        <h3>How does this work?</h3>
-        <p>This is a calculator that walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
-        <h3>Do you save my data?<h3>
-        <p>Nope. None of the forms here send any of your numbers anywhere beyond this page. They only use them to do some math.</p>
-        <h3>Is this calculator correct?</h3>
-        <p>Like I mentioned in the disclaimer, I'm not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn't necessarily what you're stuck paying...and then I kept researching insurance and tax deduction combinations...and many hours later this calculator was born.</p>
-        <p>Please think of this is an exploration into your options, and hop on the phone to talk to your insurance and tax professionals for verified expert advice.</p>
-        <p>If you think something could be improved about this project, drop me an email at _____. You can also see and contribute directly to this project's code--it's open source.</p>
-        <h3>Should I go to therapy?</h3>
-        <p>That's a big question, and it's completely up to you and your doctors! They'll give you better advice than I can. But clearly, I'm a fan.</p>
-        <h3>This is still too expensive. Do I have other options?</h3>
-        <p><a target="_blank" href="https://www.buzzfeed.com/annaborges/affordable-therapy">This article on BuzzFeed</a> actually does a great job of walking you through some creative options for getting your fees lowered; from pro-bono therapy, to Employee Assistance Programs. You have lots of options.</p>
+        <div class="faq-wrapper">
+          <div class="faq-col">
+            <div>
+              <h3>How does this work?</h3>
+              <p>This is a calculator that walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
+            </div>
+            <div>
+              <h3>Do you save my data?</h3>
+              <p>Nope. None of the forms here send your numbers anywhere beyond this page. They only use them to do some math.</p>
+            </div>
+            <div>
+              <h3>Is this calculator correct?</h3>
+              <p>Like I mentioned in the disclaimer, I'm not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn't necessarily what you're stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later this calculator was born.</p>
+              <p>Please think of this is an exploration into your options, and talk to your insurance and tax professionals for verified expert advice.</p>
+            </div>
+          </div>
+          <div class="faq-col">
+            <div>
+              <h3>Should I go to therapy?</h3>
+              <p>That's a big question, and it's completely up to you and your doctors! They'll give you better advice than I can. But clearly, I'm a fan.</p>
+            </div>
+            <div>
+              <h3>This is still too expensive. Do I have other options?</h3>
+              <p><a target="_blank" href="https://www.buzzfeed.com/annaborges/affordable-therapy">This article on BuzzFeed</a> actually does a great job of walking you through some creative options for getting your fees lowered&mdash;from pro-bono therapy, to Employee Assistance Programs. You have lots of options.</p>
+            </div>
+            <div>
+              <h3>Can I help make this better?</h3>
+              <p>Of course! If you think something could be improved about this project, drop me an email at lauren [at] laurenhallden [dot] com. You can also see and contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project's code</a>&mdash;it's open source.</p>
+              <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View the repo<span></a></p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -344,15 +368,16 @@
 
     // Calculate baserate
     $("#income-form").on('formvalid.zf.abide', function(e){
-      var income = $.trim($("#income-field").val());
+      var income = $("#income-field").val();
+      income = income.replace(/\,/g,''); // we have to do this in case they enter commas
+      income = parseInt(income,10);
       window.globalIncome = income;
       stepOne(income);
-      console.log("income:" + income);
     });
 
     // Update baserate based on slider
     $('.slider').on('changed.zf.slider', function(){
-      var yearlyCostValue = $.trim($('#yearly-cost-span').html());
+      var yearlyCostValue = $('#yearly-cost-span').html();
       console.log(yearlyCostValue);
       if (yearlyCostValue =='') {
       }
@@ -371,14 +396,16 @@
       window.globalYearlyCost = updatedYearlyCost;
       console.log(globalYearlyCost);
       // Then pick a next step
-      if (id == "step-two-yes") {
-        var location = "#section-3";
-        scrollTo(location);
-      }
-      else {
-        var location = "#section-6";
-        scrollTo(location);
-      }
+      $("#slider-form").on('formvalid.zf.abide', function(e){
+        if (id == "step-two-yes") {
+          var location = "#section-3";
+          scrollTo(location);
+        }
+        else {
+          var location = "#section-6";
+          scrollTo(location);
+        }
+      });
     });
 
     // Check insurance

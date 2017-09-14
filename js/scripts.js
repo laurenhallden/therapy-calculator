@@ -131,12 +131,10 @@ function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount)
 		if(approvedAmount < globalSessionRate) { // If yes...
 			// Their insurance only thinks it has to pay this much each year
 			yearlyCostForThisFunction = (approvedAmount * globalNumberOfSessions);
-			console.log(yearlyCostForThisFunction);
 		}
 		var costOfCopays = (outofnetworkCopay * globalNumberOfSessions); // how much copay cost of the course of a year
 		var yearlyCostAfterDeductions = (yearlyCostForThisFunction - deductible - costOfCopays); // removing whatever insurance won't cover ...
 		var insuranceDiscount = yearlyCostAfterDeductions*((100-coinsurance)/100); // ...and applying the deductible to the rest. This is how much cash you save.
-		console.log(insuranceDiscount);
 		window.globalInsuranceDiscount = insuranceDiscount; // send it to the DOM
 		var yearlyCostWithInsurance = (globalYearlyCost - insuranceDiscount); // This is your yearly amount post-insurance savings
 		setInsurance(yearlyCostWithInsurance);
@@ -282,6 +280,7 @@ function reportTaxes(fromWhere){
 	}
 	else {
 		if (fromWhere == "fsa"){
+			$('#section-10 .variable-content #used-what').html(" by using your FSA");
 			if (globalTrackingReceipts == "yes"){ // If this person is submitting manual claims, give these tips
 				$("#summary-tips").append("<li>After your insurance claims are processed, you can pay for the remaining balance with your FSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
 			}
@@ -291,6 +290,7 @@ function reportTaxes(fromWhere){
 			}
 		}
 		else if (fromWhere == "hsa"){
+			$('#section-10 .variable-content #used-what').html(" by using your HSA");
 			if (globalTrackingReceipts == "yes"){ // If this person is submitting manual claims, give these tips
 				$("#summary-tips").append("<li>After your insurance claims are processed, you can pay for the remaining balance with your HSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
 			}
