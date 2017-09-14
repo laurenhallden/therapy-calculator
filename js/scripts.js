@@ -75,16 +75,17 @@ $("#covered-or-not").on('change', function(){
 });
 
 function checkInsurance(coveredYesNo, networkYesNo){
-	if (coveredYesNo == "covered") {
-		if (networkYesNo == "in-network") {
+	if (coveredYesNo == "covered"){
+		// If they're staying in the provider network (or don't have to worry about one)...
+		if (networkYesNo == "in-network" || networkYesNo == "no-network"){
 			var location = "#section-4";
 		}
 		else {
-			var location = "#section-5";
+			var location = "#section-5"; // if they're not staying in-network
 		}
 	}
 	else {
-		var location = "#section-6";
+		var location = "#section-6"; // if they're not covered at all
 	}
 	scrollTo(location); // Send me to the section they selected
 }
@@ -121,20 +122,31 @@ function applyNetworkInsurance(copay,deductible){
 // Section FIVE: Calculate their out-of-netork insurance benefits
 // ************************************************
 
-function applyInsurance(deductible,coinsurance,approvedAmount){
-	if (globalYearlyCost > deductible){  // If their deductible isn't too high...
-		var yearlyCostForInsurancePurposes = globalYearlyCost
-		var approvedDifference = 0;
-		if(approvedAmount < globalSessionRate) { // If insurance puts a cap on their session amount...
-			approvedDifference = (globalSessionRate - approvedAmount)*globalNumberOfSessions;
-			yearlyCostForInsurancePurposes = (approvedAmount * globalNumberOfSessions); //... their insurance only thinks it has to pay this much
+/* This function is a little crazy, bear with me */
+function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount){
+	if (globalYearlyCost > deductible){  // First, let's check to see if their deductible is so high that nothing matters ALREADY
+		// If it's not, let's set a variable specifically for this function
+		var yearlyCostForThisFunction = globalYearlyCost;
+		// The first thing we want to know is whether a cap will affect their per-session rate
+		if(approvedAmount < globalSessionRate) { // If yes...
+			// Their insurance only thinks it has to pay this much each year
+			yearlyCostForThisFunction = (approvedAmount * globalNumberOfSessions);
+			console.log(yearlyCostForThisFunction);
 		}
-		var coinsuranceRate = coinsurance/100;
-		var coinsuranceCost = ((yearlyCostForInsurancePurposes-deductible)*(coinsuranceRate)); // ...apply coinsurance to the remainder
-		yearlyCostWithInsurance = (coinsuranceCost+deductible+approvedDifference);
-		// Let's store the actual amount insurance saves them so we can report on it later
-		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
+		var costOfCopays = (outofnetworkCopay * globalNumberOfSessions); // how much copay cost of the course of a year
+		var yearlyCostAfterDeductions = (yearlyCostForThisFunction - deductible - costOfCopays); // removing whatever insurance won't cover ...
+		var insuranceDiscount = yearlyCostAfterDeductions*((100-coinsurance)/100); // ...and applying the deductible to the rest. This is how much cash you save.
+		console.log(insuranceDiscount);
+		window.globalInsuranceDiscount = insuranceDiscount; // send it to the DOM
+		var yearlyCostWithInsurance = (globalYearlyCost - insuranceDiscount); // This is your yearly amount post-insurance savings
 		setInsurance(yearlyCostWithInsurance);
+	}
+	else {
+		// The deductible on this insurance is too high to help
+		// That sucks; let's be sympathetic
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it to see if you can get a plan that costs a little more per month but has a lower deductible.</p>");
+	}
+	if (insuranceDiscount > 0) {
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#insurance-results').show();
 		$('#section-6 h2').html("Making progress!");
@@ -145,9 +157,8 @@ function applyInsurance(deductible,coinsurance,approvedAmount){
 		window.globalTrackingReceipts = "yes"; // For the tips section at the end, we need to know if this person is submitting receipts
 	}
 	else {
-		// The deductible on this insurance is too high to help
-		// That sucks; let's be sympathetic
-		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
+		// We tried really hard, but their insurance just had too many restrictions to be helpful
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it to see if you can get a plan that costs a little more per month but has fewer costs when you use it.</p>");
 	}
 	var location = "#section-6";
 	scrollTo(location); // Moving on!

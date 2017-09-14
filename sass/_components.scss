@@ -364,6 +364,11 @@ p.border-bottom {
 	margin-bottom: 2em;
 }
 
+hr {
+	border: 1px solid $border-gray;
+	margin: 2em 0;
+}
+
 /* Final summary */
 #but,
 #insurance-saved,
