@@ -8,10 +8,11 @@
   <meta name="description" content="Therapy Calculator">
   <meta name="author" content="Lauren Hallden">
 
-  <!-- Form css -->
+  <!-- All our css -->
   <link rel="stylesheet" href="css/foundation.css" />
   <link rel="stylesheet" href="css/app.css">
-
+  <link rel="stylesheet" href="css/nprogress.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="stylesheets/screen.css">
 
   <!--[if lt IE 9]>
@@ -20,18 +21,25 @@
 </head>
 
 <body>
+
+  <!-- Script that checks which section is visible so we can update the progress bar -->
+  <script type="text/javascript" src="https://unpkg.com/onscreen/dist/on-screen.umd.min.js"></script>
+  <script type="text/javascript">
+      var os = new OnScreen();
+  </script>
+
   <div class="container">
   <div class="intro">
     <h1>How much can I expect to pay for therapy?</h1>
     <p class="subhead">*in 2017 America</p>
   </div>
 
-    <section id="section-1">
+    <section id="section-0">
       <h2>Hey! I’m glad you’re here.</h2>
       <p>I know the idea of budgeting for therapy is stressful, but it may not cost as much as you think. I’ll try to get you some answers.</p>
       <p>
         <div class="disclaimer">
-          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consult an expert before making decisions that impact your finances and health. Also, this calculator doesn’t cover Medicare and Medicaid just yet. I’m working on it though!
+          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consider this an estimation, and consult an expert before making decisions that impact your finances and health.
         </div>
       </p>
       <p>The first question is an awkward one (sorry!): how much money does your household make in a year?</p>
@@ -42,7 +50,7 @@
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="income-help-text"> I won’t share it with anyone, don’t worry. I just need to do some math. But you can also <a href="">see a demo</a> with sample numbers.</p>
+        <p class="help-text" id="income-help-text"> I won’t share it with anyone, don’t worry. I just need to do some math.<!-- But you can also <a href="">see a demo</a> with sample numbers.--></p>
         <button class="button next-step">Next step</button>
       </form>
     </section>
@@ -51,23 +59,31 @@
     <section id="section-2" class="hidden">
       <div id="sliding-scale-div"><h2>Your per-session rate:</h2></div>
       <p>I’d estimate that each session might cost you <span class="strong">$</span><span class="strong" id="baserate-span"></span>. But if you already have someone in mind and you know what they charge, you can adjust your rate.</p>
-      <div class="col col-8 middle">
-        <label>Set your rate to:</label>
-        <div class="slider" data-slider data-options="start: 20; end: 150; step: 5;">
-          <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="sliderOutput1"></span>
-          <span class="slider-fill" data-slider-fill></span>
+
+      <!-- Slider -->
+      <form id="slider-form" data-abide novalidate>
+        <div class="col-wrapper">
+          <div class="col col-8 middle">
+            <label>Set your rate to:</label>
+            <div class="slider" data-slider data-options="start: 20; end: 150; step: 5;">
+              <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="sliderOutput1"></span>
+              <span class="slider-fill" data-slider-fill></span>
+            </div>
+          </div>
+          <div class="col col-4 middle">
+            <label>
+              <input type="number" id="sliderOutput1" required pattern="number">
+              <span class="form-error">
+                Enter a number.
+              </span>
+              </label>
+          </div>
         </div>
-      </div>
-      <div class="col col-4 middle padded-top">
-        <input type="number" id="sliderOutput1">
-      </div>
-
-      <div id="accordion"></div>
-
-      <p>If you see your therapist once a week, that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
-      <p>But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don't accept it, but you may still be able to get some money back.</p>
-      <a class="button next-step" href="#section-3" id="step-two-yes">Yes, let’s check</a>
-      <a class="button next-step outline" href="#section-6" id="step-two-no">Nope, no insurance</a>
+        <p>If you see your therapist once a week, that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
+        <p>But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don't accept it, but you may still be able to get some money back.</p>
+        <button class="button next-step step-two" id="step-two-yes">Yes, let’s check</button>
+        <button class="button next-step outline step-two" id="step-two-no">Nope, no insurance</button>
+      </form>
     </section>
 
     <!-- Getting your health insurance -->
@@ -76,8 +92,9 @@
       <p>We’re gonna need some details on your plan’s mental health benefits. You can check online, or call your insurance company’s help line to have a real person explain everything. You’ll want to know:</p>
       <ul>
         <li>Is therapy delivered in an office setting covered by your plan?</li>
-        <li>If your plan has a preferred network, what's your <strong>copayment</strong> for an in-network provider?</li>
+        <li>If your plan has a preferred network, what's your <strong>co-payment</strong> for an in-network provider?</li>
         <li>What is the <strong>co-insurance rate</strong> for an out-of-network provider?</li>
+        <li>What is the <strong>approved amount</strong> for each therapy session?</li>
         <li>What is your current <strong>deductible</strong>?</li>
       </ul>
       <p>When you’re ready, let’s walk through the options.</p>
@@ -92,6 +109,7 @@
           <select id="network-or-not">
             <option value="in-network">In-network</option>
             <option value="out-of-network">Out-of-network</option>
+            <option value="no-network">I don't have a preferred network</option>
           </select>
         </label>
         <a class="button next-step" id="step-three">Next step</a>
@@ -103,7 +121,7 @@
       <h2>Nice!</h2>
       <p>Let’s apply your insurance and see if that lowers your costs.</p>
       <form id="in-network-form" class="section-form" data-abide novalidate>
-        <label><span>Your copay for therapy:</span>
+        <label><span>Your co-payment for therapy:</span>
           <input type="text" id="copay-field" aria-describedby="copay-help-text" required pattern="number">
           <span class="form-error">
             Enter a number.
@@ -117,7 +135,7 @@
           </span>
         </label>
         <p class="help-text" id="deductible-help-text-innetwork">You may not have one, but if you do, enter it here.</p>
-        <button class="next-step" id="step-four">Apply it!</button>
+        <button class="button next-step" id="step-four">Apply it!</button>
       </form>
     </section>
 
@@ -132,15 +150,32 @@
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="deductible-help-text-outofnetwork">You can enter your yearly deducible. (Or if you know you don’t typically reach it in a year, you can enter the amount you don’t use up.)</p>
+        <p class="help-text" id="deductible-help-text-outofnetwork">You can enter your yearly deducible, or if you want to get specific, enter the amount you typically have left after your existing medical expenses. (It might be zero!)</p>
         <label><span>Your co-insurance rate:</span>
           <input type="text" id="coinsurance-field" value="30" aria-describedby="coinsurance-help-text" required pattern="number">
           <span class="form-error">
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="coinsurance-help-text">Enter the percentage you are responsible for. For example, after you hit your deductible, your insurance may cover 70% of your costs, so your co-insurance rate is 30%</p>
-        <button class="next-step" id="step-five">Looks good!</a>
+        <p class="help-text" id="coinsurance-help-text">Your co-insurance rate is the percentage that you have to pay for each session after you’ve met your deductibe. For example, your insurance may cover 70% of each session, so your co-insurance would be 30%.</p>
+        <hr />
+        <p>There are also a few "advanced options" that are a little more rare:</p>
+        <label><span>Your co-payment for out-of-network providers:</span>
+          <input type="text" id="outofnetwork-copay-amount-field" value="" aria-describedby="outofnetwork-copay-help-text" pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        </label>
+        <p class="help-text" id="outofnetwork-copay-help-text">You may not have this if you also have co-insurance, but some plans have both. :( Leave this blank if yours doesn't.</p>
+
+        <label><span>Your plan's approved amount for each therapy session:</span>
+          <input type="text" id="approved-amount-field" value="" aria-describedby="approved-amount-help-text" pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        </label>
+        <p class="help-text" id="approved-amount-help-text">This is annoying, but your insurance can put a limit on what they think an hour of therapy <em>should</em> cost. For example, your therapist may charge you $100 an hour, but your insurance may decide this service is only worth $80. If you know you have an approved amount limit, enter it here. Otherwise we’ll assume you don’t.</p>
+        <button class="button next-step" id="step-five">Looks good!</a>
       </form>
     </section>
 
@@ -160,16 +195,20 @@
             <option value="no-tax-vehicle">Neither</option>
           </select>
         </label>
-        <button class="next-step" id="step-six-yes">Check deductions</button>
-        <a class ="button next-step outline" id="step-six-no" href="#section-9">Nope, skip the taxes stuff</a>
+        <button class="button next-step" id="step-six-yes">Check deductions</button>
+        <a class ="button next-step outline" id="step-six-no" href="#section-11">Nope, skip the taxes stuff</a>
       </form>
     </section>
 
     <!-- Getting your FSA contribution -->
     <section id="section-7" class="hidden">
       <h2>Set your FSA contribution.</h2>
-      <p>The more you contribute here, the more you can lower your tax burden. But the maximum allowed is <strong>$2,600</strong>.</p>
-      <p>If you’re already contributing, you may not have enough room left to add the full amount of therapy to your FSA. In that case, take the maximum if you can.</p>
+      <p>The more you contribute here, the more you can lower your tax burden. But there's a few things to keep in mind:</p>
+      <ul class="ul-padded">
+        <li>The maximum allowed in 2017 is <strong>$2,600</strong>.</li>
+        <li>You can't change your FSA contributions mid-year. You'll have to wait for your next open enrollment period. This part of the calculation is only useful for future planning.</li>
+      </ul>
+      <p>If you’re already using an FSA, you may not have enough room left to add the full amount of therapy. In that case, take the maximum if you can.
       <p>Otherwise, let’s assume you can bump up your FSA contribution by:</p>
       <form id="fsa-form" class="section-form" data-abide novalidate>
           <input id="fsa-field" type="text" value="" required pattern="number">
@@ -178,28 +217,45 @@
           </span>
         <!-- Would be nice to set a max limit here -->
         <p>We’ll see how much that lowers your costs.</p>
-        <button class="next-step" id="step-seven-yes">Check it out</button>
+        <button class="button next-step" id="step-seven-yes">Check it out</button>
         <a class="button next-step outline" id="step-seven-no">Nevermind, skip it</a>
       </form>
     </section>
 
-    <!-- Getting your FSA contribution -->
+    <!-- Getting your HSA contribution -->
     <section id="section-8" class="hidden">
       <h2>Set your HSA contribution.</h2>
-      <p>I need to research this.</p>
+      <p>First, let’s make sure you’re in the right place. Some things to keep in mind:</p>
+      <ul class="ul-padded">
+        <li>You can only have a Health Savings Account if you also have a qualifying <a target="_blank" href="https://www.healthcare.gov/glossary/high-deductible-health-plan/">high-deductible health plan</a>.</li>
+        <li>If you do have an HSA, the maximum amount you’re allowed to contribute in 2017 is <strong>$3,400</strong> for an individual, or <strong>$6,750</strong> for a family. You can change the amount you contribute at any time during the year.</li>
+      </ul>
+      <p>If you’re already contributing, you may not have enough room left to add the full amount of therapy to your HSA. In that case, take the maximum if you can.</p>
+      <p>Otherwise, let’s assume you can bump up your HSA contribution by:</p>
+      <form id="hsa-form" class="section-form" data-abide novalidate>
+          <input id="hsa-field" type="text" value="" required pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        <!-- Would be nice to set a max limit here -->
+        <p>We’ll see how much that lowers your costs.</p>
+        <button class="button next-step" id="step-eight-yes">Check it out</button>
+        <a class="button next-step outline" id="step-eight-no">Nevermind, skip it</a>
+      </form>
     </section>
 
     <!-- Applying your tax contributions -->
-    <section id="section-10" class="hidden">
+    <section id="section-9" class="hidden">
       <div class="variable-content">
-        <h2>Let’s talk taxes.</h2>
-        <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes by using your___.</p>
+        <h2>Let’s keep talking taxes (sorry!)</h2>
+        <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes<span id="used-what"></span>.</p>
       </div>
-      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income, you may be able to deduct them. (Your Adjusted Gross income is your household income minus any other deductions, like student loan payments or mortgage interest).</p>
+      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income in 2017 (or 7.5% if you're over 65), you may be able to deduct them.</p>
+      <p>Your Adjusted Gross income is your household income minus any other deductions, like student loan payments or mortgage interest.</p>
       <p>A few things to know:</p>
       <ul class="ul-padded">
         <li>This only applies to therapy that <a target="_blank" href="https://turbotax.intuit.com/tax-tools/tax-tips/Tax-Deductions-and-Credits/-Can-I-Claim-Medical-Expenses-on-My-Taxes-/INF14196.html">counts as medical care</a>, so you should talk to your therapist during your intake about your diagnosis. Things like marriage counseling may not count.</li>
-        <li>I can’t know what all of your deductions might be, but I can tell you this: without additional deductions, your therapy bills are <strong><span id="income-percentage"></span>%</strong> of your income.</li>
+        <li>I can’t know what all of your deductions might be, but I can tell you this: without additional deductions, your therapy bills are currently <strong><span id="income-percentage"></span>%</strong> of your Gross Adjusted Income.</li>
       </ul>
         <fieldset>
           <legend>So, you tell me: I’ll keep doing the math assuming either...</legend>
@@ -212,7 +268,16 @@
             <label for="take-deduction">The medical deduction probably won’t apply to you</label>
           </div>
         </fieldset>
-      <a class="button next-step" id="final-step">Get your final summary</a>
+      <a class="button next-step" id="step-9">Next step (you’re almost finished!)</a>
+    </section>
+
+        <!-- Applying your itemized contributions -->
+    <section id="section-10" class="hidden">
+      <div class="variable-content">
+        <h2>Guess what?</h2>
+        <p id="itemized-tax-results">You may be able to save <span class="strong">$</span><span class="strong" id="itemized-tax-discount-span"></span> on your taxes by claiming your medical expenses.</p>
+      </div>
+      <a class="button next-step" id="step-10">Get your final summary</a>
     </section>
 
     <section id="section-11" class="hidden">
@@ -222,9 +287,7 @@
       <p>A year of therapy could cost you: <span class="strong">$</span><span class="strong" <span id="final-yearly-cost"></span>
       <p id="but">
         But you’ll have saved 
-        <span id="insurance-saved"><strong>$<span id="the-insurance-saved"></span></strong> by using your insurance</span>
-        <span id="and"> and </span>
-        <span id="taxes-saved"><strong>$<span id="the-taxes-saved"></span></strong> on your taxes</span>.
+        <span id="insurance-saved"><strong>$<span id="the-insurance-saved"></span></strong> by using your insurance</span><span id="and"> and </span><span id="taxes-saved"><strong>$<span id="the-taxes-saved"></span></strong> on your taxes</span>.
       </p>
       <label id="summary-tips-label">A few practical tips based on your situation:</label>
       <ul id="summary-tips" class="ul-padded">
@@ -232,8 +295,41 @@
     </section>
 
     <div class="footer">
-      <p>Wanna help make this better?</p>
-      <p><a href="https://github.com/laurenhallden/therapy-calculator">Contribute on GitHub</a></p>
+      <div class="faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-wrapper">
+          <div class="faq-col">
+            <div>
+              <h3>How does this work?</h3>
+              <p>This is a calculator that walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
+            </div>
+            <div>
+              <h3>Do you save my data?</h3>
+              <p>Nope. None of the forms here send your numbers anywhere beyond this page. They only use them to do some math.</p>
+            </div>
+            <div>
+              <h3>Is this calculator correct?</h3>
+              <p>Like I mentioned in the disclaimer, I'm not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn't necessarily what you're stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later this calculator was born.</p>
+              <p>Please think of this is an exploration into your options, and talk to your insurance and tax professionals for verified expert advice.</p>
+            </div>
+          </div>
+          <div class="faq-col">
+            <div>
+              <h3>Should I go to therapy?</h3>
+              <p>That's a big question, and it's completely up to you and your doctors! They'll give you better advice than I can. But clearly, I'm a fan.</p>
+            </div>
+            <div>
+              <h3>This is still too expensive. Do I have other options?</h3>
+              <p><a target="_blank" href="https://www.buzzfeed.com/annaborges/affordable-therapy">This article on BuzzFeed</a> actually does a great job of walking you through some creative options for getting your fees lowered&mdash;from pro-bono therapy, to Employee Assistance Programs. You have lots of options.</p>
+            </div>
+            <div>
+              <h3>Can I help make this better?</h3>
+              <p>Of course! If you think something could be improved about this project, drop me an email at lauren [at] laurenhallden [dot] com. You can also see and contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project's code</a>&mdash;it's open source.</p>
+              <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View the repo<span></a></p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
 
@@ -244,7 +340,8 @@
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
     <script src="js/vendor/smooth-scroll.js"></script>
-  <script src="js/scripts.js"></script>
+    <script src="js/vendor/nprogress.js"></script>
+    <script src="js/scripts.js"></script>
 
   <!-- All our button functions -->
   <script>
@@ -256,6 +353,13 @@
         window.globalTrackingReceipts = "no";
     });
 
+    // Update progress bar based on current section
+    os.on('enter', 'section', (element, event) => {
+        var id = $(element).attr('id').replace(/section-/, '');
+        var progress = (id/10.99);
+        NProgress.set(progress);
+    });
+
     // Stop forms from posting on form submit
     $(".section-form").on("valid invalid submit", function(e){
       e.stopPropagation();
@@ -264,15 +368,17 @@
 
     // Calculate baserate
     $("#income-form").on('formvalid.zf.abide', function(e){
-      var income = $.trim($("#income-field").val());
+      var income = $("#income-field").val();
+      income = income.replace(/\,/g,''); // we have to do this in case they enter commas
+      income = parseInt(income,10);
       window.globalIncome = income;
       stepOne(income);
-      console.log("income:" + income);
     });
 
     // Update baserate based on slider
     $('.slider').on('changed.zf.slider', function(){
-      var yearlyCostValue = $.trim($('#yearly-cost-span').html());
+      var yearlyCostValue = $('#yearly-cost-span').html();
+      console.log(yearlyCostValue);
       if (yearlyCostValue =='') {
       }
       else {
@@ -280,6 +386,26 @@
         var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
         $('#yearly-cost-span').html(updatedYearlyCost);
       }
+    });
+
+    // Grab the value of the slider and set the new yearly cost
+    $(".step-two").click(function(){
+      var id = this.id;
+      var currentSliderValue = $('#sliderOutput1').val();
+      var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
+      window.globalYearlyCost = updatedYearlyCost;
+      console.log(globalYearlyCost);
+      // Then pick a next step
+      $("#slider-form").on('formvalid.zf.abide', function(e){
+        if (id == "step-two-yes") {
+          var location = "#section-3";
+          scrollTo(location);
+        }
+        else {
+          var location = "#section-6";
+          scrollTo(location);
+        }
+      });
     });
 
     // Check insurance
@@ -293,7 +419,7 @@
     $("#in-network-form").on('formvalid.zf.abide', function(e){
       var copay = $.trim($("#copay-field").val());
       copay = parseInt(copay,10);
-      console.log(copay);
+      //console.log(copay);
       var deductible = $.trim($("#deductible-field-innetwork").val());
       deductible = parseInt(deductible,10);
       applyNetworkInsurance(copay,deductible);
@@ -301,12 +427,25 @@
 
     // Apply out-of-network insurance
     $("#outof-network-form").on('formvalid.zf.abide', function(e){
-      var deductible = $.trim($("#deductible-field-outofnetwork").val());
+      var deductible = $("#deductible-field-outofnetwork").val();
       deductible = parseInt(deductible,10);
-      console.log(deductible);
-      var coinsurance = $.trim($("#coinsurance-field").val());
+      //console.log(deductible);
+      var coinsurance = $("#coinsurance-field").val();
       coinsurance = parseInt(coinsurance,10);
-      applyInsurance(deductible,coinsurance);
+      if ($("#outofnetwork-copay-amount-field").val() != "") {
+        var outofnetworkCopay = $("#outofnetwork-copay-amount-field").val();
+      }
+      else {
+        var outofnetworkCopay = 0;
+      }
+      outofnetworkCopay = parseInt(outofnetworkCopay,10);
+      if ($("#approved-amount-field").val() != "") {
+        var approvedAmount = $("#approved-amount-field").val();
+      }
+      else {
+        var approvedAmount = 1000; // Just pick a random high number
+      }
+      applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount);
     });
 
     // Check FSA or HSA...
@@ -319,7 +458,7 @@
         setHSA();
       }
       else {
-        var location = "#section-10";
+        var location = "#section-9";
         scrollTo(location);
         checkItemized();
       }
@@ -330,28 +469,48 @@
       getSummary();
     });
 
-    // Set FSA
+    // Do the FSA math
     $("#fsa-form").on('formvalid.zf.abide', function(e){
-      var fsaAmount = $("#fsa-field").val();
-      getFSA(fsaAmount);
+      var contribution = $("#fsa-field").val();
+      var fromWhere = "fsa";
+      doTaxes(contribution, fromWhere);
     });
 
     // Skip forward if they decide not to use an FSA
     $("#step-seven-no").click(function(){
-        var location = "#section-10";
+        var location = "#section-9";
         scrollTo(location);
         checkItemized();
     });
 
-    // Get final summary!
-    $("#final-step").click(function(){
-      var itemizedYesNo = $('#itemized-deductions :selected').val();
+    // Do the HSA math
+    $("#hsa-form").on('formvalid.zf.abide', function(e){
+      var contribution = $("#hsa-field").val();
+      var fromWhere = "hsa";
+      doTaxes(contribution, fromWhere);
+    });
+
+    // Skip forward if they decide not to use an HSA
+    $("#step-eight-no").click(function(){
+        var location = "#section-9";
+        scrollTo(location);
+        checkItemized();
+    });
+
+    // Get the final summary!
+    $("#step-9").click(function(){
+      var itemizedYesNo = $('#yes-deduction:checked').val();
+      console.log(itemizedYesNo);
        if (itemizedYesNo == 'Yes') {
         getItemized();
        }
        else {
         getSummary();
        }
+    });
+
+    $("#step-10").click(function(){
+      getSummary();
     });
 
   </script>

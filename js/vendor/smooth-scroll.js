@@ -9,6 +9,7 @@ $("a").on('click', function(event) {
 
     // Store hash
     var hash = this.hash;
+    var heading = $(hash).find('h2');
 
     // Unhide the section we're traveling to
     $(hash).removeClass("hidden");
@@ -16,7 +17,7 @@ $("a").on('click', function(event) {
     // Using jQuery's animate() method to add smooth page scroll
     // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
     $('html, body').animate({
-      scrollTop: $(hash).offset().top
+      scrollTop: $(heading).offset().top
     }, 800, function(){
 
       // Add hash (#) to URL when done scrolling (default click behavior)
@@ -29,8 +30,9 @@ $("a").on('click', function(event) {
 // Similar to above, but this scrolls to a specific section programatically based on form responses
 function scrollTo(location) {
   var hash = location;
+  var heading = $(hash).find('h2');
   $(hash).removeClass("hidden");
-  $('html, body').animate({scrollTop: $(hash).offset().top}, 800, function(){
+  $('html, body').animate({scrollTop: $(heading).offset().top}, 800, function(){
     window.location.hash = hash;
   });
 }
