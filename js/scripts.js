@@ -34,7 +34,7 @@ function stepOne(income){
 	setBaseRate(baserate);
 
 	// Move on to the next section
-	var location = "#section-2";
+	var location = '#section-2';
 	scrollTo(location);
 
 	// Initialize the baserate slider in section two
@@ -64,28 +64,28 @@ function setBaseRate(baserate){
 // ************************************************
 
 // Show and hide additional insurance options based on their coverage status
-$("#covered-or-not").on('change', function(){
+$('#covered-or-not').on('change', function(){
 	var coveredYesNo = $('#covered-or-not :selected').val();
-    if (coveredYesNo == "not-covered") {
-    	$("#network-or-not-label").slideUp();
+    if (coveredYesNo == 'not-covered') {
+    	$('#network-or-not-label').slideUp();
     }
 	else {
-		$("#network-or-not-label").slideDown();
+		$('#network-or-not-label').slideDown();
 	}
 });
 
 function checkInsurance(coveredYesNo, networkYesNo){
 	if (coveredYesNo == "covered"){
 		// If they're staying in the provider network (or don't have to worry about one)...
-		if (networkYesNo == "in-network" || networkYesNo == "no-network"){
-			var location = "#section-4";
+		if (networkYesNo == 'in-network' || networkYesNo == 'no-network'){
+			var location = '#section-4';
 		}
 		else {
-			var location = "#section-5"; // if they're not staying in-network
+			var location = '#section-5'; // if they're not staying in-network
 		}
 	}
 	else {
-		var location = "#section-6"; // if they're not covered at all
+		var location = '#section-6'; // if they're not covered at all
 	}
 	scrollTo(location); // Send me to the section they selected
 }
@@ -113,7 +113,7 @@ function applyNetworkInsurance(copay,deductible){
 		// That sucks; let's be sympathetic
 		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
 	}
-	var location = "#section-6";
+	var location = '#section-6';
 	scrollTo(location);  // Moving on!
 }
 
@@ -149,9 +149,9 @@ function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount)
 		$('#insurance-results').show();
 		$('#section-6 h2').html("Making progress!");
 		// Send a tip to the final summary list
-		$("#summary-tips-label").show();
-		$("#summary-tips").append("<li>To use your insurance, you’ll need to save your receipts and submit insurance claims.</li>");
-		$("#summary-tips").append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
+		$('#summary-tips-label').show();
+		$('#summary-tips').append("<li>To use your insurance, you’ll need to save your receipts and submit insurance claims.</li>");
+		$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
 		window.globalTrackingReceipts = "yes"; // For the tips section at the end, we need to know if this person is submitting receipts
 	}
 	else {
@@ -191,7 +191,7 @@ function setFSA(){
 	else {
 		$('#fsa-field').val(globalYearlyCost);
 	}
-	var location = "#section-7";
+	var location = '#section-7';
 	scrollTo(location); // Moving on!
 }
 
@@ -204,7 +204,7 @@ function setHSA(){
 	else {
 		$('#hsa-field').val(globalYearlyCost);
 	}
-	var location = "#section-8";
+	var location = '#section-8';
 	scrollTo(location);
 }
 
@@ -276,41 +276,41 @@ function reportTaxes(fromWhere){
 		var location = "#section-10";
 		$('#itemized-tax-discount-span').html(globalTaxDiscount);
 		$('#section-10 .variable-content #itemized-tax-results').show();
-		$("#summary-tips").append("<li>You asked to claim you medical expenses on your taxes, so you'll need to itemize your deductions.</li>");
+		$('#summary-tips').append("<li>You asked to claim you medical expenses on your taxes, so you'll need to itemize your deductions.</li>");
 	}
 	else {
-		if (fromWhere == "fsa"){
+		if (fromWhere == 'fsa'){
 			$('#section-10 .variable-content #used-what').html(" by using your FSA");
 			if (globalTrackingReceipts == "yes"){ // If this person is submitting manual claims, give these tips
-				$("#summary-tips").append("<li>After your insurance claims are processed, you can pay for the remaining balance with your FSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
+				$('#summary-tips').append("<li>After your insurance claims are processed, you can pay for the remaining balance with your FSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
 			}
 			else { // if not, give these ones
-				$("#summary-tips").append("<li>To use your Flexible Spending Account, you’ll need to save your receipts and submit claims with your FSA.</li>");
-				$("#summary-tips").append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
+				$('#summary-tips').append("<li>To use your Flexible Spending Account, you’ll need to save your receipts and submit claims with your FSA.</li>");
+				$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
 			}
 		}
-		else if (fromWhere == "hsa"){
+		else if (fromWhere == 'hsa'){
 			$('#section-10 .variable-content #used-what').html(" by using your HSA");
-			if (globalTrackingReceipts == "yes"){ // If this person is submitting manual claims, give these tips
-				$("#summary-tips").append("<li>After your insurance claims are processed, you can pay for the remaining balance with your HSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
+			if (globalTrackingReceipts == 'yes'){ // If this person is submitting manual claims, give these tips
+				$('#summary-tips').append("<li>After your insurance claims are processed, you can pay for the remaining balance with your HSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
 			}
 			else { // if not, give these ones
-				$("#summary-tips").append("<li>To use your Health Savings Account, you’ll need to save your receipts and submit claims with your HSA.</li>");
-				$("#summary-tips").append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
+				$('#summary-tips').append("<li>To use your Health Savings Account, you’ll need to save your receipts and submit claims with your HSA.</li>");
+				$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
 			}
 		}
 		$('#tax-discount-span').html(globalTaxDiscount);
-		var location = "#section-9";
+		var location = '#section-9';
 		setTaxResults();
 		checkItemized();
 	}
-	$("#summary-tips-label").show();
+	$('#summary-tips-label').show();
 	scrollTo(location);
 }
 
 // Change the content of the tax results div based on their tax savings
 function setTaxResults() {
-	$('#section-9 .variable-content h2').html("<h2>Guess what?</h2>");
+	$('#section-9 .variable-content h2').html('<h2>Guess what?</h2>');
 	$('#section-9 #additional-taxes').html("another"); // changing a word based on whether we have multiple tax tips
 	$('#section-9 .variable-content #tax-results').show();
 }
@@ -355,6 +355,6 @@ function getSummary() {
 	if ((globalInsuranceDiscount>0) && (globalTaxDiscount>0)) {
 		$('#and').show();
 	}
-	var location = "#section-11";
+	var location = '#section-11';
 	scrollTo(location);
 }

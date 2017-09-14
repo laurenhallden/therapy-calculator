@@ -80,7 +80,7 @@
           </div>
         </div>
         <p>If you see your therapist once a week, that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
-        <p>But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don't accept it, but you may still be able to get some money back.</p>
+        <p>But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don’t accept it, but you may still be able to get some money back.</p>
         <button class="button next-step step-two" id="step-two-yes">Yes, let’s check</button>
         <button class="button next-step outline step-two" id="step-two-no">Nope, no insurance</button>
       </form>
@@ -92,7 +92,7 @@
       <p>We’re gonna need some details on your plan’s mental health benefits. You can check online, or call your insurance company’s help line to have a real person explain everything. You’ll want to know:</p>
       <ul>
         <li>Is therapy delivered in an office setting covered by your plan?</li>
-        <li>If your plan has a preferred network, what's your <strong>co-payment</strong> for an in-network provider?</li>
+        <li>If your plan has a preferred network, what’s your <strong>co-payment</strong> for an in-network provider?</li>
         <li>What is the <strong>co-insurance rate</strong> for an out-of-network provider?</li>
         <li>What is the <strong>approved amount</strong> for each therapy session?</li>
         <li>What is your current <strong>deductible</strong>?</li>
@@ -166,9 +166,9 @@
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="outofnetwork-copay-help-text">You may not have this if you also have co-insurance, but some plans have both. :( Leave this blank if yours doesn't.</p>
+        <p class="help-text" id="outofnetwork-copay-help-text">You probably don’t havae this if you also have co-insurance, but some plans have both. :( Leave this blank if yours doesn’t.</p>
 
-        <label><span>Your plan's approved amount for each therapy session:</span>
+        <label><span>Your plan’s approved amount for each therapy session:</span>
           <input type="text" id="approved-amount-field" value="" aria-describedby="approved-amount-help-text" pattern="number">
           <span class="form-error">
             Enter a number.
@@ -206,7 +206,7 @@
       <p>The more you contribute here, the more you can lower your tax burden. But there's a few things to keep in mind:</p>
       <ul class="ul-padded">
         <li>The maximum allowed in 2017 is <strong>$2,600</strong>.</li>
-        <li>You can't change your FSA contributions mid-year. You'll have to wait for your next open enrollment period. This part of the calculation is only useful for future planning.</li>
+        <li>You can’t change your FSA contributions mid-year. You'll have to wait for your next open enrollment period. This part of the calculation is only useful for future planning.</li>
       </ul>
       <p>If you’re already using an FSA, you may not have enough room left to add the full amount of therapy. In that case, take the maximum if you can.
       <p>Otherwise, let’s assume you can bump up your FSA contribution by:</p>
@@ -309,14 +309,14 @@
             </div>
             <div>
               <h3>Is this calculator correct?</h3>
-              <p>Like I mentioned in the disclaimer, I'm not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn't necessarily what you're stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later this calculator was born.</p>
+              <p>Like I mentioned in the disclaimer, I’m not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn’t necessarily what you’re stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later this calculator was born.</p>
               <p>Please think of this is an exploration into your options, and talk to your insurance and tax professionals for verified expert advice.</p>
             </div>
           </div>
           <div class="faq-col">
             <div>
               <h3>Should I go to therapy?</h3>
-              <p>That's a big question, and it's completely up to you and your doctors! They'll give you better advice than I can. But clearly, I'm a fan.</p>
+              <p>That’s a big question, and it’s completely up to you and your doctors! They’ll give you better advice than I can. But clearly, I'm a fan.</p>
             </div>
             <div>
               <h3>This is still too expensive. Do I have other options?</h3>
@@ -324,7 +324,7 @@
             </div>
             <div>
               <h3>Can I help make this better?</h3>
-              <p>Of course! If you think something could be improved about this project, drop me an email at lauren [at] laurenhallden [dot] com. You can also see and contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project's code</a>&mdash;it's open source.</p>
+              <p>Of course! If you think something could be improved about this project, drop me an email at lauren [at] laurenhallden [dot] com. You can also see and contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project’s code</a>&mdash;it’s open source.</p>
               <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View the repo<span></a></p>
             </div>
           </div>
@@ -350,7 +350,7 @@
         window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
         window.globalInsuranceDiscount = 0;
         window.globalTaxDiscount = 0;
-        window.globalTrackingReceipts = "no";
+        window.globalTrackingReceipts = 'no';
     });
 
     // Update progress bar based on current section
@@ -361,14 +361,14 @@
     });
 
     // Stop forms from posting on form submit
-    $(".section-form").on("valid invalid submit", function(e){
+    $('.section-form').on('valid invalid submit', function(e){
       e.stopPropagation();
       e.preventDefault();
     });
 
     // Calculate baserate
-    $("#income-form").on('formvalid.zf.abide', function(e){
-      var income = $("#income-field").val();
+    $('#income-form').on('formvalid.zf.abide', function(e){
+      var income = $('#income-field').val();
       income = income.replace(/\,/g,''); // we have to do this in case they enter commas
       income = parseInt(income,10);
       window.globalIncome = income;
@@ -378,7 +378,6 @@
     // Update baserate based on slider
     $('.slider').on('changed.zf.slider', function(){
       var yearlyCostValue = $('#yearly-cost-span').html();
-      console.log(yearlyCostValue);
       if (yearlyCostValue =='') {
       }
       else {
@@ -389,58 +388,62 @@
     });
 
     // Grab the value of the slider and set the new yearly cost
-    $(".step-two").click(function(){
+    $('.step-two').click(function(){
       var id = this.id;
       var currentSliderValue = $('#sliderOutput1').val();
       var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
       window.globalYearlyCost = updatedYearlyCost;
-      console.log(globalYearlyCost);
       // Then pick a next step
-      $("#slider-form").on('formvalid.zf.abide', function(e){
-        if (id == "step-two-yes") {
-          var location = "#section-3";
+      $('#slider-form').on('formvalid.zf.abide', function(e){
+        if (id == 'step-two-yes') {
+          var location = '#section-3';
           scrollTo(location);
         }
         else {
-          var location = "#section-6";
+          var location = '#section-6';
           scrollTo(location);
         }
       });
     });
 
     // Check insurance
-    $("#step-three").click(function(){
+    $('#step-three').click(function(){
       var coveredYesNo = $('#covered-or-not :selected').val();
       var networkYesNo = $('#network-or-not :selected').val();
       checkInsurance(coveredYesNo, networkYesNo);
     });
 
     // Apply in-network insurance
-    $("#in-network-form").on('formvalid.zf.abide', function(e){
-      var copay = $.trim($("#copay-field").val());
+    $('#in-network-form').on('formvalid.zf.abide', function(e){
+      var copay = $('#copay-field').val();
+      copay = copay.replace(/\,/g,'');
       copay = parseInt(copay,10);
-      //console.log(copay);
-      var deductible = $.trim($("#deductible-field-innetwork").val());
+      var deductible = $('#deductible-field-innetwork').val();
+      deductible = deductible.replace(/\,/g,'');
       deductible = parseInt(deductible,10);
       applyNetworkInsurance(copay,deductible);
     });
 
     // Apply out-of-network insurance
-    $("#outof-network-form").on('formvalid.zf.abide', function(e){
-      var deductible = $("#deductible-field-outofnetwork").val();
+    $('#outof-network-form').on('formvalid.zf.abide', function(e){
+      var deductible = $('#deductible-field-outofnetwork').val();
+      deductible = deductible.replace(/\,/g,'');
       deductible = parseInt(deductible,10);
-      //console.log(deductible);
-      var coinsurance = $("#coinsurance-field").val();
+      var coinsurance = $('#coinsurance-field').val();
+      coinsurance = coinsurance.replace(/\,/g,'');
       coinsurance = parseInt(coinsurance,10);
-      if ($("#outofnetwork-copay-amount-field").val() != "") {
-        var outofnetworkCopay = $("#outofnetwork-copay-amount-field").val();
+      if ($('#outofnetwork-copay-amount-field').val() != "") {
+        var outofnetworkCopay = $('#outofnetwork-copay-amount-field').val();
+        outofnetworkCopay = outofnetworkCopay.replace(/\,/g,'');
       }
       else {
         var outofnetworkCopay = 0;
       }
       outofnetworkCopay = parseInt(outofnetworkCopay,10);
-      if ($("#approved-amount-field").val() != "") {
+      if ($('#approved-amount-field').val() != "") {
         var approvedAmount = $("#approved-amount-field").val();
+        approvedAmount = approvedAmount.replace(/\,/g,'');
+        approvedAmount = parseInt(approvedAmount,10);
       }
       else {
         var approvedAmount = 1000; // Just pick a random high number
@@ -449,58 +452,57 @@
     });
 
     // Check FSA or HSA...
-    $("#step-six-yes").click(function(){
+    $('#step-six-yes').click(function(){
       var taxVehicle = $('#tax-vehicle :selected').val();
-      if ( taxVehicle == "fsa") {
+      if ( taxVehicle == 'fsa') {
         setFSA();
       }
-      else if ( taxVehicle == "hsa") {
+      else if ( taxVehicle == 'hsa') {
         setHSA();
       }
       else {
-        var location = "#section-9";
+        var location = '#section-9';
         scrollTo(location);
         checkItemized();
       }
     });
 
     // ...or skip taxes section completely.
-    $("#step-six-no").click(function(){
+    $('#step-six-no').click(function(){
       getSummary();
     });
 
     // Do the FSA math
-    $("#fsa-form").on('formvalid.zf.abide', function(e){
-      var contribution = $("#fsa-field").val();
-      var fromWhere = "fsa";
+    $('#fsa-form').on('formvalid.zf.abide', function(e){
+      var contribution = $('#fsa-field').val();
+      var fromWhere = 'fsa';
       doTaxes(contribution, fromWhere);
     });
 
     // Skip forward if they decide not to use an FSA
-    $("#step-seven-no").click(function(){
-        var location = "#section-9";
+    $('#step-seven-no').click(function(){
+        var location = '#section-9';
         scrollTo(location);
         checkItemized();
     });
 
     // Do the HSA math
-    $("#hsa-form").on('formvalid.zf.abide', function(e){
-      var contribution = $("#hsa-field").val();
-      var fromWhere = "hsa";
+    $('#hsa-form').on('formvalid.zf.abide', function(e){
+      var contribution = $('#hsa-field').val();
+      var fromWhere = 'hsa';
       doTaxes(contribution, fromWhere);
     });
 
     // Skip forward if they decide not to use an HSA
-    $("#step-eight-no").click(function(){
-        var location = "#section-9";
+    $('#step-eight-no').click(function(){
+        var location = '#section-9';
         scrollTo(location);
         checkItemized();
     });
 
     // Get the final summary!
-    $("#step-9").click(function(){
+    $('#step-9').click(function(){
       var itemizedYesNo = $('#yes-deduction:checked').val();
-      console.log(itemizedYesNo);
        if (itemizedYesNo == 'Yes') {
         getItemized();
        }
@@ -509,7 +511,7 @@
        }
     });
 
-    $("#step-10").click(function(){
+    $('#step-10').click(function(){
       getSummary();
     });
 
