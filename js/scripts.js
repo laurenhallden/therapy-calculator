@@ -27,6 +27,7 @@ function stepOne(income){
 	else if (income < 29001){
 		var baserate = (income/1000*2);
 		baserate = Math.round(baserate);
+		baserate = Math.ceil(baserate/5)*5; // round to $5
 	}
 	if (baserate < 20){
 		var baserate = 20; // set 20 as the lower limit; you probably won't pay less than that
@@ -34,8 +35,8 @@ function stepOne(income){
 	setBaseRate(baserate);
 
 	// Move on to the next section
-	var location = '#section-2';
-	scrollTo(location);
+	var end = '#section-2';
+	scrollTo(end);
 
 	// Initialize the baserate slider in section two
 	var $slider = new Foundation.Slider($('.slider'), {
@@ -78,21 +79,21 @@ function checkInsurance(coveredYesNo, networkYesNo){
 	if (coveredYesNo == "covered"){
 		// If they're staying in the provider network (or don't have to worry about one)...
 		if (networkYesNo == 'in-network' || networkYesNo == 'no-network'){
-			var location = '#section-4';
+			var end = '#section-4';
 		}
 		else {
-			var location = '#section-5'; // if they're not staying in-network
+			var end = '#section-5'; // if they're not staying in-network
 		}
 	}
 	else {
-		var location = '#section-6'; // if they're not covered at all
+		var end = '#section-6'; // if they're not covered at all
 	}
-	scrollTo(location); // Send me to the section they selected
+	scrollTo(end); // Send me to the section they selected
 }
 
 
 // ************************************************
-// Section FOUR: Calculate their in-network benefits
+// Section FOUR: Calculate their in-network insurance benefits
 // ************************************************
 
 function applyNetworkInsurance(copay,deductible){
@@ -113,8 +114,8 @@ function applyNetworkInsurance(copay,deductible){
 		// That sucks; let's be sympathetic
 		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
 	}
-	var location = '#section-6';
-	scrollTo(location);  // Moving on!
+	var end = '#section-6';
+	scrollTo(end);  // Moving on!
 }
 
 
@@ -122,10 +123,10 @@ function applyNetworkInsurance(copay,deductible){
 // Section FIVE: Calculate their out-of-netork insurance benefits
 // ************************************************
 
-/* This function is a little crazy, bear with me */
+/* This function is a little crazy; bear with me */
 function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount){
-	if (globalYearlyCost > deductible){  // First, let's check to see if their deductible is so high that nothing matters ALREADY
-		// If it's not, let's set a variable specifically for this function
+	if (globalYearlyCost > deductible){  // First, let's check to see if their deductible is so high that nothing matters ANYWAY
+		// If not, let's set a variable specifically for this function
 		var yearlyCostForThisFunction = globalYearlyCost;
 		// The first thing we want to know is whether a cap will affect their per-session rate
 		if(approvedAmount < globalSessionRate) { // If yes...
@@ -134,7 +135,7 @@ function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount)
 		}
 		var costOfCopays = (outofnetworkCopay * globalNumberOfSessions); // how much copay cost of the course of a year
 		var yearlyCostAfterDeductions = (yearlyCostForThisFunction - deductible - costOfCopays); // removing whatever insurance won't cover ...
-		var insuranceDiscount = yearlyCostAfterDeductions*((100-coinsurance)/100); // ...and applying the deductible to the rest. This is how much cash you save.
+		var insuranceDiscount = yearlyCostAfterDeductions*((100-coinsurance)/100); // ...and applying the coinsurance to the rest. This is how much cash you save.
 		window.globalInsuranceDiscount = insuranceDiscount; // send it to the DOM
 		var yearlyCostWithInsurance = (globalYearlyCost - insuranceDiscount); // This is your yearly amount post-insurance savings
 		setInsurance(yearlyCostWithInsurance);
@@ -158,8 +159,8 @@ function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount)
 		// We tried really hard, but their insurance just had too many restrictions to be helpful
 		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it to see if you can get a plan that costs a little more per month but has fewer costs when you use it.</p>");
 	}
-	var location = "#section-6";
-	scrollTo(location); // Moving on!
+	var end = "#section-6";
+	scrollTo(end); // Moving on!
 }
 
 
@@ -191,10 +192,9 @@ function setFSA(){
 	else {
 		$('#fsa-field').val(globalYearlyCost);
 	}
-	var location = '#section-7';
-	scrollTo(location); // Moving on!
+	var end = '#section-7';
+	scrollTo(end); // Moving on!
 }
-
 
 function setHSA(){
 	// Check to see if the yearly cost of therapy is less than the max allowed HSA contribution
@@ -204,15 +204,14 @@ function setHSA(){
 	else {
 		$('#hsa-field').val(globalYearlyCost);
 	}
-	var location = '#section-8';
-	scrollTo(location);
+	var end = '#section-8';
+	scrollTo(end);
 }
 
 
 // ************************************************
 // Section NINE: Doing Yer Taxes and reporting the results
 // ************************************************
-
 
 // Let's figure out how much a tax deduction would save them */
 // This function is used by FSA, HSA and Itemized Deductions
@@ -259,12 +258,22 @@ function doTaxes(contribution,fromWhere){
 	var taxesOwed = ((globalIncome - amountOver)*taxRate)+baseTaxes;
 
 	// ...and then lowering their income by their pre-tax contribution amount, and checking again
-	window.globalIncome = (globalIncome - contribution); // we'll need this later
-	var taxesOwedWithContribution = ((globalIncome - amountOver)*taxRate)+baseTaxes;
+	window.taxableIncome = (globalIncome - contribution); // we'll need this later
+	console.log("taxableIncome" + taxableIncome);
+	var taxesOwedWithContribution = ((taxableIncome - amountOver)*taxRate)+baseTaxes;
 	taxesOwedWithContribution = Math.round(taxesOwedWithContribution);
 	var taxDiscount = taxesOwed-taxesOwedWithContribution;
-	var yearlyCostWithContribution = (globalYearlyCost - taxDiscount);
-	window.globalTaxDiscount = taxDiscount;
+	taxDiscount = Math.round(taxDiscount);
+	if (globalTaxDiscount == 0) {
+		// if we don't already have a tax discount, this is the whole thing
+		window.globalTaxDiscount = taxDiscount;
+		window.usedTaxSavings = "yes"; // we'll need to know we did this later
+	}
+	else {
+		// if we already had a discount from a previous section, add the new one to it
+		window.globalTaxDiscount = globalTaxDiscount + taxDiscount;
+	}
+	var yearlyCostWithContribution = (globalYearlyCost - globalTaxDiscount);
 	globalYearlyCost = yearlyCostWithContribution;
 	globalSessionRate = (globalYearlyCost/globalNumberOfSessions);
 	globalSessionRate = Math.round(globalSessionRate); // Round the session rate to a whole number
@@ -273,14 +282,20 @@ function doTaxes(contribution,fromWhere){
 
 function reportTaxes(fromWhere){
 	if (fromWhere == "itemized"){
-		var location = "#section-10";
+		var end = "#section-10";
 		$('#itemized-tax-discount-span').html(globalTaxDiscount);
 		$('#section-10 .variable-content #itemized-tax-results').show();
+		if (usedTaxSavings == 'yes') { // if we're combining multiple tax discounts, we need to rework the sentence in this section
+			$('#itemized-first').html("That brought your total tax savings to ");
+			$('#itemized-last').html("");
+			$('#go-to-summary').html("And that’s just about everything I can think to check for you. Ready for your results?");
+			$('#section-10 .variable-content h2').html("It keeps getting better!");
+		}
 		$('#summary-tips').append("<li>You asked to claim you medical expenses on your taxes, so you'll need to itemize your deductions.</li>");
 	}
 	else {
 		if (fromWhere == 'fsa'){
-			$('#section-10 .variable-content #used-what').html(" by using your FSA");
+			$('#section-9 .variable-content #used-what').html(" by using your FSA");
 			if (globalTrackingReceipts == "yes"){ // If this person is submitting manual claims, give these tips
 				$('#summary-tips').append("<li>After your insurance claims are processed, you can pay for the remaining balance with your FSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
 			}
@@ -290,7 +305,7 @@ function reportTaxes(fromWhere){
 			}
 		}
 		else if (fromWhere == 'hsa'){
-			$('#section-10 .variable-content #used-what').html(" by using your HSA");
+			$('#section-9 .variable-content #used-what').html(" by using your HSA");
 			if (globalTrackingReceipts == 'yes'){ // If this person is submitting manual claims, give these tips
 				$('#summary-tips').append("<li>After your insurance claims are processed, you can pay for the remaining balance with your HSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
 			}
@@ -300,12 +315,13 @@ function reportTaxes(fromWhere){
 			}
 		}
 		$('#tax-discount-span').html(globalTaxDiscount);
-		var location = '#section-9';
+		var end = '#section-9';
 		setTaxResults();
 		checkItemized();
 	}
 	$('#summary-tips-label').show();
-	scrollTo(location);
+	scrollTo(end);
+	console.log(fromWhere);
 }
 
 // Change the content of the tax results div based on their tax savings
@@ -355,6 +371,8 @@ function getSummary() {
 	if ((globalInsuranceDiscount>0) && (globalTaxDiscount>0)) {
 		$('#and').show();
 	}
-	var location = '#section-11';
-	scrollTo(location);
+	if (start !== 'section-6') { // excluding section 6 from this, because it's a link click and it's already headed there.
+		var end = '#section-11';
+		scrollTo(end);
+	}
 }

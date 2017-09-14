@@ -2,7 +2,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 5, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,45 +24,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -132,47 +132,53 @@ section h2 {
 }
 
 /* Responsive Columns */
-/* line 51, ../sass/_components.scss */
-.col-wrapper {
+/* line 52, ../sass/_components.scss */
+.flex-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+/* line 57, ../sass/_components.scss */
+.flex-wrapper.slider-wrapper {
+  align-items: flex-start;
   margin: 30px 0 20px;
   padding: 10px 0;
   border-top: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;
 }
-
-/* line 58, ../sass/_components.scss */
-.col {
-  display: inline-block;
-  vertical-align: top;
-  padding: 10px;
+/* line 64, ../sass/_components.scss */
+.flex-wrapper.slider-wrapper .left-content {
+  flex-grow: 8;
 }
-/* line 63, ../sass/_components.scss */
-.col.col-8 {
-  width: 73%;
+/* line 68, ../sass/_components.scss */
+.flex-wrapper.slider-wrapper .right-content {
+  width: 8em;
+  padding: 20px 0 0 20px;
 }
-/* line 67, ../sass/_components.scss */
-.col.col-4 {
-  width: 24%;
+/* line 76, ../sass/_components.scss */
+.flex-wrapper.frequency-wrapper .left-content {
+  flex-grow: 0;
 }
-/* line 71, ../sass/_components.scss */
-.col.col-2 {
-  width: 49%;
+/* line 80, ../sass/_components.scss */
+.flex-wrapper.frequency-wrapper .right-content {
+  flex-grow: 2;
+  padding-left: 20px;
 }
-/* line 75, ../sass/_components.scss */
-.col.middle {
-  vertical-align: middle;
+/* line 83, ../sass/_components.scss */
+.flex-wrapper.frequency-wrapper .right-content select {
+  width: 100%;
 }
 
 /* ===================
 Type
 ====================*/
-/* line 84, ../sass/_components.scss */
+/* line 96, ../sass/_components.scss */
 h1 {
   font-size: 3rem;
   line-height: 3rem;
 }
 
-/* line 89, ../sass/_components.scss */
+/* line 101, ../sass/_components.scss */
 h2 {
   font-size: 1.4rem;
   line-height: 2rem;
@@ -180,57 +186,57 @@ h2 {
   font-weight: 600;
 }
 
-/* line 96, ../sass/_components.scss */
+/* line 108, ../sass/_components.scss */
 h3 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #fff;
   opacity: 0.6;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.2;
   margin-bottom: 0.5em;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-/* line 106, ../sass/_components.scss */
+/* line 118, ../sass/_components.scss */
 p {
   margin-bottom: 1em;
   line-height: 1.4;
 }
 
-/* line 111, ../sass/_components.scss */
+/* line 123, ../sass/_components.scss */
 p.subhead {
   margin: 1rem 0;
   font-size: 1.3rem;
 }
 
-/* line 116, ../sass/_components.scss */
+/* line 128, ../sass/_components.scss */
 p.help-text {
   color: #999999;
   font-size: 0.85rem;
   font-style: normal;
   line-height: 1.25;
 }
-/* line 122, ../sass/_components.scss */
+/* line 134, ../sass/_components.scss */
 p.help-text a {
   color: #999999;
 }
 
-/* line 127, ../sass/_components.scss */
+/* line 139, ../sass/_components.scss */
 a {
   color: #1f7ea3;
   text-decoration: none;
 }
-/* line 131, ../sass/_components.scss */
+/* line 143, ../sass/_components.scss */
 a:hover {
   text-decoration: underline;
 }
 
-/* line 136, ../sass/_components.scss */
+/* line 148, ../sass/_components.scss */
 em {
   font-style: italic;
 }
 
-/* line 140, ../sass/_components.scss */
+/* line 152, ../sass/_components.scss */
 span.strong {
   font-weight: bold;
   color: #0ea257;
@@ -238,24 +244,24 @@ span.strong {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 147, ../sass/_components.scss */
+/* line 159, ../sass/_components.scss */
 strong {
   font-weight: bold;
 }
 
-/* line 151, ../sass/_components.scss */
+/* line 163, ../sass/_components.scss */
 ul {
   list-style-type: disc;
   list-style-position: inside;
 }
 
-/* line 156, ../sass/_components.scss */
+/* line 168, ../sass/_components.scss */
 ol {
   list-style-type: decimal;
   list-style-position: inside;
 }
 
-/* line 161, ../sass/_components.scss */
+/* line 173, ../sass/_components.scss */
 ul,
 ol {
   margin-bottom: 1em;
@@ -263,7 +269,7 @@ ol {
   padding-left: 1em;
 }
 
-/* line 168, ../sass/_components.scss */
+/* line 180, ../sass/_components.scss */
 ul ul,
 ol ul {
   list-style-type: circle;
@@ -271,7 +277,7 @@ ol ul {
   margin-left: 15px;
 }
 
-/* line 175, ../sass/_components.scss */
+/* line 187, ../sass/_components.scss */
 ol ol,
 ul ol {
   list-style-type: lower-latin;
@@ -279,7 +285,7 @@ ul ol {
   margin-left: 15px;
 }
 
-/* line 182, ../sass/_components.scss */
+/* line 194, ../sass/_components.scss */
 ul li,
 ol li {
   list-style-position: inside;
@@ -287,7 +293,7 @@ ol li {
   padding-left: 1em;
 }
 
-/* line 190, ../sass/_components.scss */
+/* line 202, ../sass/_components.scss */
 .ul-padded li {
   margin-bottom: 1em;
 }
@@ -295,18 +301,18 @@ ol li {
 /* ===================
 Form elements
 ====================*/
-/* line 199, ../sass/_components.scss */
+/* line 211, ../sass/_components.scss */
 form,
 input {
   color: #444;
 }
 
-/* line 204, ../sass/_components.scss */
+/* line 216, ../sass/_components.scss */
 label {
   line-height: 1.4;
 }
 
-/* line 208, ../sass/_components.scss */
+/* line 220, ../sass/_components.scss */
 form label,
 form label span,
 label {
@@ -316,25 +322,25 @@ label {
   display: block;
 }
 
-/* line 217, ../sass/_components.scss */
+/* line 229, ../sass/_components.scss */
 .form-error,
 .help-text {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 222, ../sass/_components.scss */
+/* line 234, ../sass/_components.scss */
 form label span {
   margin-bottom: 10px;
 }
 
-/* line 226, ../sass/_components.scss */
+/* line 238, ../sass/_components.scss */
 form label {
   padding: 20px 0 0;
   /* This keeps our fields from jumping when we show and hide them
   height: 105px;*/
 }
 
-/* line 233, ../sass/_components.scss */
+/* line 245, ../sass/_components.scss */
 input,
 [type='text'],
 [type='number'] {
@@ -347,14 +353,14 @@ input,
   background: #f7f8f8;
   height: auto;
 }
-/* line 245, ../sass/_components.scss */
+/* line 257, ../sass/_components.scss */
 input.focus,
 [type='text'].focus,
 [type='number'].focus {
   border: 1px solid #eb0162;
 }
 
-/* line 250, ../sass/_components.scss */
+/* line 262, ../sass/_components.scss */
 select {
   height: auto;
   padding: 0.75em;
@@ -363,11 +369,11 @@ select {
   background-color: #f7f8f8;
 }
 
-/* line 258, ../sass/_components.scss */
+/* line 270, ../sass/_components.scss */
 .radio-button {
   display: block;
 }
-/* line 261, ../sass/_components.scss */
+/* line 273, ../sass/_components.scss */
 .radio-button [type='radio'],
 .radio-button label {
   display: inline-block;
@@ -375,18 +381,18 @@ select {
   margin-bottom: 1em;
   cursor: pointer;
 }
-/* line 268, ../sass/_components.scss */
+/* line 280, ../sass/_components.scss */
 .radio-button label {
   /* I know, I know */
   cursor: default !important;
 }
 
-/* line 276, ../sass/_components.scss */
+/* line 288, ../sass/_components.scss */
 fieldset legend {
   margin-bottom: 2em;
 }
 
-/* line 281, ../sass/_components.scss */
+/* line 293, ../sass/_components.scss */
 button,
 .button {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -404,21 +410,21 @@ button,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 298, ../sass/_components.scss */
+/* line 310, ../sass/_components.scss */
 button.outline,
 .button.outline {
   background-color: transparent;
   color: #0ea257;
   border: 2px solid #0ea257;
 }
-/* line 303, ../sass/_components.scss */
+/* line 315, ../sass/_components.scss */
 button.outline:hover,
 .button.outline:hover {
   background-color: transparent;
   color: #128857;
   border: 2px solid #128857;
 }
-/* line 310, ../sass/_components.scss */
+/* line 322, ../sass/_components.scss */
 button:hover,
 .button:hover {
   background-color: #128857;
@@ -426,12 +432,12 @@ button:hover,
   cursor: pointer;
 }
 
-/* line 317, ../sass/_components.scss */
+/* line 329, ../sass/_components.scss */
 .button + .button {
   margin-left: 0.5em;
 }
 
-/* line 321, ../sass/_components.scss */
+/* line 333, ../sass/_components.scss */
 .error {
   color: #eb0162;
   font-size: 0.8rem;
@@ -440,31 +446,36 @@ button:hover,
 /* ===================
 Page elements
 ====================*/
-/* line 331, ../sass/_components.scss */
+/* line 343, ../sass/_components.scss */
 .intro,
 .footer {
   color: #fff;
   padding: 4em 0 2em;
   text-align: center;
 }
-/* line 337, ../sass/_components.scss */
+/* line 349, ../sass/_components.scss */
 .intro p,
 .intro p a,
 .footer p,
 .footer p a {
   color: rgba(255, 255, 255, 0.6);
 }
-/* line 342, ../sass/_components.scss */
+/* line 354, ../sass/_components.scss */
 .intro a,
 .footer a {
   text-decoration: underline;
+}
+/* line 357, ../sass/_components.scss */
+.intro a:hover,
+.footer a:hover {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* ===================
 Specific sections
 ====================*/
 /* 1 */
-/* line 354, ../sass/_components.scss */
+/* line 370, ../sass/_components.scss */
 .disclaimer {
   background-color: rgba(31, 126, 161, 0.075);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -475,7 +486,7 @@ Specific sections
   color: #1f7ea3;
   margin: 30px 0;
 }
-/* line 364, ../sass/_components.scss */
+/* line 380, ../sass/_components.scss */
 .disclaimer a {
   color: #1f7ea3;
   text-decoration: underline;
@@ -483,7 +494,7 @@ Specific sections
 
 /* 6 */
 /* We want this hidden in case the person doesn't have insurance */
-/* line 373, ../sass/_components.scss */
+/* line 389, ../sass/_components.scss */
 #insurance-results,
 #tax-results {
   display: none;
@@ -492,56 +503,79 @@ Specific sections
   margin-bottom: 2em;
 }
 
-/* line 381, ../sass/_components.scss */
+/* line 397, ../sass/_components.scss */
 p.border-bottom {
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 387, ../sass/_components.scss */
+/* line 403, ../sass/_components.scss */
 hr {
   border: 1px solid #eaeaea;
   margin: 2em 0;
 }
 
 /* Final summary */
-/* line 393, ../sass/_components.scss */
-#but,
-#insurance-saved,
-#taxes-saved,
-#and,
-#summary-tips-label,
-#itemized-tax-results {
+/* line 412, ../sass/_components.scss */
+#section-11 label,
+#section-11 p,
+#section-11 span {
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+/* line 419, ../sass/_components.scss */
+#section-11 #summary-tips-label {
+  margin-top: 40px;
+}
+/* line 423, ../sass/_components.scss */
+#section-11 #but,
+#section-11 #insurance-saved,
+#section-11 #taxes-saved,
+#section-11 #and,
+#section-11 #summary-tips-label,
+#section-11 #itemized-tax-results {
   display: none;
 }
 
 /* FAQ */
-/* line 405, ../sass/_components.scss */
+/* line 438, ../sass/_components.scss */
+.footer hr {
+  opacity: 0.3;
+  border-top: 1px solid #fff;
+  border-bottom: 0;
+  margin: 1em 0 4em;
+}
+
+/* line 447, ../sass/_components.scss */
 .faq .faq-wrapper {
   display: flex;
   margin-top: 2em;
 }
-/* line 409, ../sass/_components.scss */
+/* line 451, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col {
   width: 50%;
   text-align: left;
 }
-/* line 413, ../sass/_components.scss */
+/* line 455, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col div {
   margin: 0 20px 2em;
 }
-/* line 418, ../sass/_components.scss */
+/* line 460, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
-/* line 422, ../sass/_components.scss */
+/* line 464, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span, .faq .faq-wrapper .repo-link i {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 427, ../sass/_components.scss */
+/* line 468, ../sass/_components.scss */
+.faq .faq-wrapper .repo-link span.arrow, .faq .faq-wrapper .repo-link i.arrow {
+  margin-left: 6px;
+}
+/* line 473, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link i {
   margin-right: 10px;
   font-size: 2rem;
