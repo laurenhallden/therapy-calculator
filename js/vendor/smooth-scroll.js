@@ -1,6 +1,8 @@
 
-// Add smooth scrolling to all links
+// Add smooth scrolling to all button links
 $("a").on('click', function(event) {
+  var start = $(this).closest('section').attr('id');
+  window.start = start;
 
   // Make sure this.hash has a value before overriding default behavior
   if (this.hash !== "") {
@@ -11,7 +13,11 @@ $("a").on('click', function(event) {
     var hash = this.hash;
     var heading = $(hash).find('h2');
 
-    // Unhide the section we're traveling to
+    // Loop through subsequent section and hide them, in case the user is starting over and changing stuff
+    var currentSection = $("body").find('#' + start);
+    $(currentSection).nextAll().addClass('hidden');
+
+    // Then unhide the section we're going to
     $(hash).removeClass("hidden");
 
     // Using jQuery's animate() method to add smooth page scroll
@@ -28,9 +34,15 @@ $("a").on('click', function(event) {
 
 
 // Similar to above, but this scrolls to a specific section programatically based on form responses
-function scrollTo(location) {
-  var hash = location;
+function scrollTo(end) {
+  var hash = end;
   var heading = $(hash).find('h2');
+
+  // Loop through subsequent section and hide them, in case the user is starting over and changing stuff
+  var currentSection = $("body").find('#' + start);
+  $(currentSection).nextAll().addClass('hidden');
+
+  // Then unhide the section we're going to
   $(hash).removeClass("hidden");
   $('html, body').animate({scrollTop: $(heading).offset().top}, 800, function(){
     window.location.hash = hash;

@@ -8,20 +8,29 @@ html, body {
 	font-weight: 400;
     font-style: normal;
     font-family: georgia,"times new roman",times,serif;
-    	-webkit-transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
 	-moz-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
+
+	@media #{$break-mobile-large} {
+		font-size: 16px;
+		margin: 0 10px;
+	}
 }
 
 /* Content container */
 .container {
 	width: 40rem;
 	margin: 0 auto;
+
+	@media #{$break-mobile-large} {
+		max-width: 100%;
+	}
 }
 
 section {
-	padding: 3rem;
+	padding: 3em;
 	display: block;
 	opacity: 1;
 	background: $white;
@@ -34,6 +43,10 @@ section {
 	&.hidden {
 		display: none;
 		opacity: 0;
+	}
+
+	@media #{$break-mobile-large} {
+		padding: 40px 20px;
 	}
 }
 
@@ -48,33 +61,61 @@ section h2 {
 
 /* Responsive Columns */
 
-.col-wrapper {
-	margin: 30px 0 20px;
-	padding: 10px 0;
-	border-top: 1px solid $border-gray;
-	border-bottom: 1px solid $border-gray;
-}
 
-.col {
-	display: inline-block;
-	vertical-align: top;
-	padding: 10px;
+.flex-wrapper {
+	display: flex;
+	align-items: center;
+	width: 100%;
 
-	&.col-8 {
-		width: 73%;
+	&.slider-wrapper {
+		align-items: flex-start;
+		margin: 30px 0 20px;
+		padding: 10px 0;
+		border-top: 1px solid $border-gray;
+		border-bottom: 1px solid $border-gray;
+
+		.left-content {
+			flex-grow: 8;
+		}
+
+		.right-content {
+			width: 8em;
+			padding: 20px 0 0 20px;
+		}
 	}
 
-	&.col-4 {
-		width: 24%;
+	&.frequency-wrapper {
+
+		@media #{$break-mobile-large} {
+			display: block;
+		}
+
+		.left-content {
+			flex-grow: 0;
+
+			@media #{$break-mobile-large} {
+				width: 100%;
+				display: block;
+			}
+		}
+
+		.right-content {
+			flex-grow: 2;
+			padding-left: 20px;
+
+			@media #{$break-mobile-large} {
+				width: 100%;
+				display: block;
+				padding-left: 0;
+			}
+
+			select {
+				width: 100%;
+			}
+		}
+
 	}
 
-	&.col-2 {
-		width: 49%;
-	}
-
-	&.middle {
-		vertical-align: middle;
-	}
 }
 
 /* ===================
@@ -84,12 +125,17 @@ Type
 h1 {
 	font-size: 3rem;
 	line-height: 3rem;
+
+	@media #{$break-mobile-large} {
+		font-size: 2.6rem;
+	}
+
 }
 
 h2 {
 	font-size: 1.4rem;
-	line-height: 2rem;
-	margin-bottom: 1rem;
+	line-height: 1.8rem;
+	margin-bottom: 1.5rem;
 	font-weight: 600;
 }
 
@@ -98,9 +144,9 @@ h3 {
 	color: $white;
 	opacity: 0.6;
 	font-weight: 700;
-	line-height: 1.4;
+	line-height: 1.2;
 	margin-bottom: 0.5em;
-	font-size: 1.1rem;
+	font-size: 1rem;
 }
 
 p {
@@ -128,7 +174,9 @@ a {
 	color: $blue-green;
 	text-decoration: none;
 
-	&:hover {
+	&:hover,
+	&:active,
+	&:focus {
 		text-decoration: underline;
 	}
 }
@@ -300,22 +348,35 @@ button,
 		color: $green;
 		border: 2px solid $green;
 
-		&:hover {
+		&:hover,
+		&:active,
+		&:focus {
 			background-color: transparent;
 			color: $hover-green;
 			border: 2px solid $hover-green;
 		}
 	}
 
-	&:hover {
+	&:hover,
+	&:active,
+	&:focus {
 		background-color: $hover-green;
 		border: 2px solid $hover-green;
 		cursor: pointer;
+	}
+
+	@media #{$break-mobile-large} {
+		width: 100%;
+		display: block;
 	}
 }
 
 .button+.button {
 	margin-left: 0.5em;
+
+	@media #{$break-mobile-large} {
+		margin-left: 0;
+	}
 }
 
 .error {
@@ -341,6 +402,12 @@ Page elements
 
 	a {
 		text-decoration: underline;
+
+		&:hover,
+		&:active,
+		&:focus {
+			color: rgba(255,255,255,0.8);
+		}
 	}
 }
 
@@ -390,25 +457,60 @@ hr {
 }
 
 /* Final summary */
-#but,
-#insurance-saved,
-#taxes-saved,
-#and,
-#summary-tips-label,
-#itemized-tax-results {
-	display: none;
+
+#section-11 {
+
+	label,
+	p,
+	span {
+		line-height: 1.4;
+		margin-bottom: 10px;
+	}
+
+	#summary-tips-label {
+		margin-top: 40px;
+	}
+
+	#but,
+	#insurance-saved,
+	#taxes-saved,
+	#and,
+	#summary-tips-label,
+	#itemized-tax-results {
+		display: none;
+	}
 }
 
+
 /* FAQ */
+
+.footer {
+
+	hr {
+		opacity: 0.3;
+		border-top: 1px solid $white;
+		border-bottom: 0;
+		margin: 1em 0 4em;
+	}
+}
 
 .faq {
 	.faq-wrapper {
 		display: flex;
 		margin-top: 2em;
 
+		@media #{$break-mobile-large} {
+			display: block;
+		}
+
 		.faq-col {
 			width: 50%;
 			text-align: left;
+
+			@media #{$break-mobile-large} {
+				width: 100%;
+				display: block;
+			}
 
 			div {
 				margin: 0 20px 2em;
@@ -422,6 +524,10 @@ hr {
 			span, i {
 				display: inline-block;
 				vertical-align: middle;
+
+				&.arrow {
+					margin-left: 6px;
+				}
 			}
 
 			i {
