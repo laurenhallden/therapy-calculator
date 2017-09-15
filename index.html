@@ -428,7 +428,7 @@
     // Calculate baserate
     $('#income-form').on('formvalid.zf.abide', function(e){
       var income = $('#income-field').val();
-      income = income.replace(/\,/g,''); // we have to do this in case they enter commas
+      income = income.replace(/\,/g,''); // we have to keeping doing this in case they enter commas
       income = parseInt(income,10);
       window.globalIncome = income;
       stepOne(income);
@@ -458,6 +458,7 @@
     $('.step-two').click(function(){
       var theId = this.id;
       var currentSliderValue = $('#sliderOutput1').val();
+      window.globalSessionRate = currentSliderValue;
       var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
       window.globalYearlyCost = updatedYearlyCost;
       // Then pick a next step
@@ -471,6 +472,7 @@
           scrollTo(end);
         }
       });
+
     });
 
     // Check insurance
