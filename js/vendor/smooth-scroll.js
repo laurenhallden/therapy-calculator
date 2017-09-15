@@ -1,7 +1,6 @@
 $(document).ready(function(){
   // Add smooth scrolling to all links
   $("a.button").on('click', function(event) {
-    console.log("a is firing");
 
     // Make sure this.hash has a value before overriding default behavior
     if (this.hash !== "") {
@@ -32,7 +31,6 @@ $(document).ready(function(){
 
 function scrollTo(end){
     hash = end;
-    console.log("b is firing");
 
     // Make sure this.hash has a value before overriding default behavior
     if (hash !== "") {

@@ -410,7 +410,6 @@
     os.on('enter', 'section', (element, event) => {
       var scrollId = $(element).attr('id').replace(/section-/, '');
       var progress = (scrollId/10.99);
-      console.log(scrollId);
       NProgress.set(progress);
     });
 
