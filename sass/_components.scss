@@ -125,10 +125,11 @@ Type
 
 h1 {
 	font-size: 3rem;
-	line-height: 2.5rem;
+	line-height: 3.5rem;
 
 	@media #{$break-mobile-large} {
 		font-size: 2.5rem;
+		line-height: 2.75rem;
 	}
 
 }

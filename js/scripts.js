@@ -344,11 +344,12 @@ function doTaxes(contribution,fromWhere){
 	if (globalTaxDiscount == 0) {
 		// if we don't already have a tax discount, this is the whole thing
 		window.globalTaxDiscount = taxDiscount;
-		window.usedTaxSavings = "yes"; // we'll need to know we did this later
+		window.usedTaxSavings = "no"; // we'll need to know we did this later
 	}
 	else {
 		// if we already had a discount from a previous section, add the new one to it
 		window.globalTaxDiscount = globalTaxDiscount + taxDiscount;
+		window.usedTaxSavings = "yes"; // we'll need to know we did this later
 	}
 	var yearlyCostWithContribution = (globalYearlyCost - globalTaxDiscount);
 	globalYearlyCost = yearlyCostWithContribution;
@@ -362,13 +363,13 @@ function reportTaxes(fromWhere){
 		var end = "#section-10";
 		$('#itemized-tax-discount-span').html(globalTaxDiscount);
 		$('#section-10 .variable-content #itemized-tax-results').show();
+		$('#go-to-summary').html("And that’s just about everything I can think to check for you. Ready for your results?");
 		if (usedTaxSavings == 'yes') { // if we're combining multiple tax discounts, we need to rework the sentence in this section
 			$('#itemized-first').html("That brought your total tax savings to ");
 			$('#itemized-last').html("");
-			$('#go-to-summary').html("And that’s just about everything I can think to check for you. Ready for your results?");
 			$('#section-10 .variable-content h2').html("It keeps getting better!");
 		}
-		$('#summary-tips').append("<li>You asked to claim you medical expenses on your taxes, so you'll need to itemize your deductions.</li>");
+		$('#summary-tips').append("<li>You asked to claim you medical expenses on your taxes, so you'll need to itemize your deductions. You should also keep a copy of your receipts in case the IRS wants them later.</li>");
 	}
 	else {
 		if (fromWhere == 'fsa'){
