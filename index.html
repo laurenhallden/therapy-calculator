@@ -72,7 +72,7 @@
       <p>I know the idea of budgeting for therapy is stressful, but it may not cost as much as you think. I’ll try to get you some answers.</p>
       <p>
         <div class="disclaimer">
-          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consider this an estimation, and consult an expert before making decisions that impact your finances and health.
+          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a target="_blank" href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consider this an estimation, and consult an expert before making decisions that impact your finances and health.
         </div>
       </p>
       <p>The first question is an awkward one (sorry!): how much money does your household make in a year?</p>
@@ -343,7 +343,7 @@
       </p>
       <label id="summary-tips-label">A few practical tips based on your situation:</label>
       <ul id="summary-tips" class="ul-padded">
-      <ul>
+      </ul>
     </section>
 
     <div class="footer">
@@ -377,7 +377,7 @@
             </div>
             <div>
               <h3>Can I help make this better?</h3>
-              <p>Of course! If you think something could be improved, drop me an email at lauren [at] laurenhallden [dot] com, or find me on twitter @<a target="_blank" href="https://twitter.com/phillylauren">phillylauren</a>. You can also contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project’s code</a>&mdash;it’s open source.</p>
+              <p>Of course! If you think something could be improved, drop me an email at lauren [at] laurenhallden [dot] com, or find me on twitter @<a target="_blank" href="https://twitter.com/phillylauren">phillylauren</a>. You can also contribute directly to <a target="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project’s code</a>&mdash;it’s open source.</p>
               <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View it on GitHub</span><span class="arrow">➞</span></a></p>
             </div>
           </div>
@@ -400,17 +400,18 @@
   <script>
     // Start with a bunch of assumptions and zeros until told otherwise
     $( document ).ready(function(){
-        window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
-        window.globalInsuranceDiscount = 0;
-        window.globalTaxDiscount = 0;
-        window.globalTrackingReceipts = 'no';
+      window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
+      window.globalInsuranceDiscount = 0;
+      window.globalTaxDiscount = 0;
+      window.globalTrackingReceipts = 'no';
+      window.start = '#section-2';
     });
 
     // Update progress bar based on current section
     os.on('enter', 'section', (element, event) => {
-        var id = $(element).attr('id').replace(/section-/, '');
-        var progress = (id/10.99);
-        NProgress.set(progress);
+      var id = $(element).attr('id').replace(/section-/, '');
+      var progress = (id/10.99);
+      NProgress.set(progress);
     });
 
     // Stop forms from posting on form submit
