@@ -157,7 +157,7 @@
             <option value="no-network">I don't have a preferred network</option>
           </select>
         </label>
-        <a class="button next-step" id="step-three">Next step</a>
+        <button class="button next-step" id="step-three">Next step</button>
       </form>
     </section>
 
@@ -404,13 +404,13 @@
       window.globalInsuranceDiscount = 0;
       window.globalTaxDiscount = 0;
       window.globalTrackingReceipts = 'no';
-      window.start = '#section-2';
     });
 
     // Update progress bar based on current section
     os.on('enter', 'section', (element, event) => {
-      var id = $(element).attr('id').replace(/section-/, '');
-      var progress = (id/10.99);
+      var scrollId = $(element).attr('id').replace(/section-/, '');
+      var progress = (scrollId/10.99);
+      console.log(scrollId);
       NProgress.set(progress);
     });
 
@@ -421,7 +421,7 @@
     });
 
     // Whenever a button is clicked, log its section to the DOM
-    $('button.button').click(function(){
+    $('.button').click(function(){
       var start = $(this).closest('section').attr('id');
       window.start = start;
     });
@@ -457,17 +457,17 @@
 
     // Grab the value of the slider and set the new yearly cost
     $('.step-two').click(function(){
-      var id = this.id;
+      var theId = this.id;
       var currentSliderValue = $('#sliderOutput1').val();
       var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
       window.globalYearlyCost = updatedYearlyCost;
       // Then pick a next step
       $('#slider-form').on('formvalid.zf.abide', function(e){
-        if (id == 'step-two-yes') {
+        if (theId == 'step-two-yes'){
           var end = '#section-3';
           scrollTo(end);
         }
-        else {
+        else if (theId == 'step-two-no'){
           var end = '#section-6';
           scrollTo(end);
         }

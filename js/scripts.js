@@ -336,7 +336,6 @@ function doTaxes(contribution,fromWhere){
 
 	// ...and then lowering their income by their pre-tax contribution amount, and checking again
 	window.taxableIncome = (globalIncome - contribution); // we'll need this later
-	console.log("taxableIncome" + taxableIncome);
 	var taxesOwedWithContribution = ((taxableIncome - amountOver)*taxRate)+baseTaxes;
 	taxesOwedWithContribution = Math.round(taxesOwedWithContribution);
 	var taxDiscount = taxesOwed-taxesOwedWithContribution;
@@ -398,7 +397,6 @@ function reportTaxes(fromWhere){
 	}
 	$('#summary-tips-label').show();
 	scrollTo(end);
-	console.log(fromWhere);
 }
 
 // Change the content of the tax results div based on their tax savings
@@ -448,7 +446,7 @@ function getSummary() {
 	if ((globalInsuranceDiscount>0) && (globalTaxDiscount>0)) {
 		$('#and').show();
 	}
-	if (start !== 'section-6') { // excluding section 6 from this, because it's a link click and it's already headed there.
+	if (start !== '#section-6') { // excluding section 6 from this, because it's a link click and it's already headed there.
 		var end = '#section-11';
 		scrollTo(end);
 	}
