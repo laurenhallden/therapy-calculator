@@ -98,7 +98,7 @@ html, body {
   /* line 5, ../sass/_components.scss */
   html, body {
     font-size: 16px;
-    margin: 0 10px;
+    margin: 0 0.5rem;
   }
 }
 
@@ -135,7 +135,7 @@ section.hidden {
 @media screen and (max-width: 767px) {
   /* line 32, ../sass/_components.scss */
   section {
-    padding: 40px 20px;
+    padding: 2rem 1.5rem;
   }
 }
 
@@ -204,7 +204,7 @@ section h2 {
     padding-left: 0;
   }
 }
-/* line 112, ../sass/_components.scss */
+/* line 113, ../sass/_components.scss */
 .flex-wrapper.frequency-wrapper .right-content select {
   width: 100%;
 }
@@ -212,19 +212,19 @@ section h2 {
 /* ===================
 Type
 ====================*/
-/* line 125, ../sass/_components.scss */
+/* line 126, ../sass/_components.scss */
 h1 {
   font-size: 3rem;
-  line-height: 3rem;
+  line-height: 2.5rem;
 }
 @media screen and (max-width: 767px) {
-  /* line 125, ../sass/_components.scss */
+  /* line 126, ../sass/_components.scss */
   h1 {
-    font-size: 2.6rem;
+    font-size: 2.5rem;
   }
 }
 
-/* line 135, ../sass/_components.scss */
+/* line 136, ../sass/_components.scss */
 h2 {
   font-size: 1.4rem;
   line-height: 1.8rem;
@@ -232,7 +232,7 @@ h2 {
   font-weight: 600;
 }
 
-/* line 142, ../sass/_components.scss */
+/* line 143, ../sass/_components.scss */
 h3 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #fff;
@@ -243,47 +243,47 @@ h3 {
   font-size: 1rem;
 }
 
-/* line 152, ../sass/_components.scss */
+/* line 153, ../sass/_components.scss */
 p {
   margin-bottom: 1em;
   line-height: 1.4;
 }
 
-/* line 157, ../sass/_components.scss */
+/* line 158, ../sass/_components.scss */
 p.subhead {
   margin: 1rem 0;
   font-size: 1.3rem;
 }
 
-/* line 162, ../sass/_components.scss */
+/* line 163, ../sass/_components.scss */
 p.help-text {
   color: #999999;
   font-size: 0.85rem;
   font-style: normal;
   line-height: 1.25;
 }
-/* line 168, ../sass/_components.scss */
+/* line 169, ../sass/_components.scss */
 p.help-text a {
   color: #999999;
 }
 
-/* line 173, ../sass/_components.scss */
+/* line 174, ../sass/_components.scss */
 a {
   color: #1f7ea3;
   text-decoration: none;
   cursor: pointer;
 }
-/* line 178, ../sass/_components.scss */
+/* line 179, ../sass/_components.scss */
 a:hover, a:active, a:focus {
   text-decoration: underline;
 }
 
-/* line 185, ../sass/_components.scss */
+/* line 186, ../sass/_components.scss */
 em {
   font-style: italic;
 }
 
-/* line 189, ../sass/_components.scss */
+/* line 190, ../sass/_components.scss */
 span.strong {
   font-weight: bold;
   color: #0ea257;
@@ -291,32 +291,39 @@ span.strong {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 196, ../sass/_components.scss */
+/* line 197, ../sass/_components.scss */
 strong {
   font-weight: bold;
 }
 
-/* line 200, ../sass/_components.scss */
+/* line 201, ../sass/_components.scss */
 ul {
   list-style-type: disc;
   list-style-position: inside;
 }
 
-/* line 205, ../sass/_components.scss */
+/* line 206, ../sass/_components.scss */
 ol {
   list-style-type: decimal;
   list-style-position: inside;
 }
 
-/* line 210, ../sass/_components.scss */
+/* line 211, ../sass/_components.scss */
 ul,
 ol {
   margin-bottom: 1em;
   line-height: 1.4;
   padding-left: 1em;
 }
+@media screen and (max-width: 767px) {
+  /* line 211, ../sass/_components.scss */
+  ul,
+  ol {
+    padding-left: 0.5em;
+  }
+}
 
-/* line 217, ../sass/_components.scss */
+/* line 223, ../sass/_components.scss */
 ul ul,
 ol ul {
   list-style-type: circle;
@@ -324,7 +331,7 @@ ol ul {
   margin-left: 15px;
 }
 
-/* line 224, ../sass/_components.scss */
+/* line 230, ../sass/_components.scss */
 ol ol,
 ul ol {
   list-style-type: lower-latin;
@@ -332,7 +339,7 @@ ul ol {
   margin-left: 15px;
 }
 
-/* line 231, ../sass/_components.scss */
+/* line 237, ../sass/_components.scss */
 ul li,
 ol li {
   list-style-position: inside;
@@ -340,7 +347,7 @@ ol li {
   padding-left: 1em;
 }
 
-/* line 239, ../sass/_components.scss */
+/* line 245, ../sass/_components.scss */
 .ul-padded li {
   margin-bottom: 1em;
 }
@@ -348,18 +355,18 @@ ol li {
 /* ===================
 Form elements
 ====================*/
-/* line 248, ../sass/_components.scss */
+/* line 254, ../sass/_components.scss */
 form,
 input {
   color: #444;
 }
 
-/* line 253, ../sass/_components.scss */
+/* line 259, ../sass/_components.scss */
 label {
   line-height: 1.4;
 }
 
-/* line 257, ../sass/_components.scss */
+/* line 263, ../sass/_components.scss */
 form label,
 form label span,
 label {
@@ -369,25 +376,29 @@ label {
   display: block;
 }
 
-/* line 266, ../sass/_components.scss */
+/* line 272, ../sass/_components.scss */
 .form-error,
 .help-text {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 271, ../sass/_components.scss */
+/* line 277, ../sass/_components.scss */
 form label span {
   margin-bottom: 10px;
 }
 
-/* line 275, ../sass/_components.scss */
+/* line 281, ../sass/_components.scss */
 form label {
   padding: 20px 0 0;
-  /* This keeps our fields from jumping when we show and hide them
-  height: 105px;*/
+}
+@media screen and (max-width: 767px) {
+  /* line 281, ../sass/_components.scss */
+  form label {
+    padding: 0.5rem 0 0;
+  }
 }
 
-/* line 282, ../sass/_components.scss */
+/* line 289, ../sass/_components.scss */
 input,
 [type='text'],
 [type='number'] {
@@ -400,14 +411,14 @@ input,
   background: #f7f8f8;
   height: auto;
 }
-/* line 294, ../sass/_components.scss */
+/* line 301, ../sass/_components.scss */
 input.focus,
 [type='text'].focus,
 [type='number'].focus {
   border: 1px solid #eb0162;
 }
 
-/* line 299, ../sass/_components.scss */
+/* line 306, ../sass/_components.scss */
 select {
   height: auto;
   padding: 0.75em;
@@ -416,11 +427,11 @@ select {
   background-color: #f7f8f8;
 }
 
-/* line 307, ../sass/_components.scss */
+/* line 314, ../sass/_components.scss */
 .radio-button {
   display: block;
 }
-/* line 310, ../sass/_components.scss */
+/* line 317, ../sass/_components.scss */
 .radio-button [type='radio'],
 .radio-button label {
   display: inline-block;
@@ -428,18 +439,39 @@ select {
   margin-bottom: 1em;
   cursor: pointer;
 }
-/* line 317, ../sass/_components.scss */
+@media screen and (max-width: 767px) {
+  /* line 317, ../sass/_components.scss */
+  .radio-button [type='radio'],
+  .radio-button label {
+    vertical-align: top;
+  }
+}
+@media screen and (max-width: 767px) {
+  /* line 330, ../sass/_components.scss */
+  .radio-button [type='radio'] {
+    margin-top: 0.3rem;
+  }
+}
+/* line 335, ../sass/_components.scss */
 .radio-button label {
   /* I know, I know */
   cursor: default !important;
 }
-
-/* line 325, ../sass/_components.scss */
-fieldset legend {
-  margin-bottom: 2em;
+@media screen and (max-width: 767px) {
+  /* line 335, ../sass/_components.scss */
+  .radio-button label {
+    width: 90%;
+    margin-right: 0;
+  }
 }
 
-/* line 330, ../sass/_components.scss */
+/* line 348, ../sass/_components.scss */
+fieldset legend {
+  margin-bottom: 2em;
+  line-height: 1.4;
+}
+
+/* line 354, ../sass/_components.scss */
 button,
 .button {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -457,14 +489,14 @@ button,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 347, ../sass/_components.scss */
+/* line 371, ../sass/_components.scss */
 button.outline,
 .button.outline {
   background-color: transparent;
   color: #0ea257;
   border: 2px solid #0ea257;
 }
-/* line 352, ../sass/_components.scss */
+/* line 376, ../sass/_components.scss */
 button.outline:hover, button.outline:active, button.outline:focus,
 .button.outline:hover,
 .button.outline:active,
@@ -473,7 +505,7 @@ button.outline:hover, button.outline:active, button.outline:focus,
   color: #128857;
   border: 2px solid #128857;
 }
-/* line 361, ../sass/_components.scss */
+/* line 385, ../sass/_components.scss */
 button:hover, button:active, button:focus,
 .button:hover,
 .button:active,
@@ -483,7 +515,7 @@ button:hover, button:active, button:focus,
   cursor: pointer;
 }
 @media screen and (max-width: 767px) {
-  /* line 330, ../sass/_components.scss */
+  /* line 354, ../sass/_components.scss */
   button,
   .button {
     width: 100%;
@@ -491,18 +523,18 @@ button:hover, button:active, button:focus,
   }
 }
 
-/* line 375, ../sass/_components.scss */
+/* line 399, ../sass/_components.scss */
 .button + .button {
   margin-left: 0.5em;
 }
 @media screen and (max-width: 767px) {
-  /* line 375, ../sass/_components.scss */
+  /* line 399, ../sass/_components.scss */
   .button + .button {
     margin-left: 0;
   }
 }
 
-/* line 383, ../sass/_components.scss */
+/* line 407, ../sass/_components.scss */
 .error {
   color: #eb0162;
   font-size: 0.8rem;
@@ -511,26 +543,26 @@ button:hover, button:active, button:focus,
 /* ===================
 Page elements
 ====================*/
-/* line 393, ../sass/_components.scss */
+/* line 417, ../sass/_components.scss */
 .intro,
 .footer {
   color: #fff;
   padding: 4em 0 2em;
   text-align: center;
 }
-/* line 399, ../sass/_components.scss */
+/* line 423, ../sass/_components.scss */
 .intro p,
 .intro p a,
 .footer p,
 .footer p a {
   color: rgba(255, 255, 255, 0.6);
 }
-/* line 404, ../sass/_components.scss */
+/* line 428, ../sass/_components.scss */
 .intro a,
 .footer a {
   text-decoration: underline;
 }
-/* line 407, ../sass/_components.scss */
+/* line 431, ../sass/_components.scss */
 .intro a:hover, .intro a:active, .intro a:focus,
 .footer a:hover,
 .footer a:active,
@@ -542,7 +574,7 @@ Page elements
 Specific sections
 ====================*/
 /* 1 */
-/* line 422, ../sass/_components.scss */
+/* line 446, ../sass/_components.scss */
 .disclaimer {
   background-color: rgba(31, 126, 161, 0.075);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -553,7 +585,7 @@ Specific sections
   color: #1f7ea3;
   margin: 30px 0;
 }
-/* line 432, ../sass/_components.scss */
+/* line 456, ../sass/_components.scss */
 .disclaimer a {
   color: #1f7ea3;
   text-decoration: underline;
@@ -561,7 +593,7 @@ Specific sections
 
 /* 6 */
 /* We want this hidden in case the person doesn't have insurance */
-/* line 441, ../sass/_components.scss */
+/* line 465, ../sass/_components.scss */
 #insurance-results,
 #tax-results {
   display: none;
@@ -570,39 +602,39 @@ Specific sections
   margin-bottom: 2em;
 }
 
-/* line 449, ../sass/_components.scss */
+/* line 473, ../sass/_components.scss */
 p.border-bottom {
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 455, ../sass/_components.scss */
+/* line 479, ../sass/_components.scss */
 p.border-top {
   border-top: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 461, ../sass/_components.scss */
+/* line 485, ../sass/_components.scss */
 hr {
   border: 1px solid #eaeaea;
   margin: 2em 0;
 }
 
 /* Final summary */
-/* line 470, ../sass/_components.scss */
+/* line 494, ../sass/_components.scss */
 #section-11 label,
 #section-11 p,
 #section-11 span {
   line-height: 1.4;
   margin-bottom: 10px;
 }
-/* line 477, ../sass/_components.scss */
+/* line 501, ../sass/_components.scss */
 #section-11 #summary-tips-label {
   margin-top: 40px;
 }
-/* line 481, ../sass/_components.scss */
+/* line 505, ../sass/_components.scss */
 #section-11 #but,
 #section-11 #insurance-saved,
 #section-11 #taxes-saved,
@@ -614,12 +646,12 @@ hr {
 
 /* FAQ */
 @media screen and (max-width: 767px) {
-  /* line 494, ../sass/_components.scss */
+  /* line 518, ../sass/_components.scss */
   .footer {
     text-align: left;
   }
 }
-/* line 500, ../sass/_components.scss */
+/* line 524, ../sass/_components.scss */
 .footer hr {
   opacity: 0.3;
   border-top: 1px solid #fff;
@@ -628,60 +660,60 @@ hr {
 }
 
 @media screen and (max-width: 767px) {
-  /* line 508, ../sass/_components.scss */
+  /* line 532, ../sass/_components.scss */
   .faq {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-/* line 514, ../sass/_components.scss */
+/* line 538, ../sass/_components.scss */
 .faq .faq-wrapper {
   display: flex;
   margin-top: 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 514, ../sass/_components.scss */
+  /* line 538, ../sass/_components.scss */
   .faq .faq-wrapper {
     display: block;
   }
 }
-/* line 522, ../sass/_components.scss */
+/* line 546, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col {
   width: 50%;
   text-align: left;
 }
 @media screen and (max-width: 767px) {
-  /* line 522, ../sass/_components.scss */
+  /* line 546, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col {
     width: 100%;
     display: block;
   }
 }
-/* line 531, ../sass/_components.scss */
+/* line 555, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col div {
   margin: 0 20px 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 531, ../sass/_components.scss */
+  /* line 555, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col div {
     margin: 0 0 2em;
   }
 }
-/* line 540, ../sass/_components.scss */
+/* line 564, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
-/* line 544, ../sass/_components.scss */
+/* line 568, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span, .faq .faq-wrapper .repo-link i {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 548, ../sass/_components.scss */
+/* line 572, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span.arrow, .faq .faq-wrapper .repo-link i.arrow {
   margin-left: 6px;
 }
-/* line 553, ../sass/_components.scss */
+/* line 577, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link i {
   margin-right: 10px;
   font-size: 2rem;

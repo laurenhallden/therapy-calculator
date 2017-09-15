@@ -15,7 +15,7 @@ html, body {
 
 	@media #{$break-mobile-large} {
 		font-size: 16px;
-		margin: 0 10px;
+		margin: 0 0.5rem;
 	}
 }
 
@@ -46,7 +46,7 @@ section {
 	}
 
 	@media #{$break-mobile-large} {
-		padding: 40px 20px;
+		padding: 2rem 1.5rem;
 	}
 }
 
@@ -107,6 +107,7 @@ section h2 {
 				width: 100%;
 				display: block;
 				padding-left: 0;
+
 			}
 
 			select {
@@ -124,10 +125,10 @@ Type
 
 h1 {
 	font-size: 3rem;
-	line-height: 3rem;
+	line-height: 2.5rem;
 
 	@media #{$break-mobile-large} {
-		font-size: 2.6rem;
+		font-size: 2.5rem;
 	}
 
 }
@@ -212,6 +213,11 @@ ol {
 	margin-bottom: 1em;
 	line-height: 1.4;
 	padding-left: 1em;
+
+	@media #{$break-mobile-large} {
+		padding-left: 0.5em;
+	}
+
 }
 
 ul ul,
@@ -274,9 +280,10 @@ form label span {
 
 form label {
 	padding: 20px 0 0;
-	
-	/* This keeps our fields from jumping when we show and hide them
-	height: 105px;*/
+
+	@media #{$break-mobile-large} {
+		padding: 0.5rem 0 0;
+	}
 }
 
 input,
@@ -313,10 +320,26 @@ select {
 		vertical-align: middle;
 		margin-bottom: 1em;
 		cursor: pointer;
+
+		@media #{$break-mobile-large} {
+			vertical-align: top;
+		}
 	}
+
+	@media #{$break-mobile-large} {
+		[type='radio'] {
+			margin-top: 0.3rem;
+		}
+	}
+
 	label {
 		/* I know, I know */
 		cursor: default !important;
+
+		@media #{$break-mobile-large} {
+			width: 90%;
+			margin-right: 0;
+		}
 	}
 }
 
@@ -324,6 +347,7 @@ fieldset {
 
 	legend {
 		margin-bottom: 2em;
+		line-height: 1.4;
 	}
 }
 
