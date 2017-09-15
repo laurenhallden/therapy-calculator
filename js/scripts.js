@@ -218,40 +218,117 @@ function setHSA(){
 
 function doTaxes(contribution,fromWhere){
 	// Apply some marginal tax rates, yo!
-	if (globalIncome > 418400){
-		var taxRate = .3960
-		var baseTaxes = 121505.25;
-		var amountOver = 418400;
+	// But first we need to put them in a tax bracket, because that is A Thing.
+	if (taxBracket == 'single'){ // Single person rates
+		if (globalIncome > 418400){
+			var taxRate = .3960;
+			var baseTaxes = 121505.25;
+			var amountOver = 418400;
+		}
+		else if (globalIncome > 416700){
+			var taxRate = .35;
+			var baseTaxes = 120910.25;
+			var amountOver = 416700;
+		}
+		else if (globalIncome > 191650){
+			var taxRate = .33;
+			var baseTaxes = 46643.75;
+			var amountOver = 191650;
+		}
+		else if (globalIncome > 91900){
+			var taxRate = .28;
+			var baseTaxes = 18713.75;
+			var amountOver = 91900;
+		}
+		else if (globalIncome > 37950){
+			var taxRate = .25;
+			var baseTaxes = 5226.25;
+			var amountOver = 37950;
+		}
+		else if (globalIncome > 9325){
+			var taxRate = .15;
+			var baseTaxes = 932.50;
+			var amountOver = 9325;
+		}
+		else if (globalIncome > 0){
+			var taxRate = .10;
+			var baseTaxes = 0;
+			var amountOver = 0;
+		}
 	}
-	else if (globalIncome > 416700){
-		var taxRate = .35
-		var baseTaxes = 120910.25;
-		var amountOver = 416700;
+	else if (taxBracket == 'joint'){ // Joint filing rates
+		if (globalIncome > 470700){
+			var taxRate = .3960;
+			var baseTaxes = 131628;
+			var amountOver = 470700;
+		}
+		else if (globalIncome > 416700){
+			var taxRate = .35;
+			var baseTaxes = 112728;
+			var amountOver = 416700;
+		}
+		else if (globalIncome > 233350){
+			var taxRate = .33;
+			var baseTaxes = 52222.50;
+			var amountOver = 233350;
+		}
+		else if (globalIncome > 153100){
+			var taxRate = .28;
+			var baseTaxes = 29752.50;
+			var amountOver = 153100;
+		}
+		else if (globalIncome > 75900){
+			var taxRate = .25
+			var baseTaxes = 10452.50;
+			var amountOver = 75900;
+		}
+		else if (globalIncome > 18650){
+			var taxRate = .15;
+			var baseTaxes = 1865;
+			var amountOver = 18650;
+		}
+		else if (globalIncome > 0){
+			var taxRate = .10;
+			var baseTaxes = 0;
+			var amountOver = 0;
+		}
 	}
-	else if (globalIncome > 191650){
-		var taxRate = .33
-		var baseTaxes = 46643.75;
-		var amountOver = 191650;
-	}
-	else if (globalIncome > 91900){
-		var taxRate = .28
-		var baseTaxes = 18713.75;
-		var amountOver = 91900;
-	}
-	else if (globalIncome > 37950){
-		var taxRate = .25
-		var baseTaxes = 5226.25;
-		var amountOver = 37950;
-	}
-	else if (globalIncome > 9325){
-		var taxRate = .15
-		var baseTaxes = 932.50;
-		var amountOver = 9325;
-	}
-	else if (globalIncome > 0){
-		var taxRate = .10
-		var baseTaxes = 0;
-		var amountOver = 0;
+	else { // Head of household rates
+		if (globalIncome > 444550){
+			var taxRate = .3960;
+			var baseTaxes = 126950;
+			var amountOver = 444550;
+		}
+		else if (globalIncome > 416700){
+			var taxRate = .35;
+			var baseTaxes = 117202.50;
+			var amountOver = 416701; // Idk why this is one more than normal but that's what the source said
+		}
+		else if (globalIncome > 212500){
+			var taxRate = .33;
+			var baseTaxes = 49816.50;
+			var amountOver = 212500;
+		}
+		else if (globalIncome > 131200){
+			var taxRate = .28;
+			var baseTaxes = 27052.50;
+			var amountOver = 131200;
+		}
+		else if (globalIncome > 50800){
+			var taxRate = .25
+			var baseTaxes = 6952.50;
+			var amountOver = 50800;
+		}
+		else if (globalIncome > 13350){
+			var taxRate = .15;
+			var baseTaxes = 1335;
+			var amountOver = 13350;
+		}
+		else if (globalIncome > 0){
+			var taxRate = .10;
+			var baseTaxes = 0;
+			var amountOver = 0;
+		}
 	}
 
 	// This is a little simplistic, but we're checking what they would pay in taxes normally...

@@ -178,7 +178,7 @@
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="outofnetwork-copay-help-text">You probably don’t havae this if you also have co-insurance, but some plans have both. :( Leave this blank if yours doesn’t.</p>
+        <p class="help-text" id="outofnetwork-copay-help-text">You probably don’t have this if you also have co-insurance, but some plans have both. :( Leave this blank if yours doesn’t.</p>
 
         <label><span>Your plan’s approved amount for each therapy session:</span>
           <input type="text" id="approved-amount-field" value="" aria-describedby="approved-amount-help-text" pattern="number">
@@ -207,6 +207,13 @@
             <option value="no-tax-vehicle">Neither</option>
           </select>
         </label>
+        <label><span>And you file taxes:</span>
+            <select id="tax-bracket">
+              <option value="single">As a single person</option>
+              <option value="joint">Married, filing jointly</option>
+              <option value="head">As the head of a household</option>
+            </select>
+          </label>
         <button class="button next-step" id="step-six-yes">Check deductions</button>
         <a class="button next-step outline" id="step-six-no" href="#section-11">Nope, skip the taxes stuff</a>
       </form>
@@ -262,7 +269,7 @@
         <h2>Let’s keep talking taxes (sorry!)</h2>
         <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes<span id="used-what"></span>.</p>
       </div>
-      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income in 2017 (or 7.5% if you're over 65), you may be able to deduct them.</p>
+      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income in 2017, you may be able to deduct them.</p>
       <p>Your Adjusted Gross income is your household income minus any other deductions, like student loan payments or mortgage interest.</p>
       <p>A few things to know:</p>
       <ul class="ul-padded">
@@ -314,16 +321,16 @@
           <div class="faq-col">
             <div>
               <h3>How does this work?</h3>
-              <p>This is a calculator that walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
+              <p>This calculator walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
             </div>
             <div>
               <h3>Do you save my data?</h3>
-              <p>Nope. None of the forms here send your numbers anywhere beyond this page. They only use them to do some math.</p>
+              <p>Nope. None of the forms here send your numbers anywhere beyond this page. We're just doing some math for you.</p>
             </div>
             <div>
               <h3>Is this calculator correct?</h3>
-              <p>Like I mentioned in the disclaimer, I’m not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn’t necessarily what you’re stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later this calculator was born.</p>
-              <p>Please think of this is an exploration into your options, and talk to your insurance and tax professionals for verified expert advice.</p>
+              <p>As I mentioned in the disclaimer, I’m not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn’t necessarily what you’re stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later, this calculator was born.</p>
+              <p>Please think of this is an exploration of your options, and talk to your insurance and tax professionals for verified expert advice.</p>
             </div>
           </div>
           <div class="faq-col">
@@ -337,8 +344,8 @@
             </div>
             <div>
               <h3>Can I help make this better?</h3>
-              <p>Of course! If you think something could be improved about this project, drop me an email at lauren [at] laurenhallden [dot] com, or find me on twitter @<a target="_blank" href="https://twitter.com/phillylauren">phillylauren</a>. You can also see and contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project’s code</a>&mdash;it’s open source.</p>
-              <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View on GitHub</span><span class="arrow">➞</span></a></p>
+              <p>Of course! If you think something could be improved, drop me an email at lauren [at] laurenhallden [dot] com, or find me on twitter @<a target="_blank" href="https://twitter.com/phillylauren">phillylauren</a>. You can also contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project’s code</a>&mdash;it’s open source.</p>
+              <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View it on GitHub</span><span class="arrow">➞</span></a></p>
             </div>
           </div>
         </div>
@@ -480,6 +487,8 @@
 
     // Check FSA or HSA...
     $('#step-six-yes').click(function(){
+      var taxBracket = $('#tax-bracket :selected').val();
+      window.taxBracket = taxBracket;
       var taxVehicle = $('#tax-vehicle :selected').val();
       if ( taxVehicle == 'fsa') {
         setFSA();
