@@ -493,6 +493,10 @@ hr {
 
 .footer {
 
+	@media #{$break-mobile-large} {
+		text-align: left;
+	}
+
 	hr {
 		opacity: 0.3;
 		border-top: 1px solid $white;
@@ -502,6 +506,11 @@ hr {
 }
 
 .faq {
+	@media #{$break-mobile-large} {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+
 	.faq-wrapper {
 		display: flex;
 		margin-top: 2em;
@@ -521,6 +530,10 @@ hr {
 
 			div {
 				margin: 0 20px 2em;
+
+				@media #{$break-mobile-large} {
+					margin: 0 0 2em;
+				}
 			}
 		}
 
