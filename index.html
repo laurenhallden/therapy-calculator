@@ -400,14 +400,18 @@
   <script>
     // Start with a bunch of assumptions and zeros until told otherwise
     $( document ).ready(function(){
-        setBasics();
+      window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
+      window.globalInsuranceDiscount = 0;
+      window.globalTaxDiscount = 0;
+      window.globalTrackingReceipts = 'no';
+      window.start = '#section-2';
     });
 
     // Update progress bar based on current section
     os.on('enter', 'section', (element, event) => {
-        var id = $(element).attr('id').replace(/section-/, '');
-        var progress = (id/10.99);
-        NProgress.set(progress);
+      var id = $(element).attr('id').replace(/section-/, '');
+      var progress = (id/10.99);
+      NProgress.set(progress);
     });
 
     // Stop forms from posting on form submit
