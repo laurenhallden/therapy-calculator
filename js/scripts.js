@@ -136,6 +136,7 @@ function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount)
 		var costOfCopays = (outofnetworkCopay * globalNumberOfSessions); // how much copay cost of the course of a year
 		var yearlyCostAfterDeductions = (yearlyCostForThisFunction - deductible - costOfCopays); // removing whatever insurance won't cover ...
 		var insuranceDiscount = yearlyCostAfterDeductions*((100-coinsurance)/100); // ...and applying the coinsurance to the rest. This is how much cash you save.
+		insuranceDiscount = Math.round(insuranceDiscount);
 		window.globalInsuranceDiscount = insuranceDiscount; // send it to the DOM
 		var yearlyCostWithInsurance = (globalYearlyCost - insuranceDiscount); // This is your yearly amount post-insurance savings
 		setInsurance(yearlyCostWithInsurance);
