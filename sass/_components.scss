@@ -8,20 +8,29 @@ html, body {
 	font-weight: 400;
     font-style: normal;
     font-family: georgia,"times new roman",times,serif;
-    	-webkit-transition: all 0.3s ease-out;
+    -webkit-transition: all 0.3s ease-out;
 	-moz-transition: all 0.3s ease-out;
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
+
+	@media #{$break-mobile-large} {
+		font-size: 16px;
+		margin: 0 10px;
+	}
 }
 
 /* Content container */
 .container {
 	width: 40rem;
 	margin: 0 auto;
+
+	@media #{$break-mobile-large} {
+		max-width: 100%;
+	}
 }
 
 section {
-	padding: 3rem;
+	padding: 3em;
 	display: block;
 	opacity: 1;
 	background: $white;
@@ -34,6 +43,10 @@ section {
 	&.hidden {
 		display: none;
 		opacity: 0;
+	}
+
+	@media #{$break-mobile-large} {
+		padding: 40px 20px;
 	}
 }
 
@@ -73,13 +86,29 @@ section h2 {
 
 	&.frequency-wrapper {
 
+		@media #{$break-mobile-large} {
+			display: block;
+		}
+
 		.left-content {
 			flex-grow: 0;
+
+			@media #{$break-mobile-large} {
+				width: 100%;
+				display: block;
+			}
 		}
 
 		.right-content {
 			flex-grow: 2;
 			padding-left: 20px;
+
+			@media #{$break-mobile-large} {
+				width: 100%;
+				display: block;
+				padding-left: 0;
+			}
+
 			select {
 				width: 100%;
 			}
@@ -96,12 +125,17 @@ Type
 h1 {
 	font-size: 3rem;
 	line-height: 3rem;
+
+	@media #{$break-mobile-large} {
+		font-size: 2.6rem;
+	}
+
 }
 
 h2 {
 	font-size: 1.4rem;
-	line-height: 2rem;
-	margin-bottom: 1rem;
+	line-height: 1.8rem;
+	margin-bottom: 1.5rem;
 	font-weight: 600;
 }
 
@@ -140,7 +174,9 @@ a {
 	color: $blue-green;
 	text-decoration: none;
 
-	&:hover {
+	&:hover,
+	&:active,
+	&:focus {
 		text-decoration: underline;
 	}
 }
@@ -312,22 +348,35 @@ button,
 		color: $green;
 		border: 2px solid $green;
 
-		&:hover {
+		&:hover,
+		&:active,
+		&:focus {
 			background-color: transparent;
 			color: $hover-green;
 			border: 2px solid $hover-green;
 		}
 	}
 
-	&:hover {
+	&:hover,
+	&:active,
+	&:focus {
 		background-color: $hover-green;
 		border: 2px solid $hover-green;
 		cursor: pointer;
+	}
+
+	@media #{$break-mobile-large} {
+		width: 100%;
+		display: block;
 	}
 }
 
 .button+.button {
 	margin-left: 0.5em;
+
+	@media #{$break-mobile-large} {
+		margin-left: 0;
+	}
 }
 
 .error {
@@ -354,7 +403,9 @@ Page elements
 	a {
 		text-decoration: underline;
 
-		&:hover {
+		&:hover,
+		&:active,
+		&:focus {
 			color: rgba(255,255,255,0.8);
 		}
 	}
@@ -448,9 +499,18 @@ hr {
 		display: flex;
 		margin-top: 2em;
 
+		@media #{$break-mobile-large} {
+			display: block;
+		}
+
 		.faq-col {
 			width: 50%;
 			text-align: left;
+
+			@media #{$break-mobile-large} {
+				width: 100%;
+				display: block;
+			}
 
 			div {
 				margin: 0 20px 2em;
