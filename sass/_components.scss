@@ -173,6 +173,7 @@ p.help-text {
 a {
 	color: $blue-green;
 	text-decoration: none;
+	cursor: pointer;
 
 	&:hover,
 	&:active,
@@ -447,6 +448,12 @@ Specific sections
 
 p.border-bottom {
 	border-bottom: 1px solid $border-gray;
+	padding-bottom: 2em;
+	margin-bottom: 2em;
+}
+
+p.border-top {
+	border-top: 1px solid $border-gray;
 	padding-bottom: 2em;
 	margin-bottom: 2em;
 }
