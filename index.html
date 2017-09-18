@@ -129,7 +129,7 @@
         </label>
         <p class="help-text" id="copay-help-text">This is probably the same as what you’d pay to see a specialist.</p>
         <label><span>Your deductible:</span>
-          <input type="text" id="deductible-field-innetwork" aria-describedby="deductible-help-text-innetwork" required pattern="number">
+          <input type="text" id="deductible-field-innetwork" aria-describedby="deductible-help-text-innetwork" pattern="number">
           <span class="form-error">
             Enter a number.
           </span>
@@ -418,9 +418,14 @@
       var copay = $('#copay-field').val();
       copay = copay.replace(/\,/g,'');
       copay = parseInt(copay,10);
-      var deductible = $('#deductible-field-innetwork').val();
-      deductible = deductible.replace(/\,/g,'');
-      deductible = parseInt(deductible,10);
+      if ($('#deductible-field-innetwork').val()){
+        var deductible = $('#deductible-field-innetwork').val();
+        deductible = deductible.replace(/\,/g,'');
+        deductible = parseInt(deductible,10);
+      }
+      else {
+        deductible = 0;
+      }
       applyNetworkInsurance(copay,deductible);
     });
 
