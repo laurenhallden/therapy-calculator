@@ -97,7 +97,7 @@ function checkInsurance(coveredYesNo, networkYesNo){
 // ************************************************
 
 function applyNetworkInsurance(copay,deductible){
-	if (globalYearlyCost > deductible){ // If their deductible isn't too high...
+	if ((globalYearlyCost > deductible) && (globalSessionRate > copay)){ // If their deductible isn't too high...
 		var sessionsToHitDeductible = (deductible/globalSessionRate); // how many sessions to hit their deductible?
 		sessionsToHitDeductible = Math.ceil(sessionsToHitDeductible); // we want the upper limit of the session it takes
 		var sessionsRemaining = (globalNumberOfSessions - sessionsToHitDeductible);
@@ -106,14 +106,22 @@ function applyNetworkInsurance(copay,deductible){
 		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
 		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
-		$('#insurance-results').show();
 		$('#section-6 h2').html("Making progress!");
 	}
 	else {
-		// The deductible on this insurance is too high to help
-		// That sucks; let's be sympathetic
-		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p>You didn’t save any money this way. It may be worth it for you to consider paying slightly more per month for insurance with a lower deductible.</p>");
+		if (globalYearlyCost <= deductible) {
+			// The deductible on this insurance is too high to help
+			// That sucks; let's be sympathetic
+			$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can pay slightly more per month for insurance with a lower deductible.</p>");
+			console.log(globalYearlyCost);
+			console.log(deductible);
+		}
+		else if (globalSessionRate <= copay) {
+			// The copays are too hight
+			$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can get access to a plan with lower copays.</p>");
+		}
 	}
+	$('#insurance-results').show();
 	var end = '#section-6';
 	scrollTo(end);  // Moving on!
 }
