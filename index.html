@@ -2,11 +2,46 @@
 
 <html lang="en">
 <head>
+  <!-- Global Site Tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44119217-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments)};
+    gtag('js', new Date());
+
+    gtag('config', 'UA-44119217-3');
+  </script>
+
   <meta charset="utf-8">
 
   <title>Therapy Calculator</title>
-  <meta name="description" content="Therapy Calculator">
+  <meta name="description" content="Not sure how to pay for therapy? See how sliding-scales, insurance and tax dedictions help make therapy more affordable.">
   <meta name="author" content="Lauren Hallden">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta name="viewport" content="width=device-width" initial-scale=1>
+
+  <!-- Metatags -->
+  <meta property="og:title" content="Therapy Calculator" />
+  <meta property="og:url" content="http://laurenhallden.com/therapy-calculator" />
+  <meta property="og:type" content="website" />
+  <meta property="og:description" content="Not sure how to pay for therapy? See how sliding-scales, insurance and tax dedictions help make therapy more affordable." />
+  <meta property="og:image" content="images/desk.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Therapy Calculator" />
+  <meta name="tiwtter:creator" content="@phillydayhiker" />
+  <meta name="twitter:description" content="Not sure how to pay for therapy? See how sliding-scales, insurance and tax dedictions help make therapy more affordable." />
+  <meta name="twitter:url" content="http://laurenhallden.com/therapy-calculator" />
+  <meta name="twitter:image" content="images/desk.jpg" />
+
+
 
   <!-- All our css -->
   <link rel="stylesheet" href="css/foundation.css" />
@@ -39,7 +74,7 @@
       <p>I know the idea of budgeting for therapy is stressful, but it may not cost as much as you think. I’ll try to get you some answers.</p>
       <p>
         <div class="disclaimer">
-          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consider this an estimation, and consult an expert before making decisions that impact your finances and health.
+          <strong>A small disclaimer:</strong> I’m not a tax or insurance professional. I’m just <a target="_blank" href="http://www.laurenhallden.com">a web designer</a> who thinks this process should be less scary. Please consider this an estimation, and consult an expert before making decisions that impact your finances and health.
         </div>
       </p>
       <p>The first question is an awkward one (sorry!): how much money does your household make in a year?</p>
@@ -62,24 +97,36 @@
 
       <!-- Slider -->
       <form id="slider-form" data-abide novalidate>
-        <div class="col-wrapper">
-          <div class="col col-8 middle">
+        <div class="flex-wrapper slider-wrapper">
+          <div class="left-content">
             <label>Set your rate to:</label>
             <div class="slider" data-slider data-options="start: 20; end: 150; step: 5;">
               <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="sliderOutput1"></span>
               <span class="slider-fill" data-slider-fill></span>
             </div>
           </div>
-          <div class="col col-4 middle">
+          <div class="right-content">
             <label>
               <input type="number" id="sliderOutput1" required pattern="number">
               <span class="form-error">
                 Enter a number.
               </span>
-              </label>
+            </label>
           </div>
         </div>
-        <p>If you see your therapist once a week, that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
+        <div class="flex-wrapper frequency-wrapper">
+          <p class="left-content">If you see your therapist... </p>
+          <p class="right-content">
+            <label class="inline">
+              <select id="frequency">
+                <option value="48">Every week</option>
+                <option value="24">Every other week</option>
+                <option value="12">Once a month</option>
+              </select>
+            </label>
+          </p>
+        </div>
+        <p>...that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
         <p>But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don’t accept it, but you may still be able to get some money back.</p>
         <button class="button next-step step-two" id="step-two-yes">Yes, let’s check</button>
         <button class="button next-step outline step-two" id="step-two-no">Nope, no insurance</button>
@@ -112,7 +159,7 @@
             <option value="no-network">I don't have a preferred network</option>
           </select>
         </label>
-        <a class="button next-step" id="step-three">Next step</a>
+        <button class="button next-step" id="step-three">Next step</button>
       </form>
     </section>
 
@@ -166,7 +213,7 @@
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="outofnetwork-copay-help-text">You probably don’t havae this if you also have co-insurance, but some plans have both. :( Leave this blank if yours doesn’t.</p>
+        <p class="help-text" id="outofnetwork-copay-help-text">You probably don’t have this if you also have co-insurance, but some plans have both. :( Leave this blank if yours doesn’t.</p>
 
         <label><span>Your plan’s approved amount for each therapy session:</span>
           <input type="text" id="approved-amount-field" value="" aria-describedby="approved-amount-help-text" pattern="number">
@@ -175,7 +222,7 @@
           </span>
         </label>
         <p class="help-text" id="approved-amount-help-text">This is annoying, but your insurance can put a limit on what they think an hour of therapy <em>should</em> cost. For example, your therapist may charge you $100 an hour, but your insurance may decide this service is only worth $80. If you know you have an approved amount limit, enter it here. Otherwise we’ll assume you don’t.</p>
-        <button class="button next-step" id="step-five">Looks good!</a>
+        <button class="button next-step" id="step-five">Looks good!</button>
       </form>
     </section>
 
@@ -195,8 +242,15 @@
             <option value="no-tax-vehicle">Neither</option>
           </select>
         </label>
+        <label><span>And you file taxes:</span>
+            <select id="tax-bracket">
+              <option value="single">As a single person</option>
+              <option value="joint">Married, filing jointly</option>
+              <option value="head">As the head of a household</option>
+            </select>
+          </label>
         <button class="button next-step" id="step-six-yes">Check deductions</button>
-        <a class ="button next-step outline" id="step-six-no" href="#section-11">Nope, skip the taxes stuff</a>
+        <a class="button next-step outline" id="step-six-no" href="#section-11">Nope, skip the taxes stuff</a>
       </form>
     </section>
 
@@ -250,7 +304,7 @@
         <h2>Let’s keep talking taxes (sorry!)</h2>
         <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes<span id="used-what"></span>.</p>
       </div>
-      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income in 2017 (or 7.5% if you're over 65), you may be able to deduct them.</p>
+      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 10%</strong> of your Adjusted Gross Income in 2017, you may be able to deduct them.</p>
       <p>Your Adjusted Gross income is your household income minus any other deductions, like student loan payments or mortgage interest.</p>
       <p>A few things to know:</p>
       <ul class="ul-padded">
@@ -275,14 +329,14 @@
     <section id="section-10" class="hidden">
       <div class="variable-content">
         <h2>Guess what?</h2>
-        <p id="itemized-tax-results">You may be able to save <span class="strong">$</span><span class="strong" id="itemized-tax-discount-span"></span> on your taxes by claiming your medical expenses.</p>
+        <p id="itemized-tax-results"><span id="itemized-first">You may be able to save </span><span class="strong">$</span><span class="strong" id="itemized-tax-discount-span"></span><span id="itemized-last"> on your taxes by claiming your medical expenses</span>. <span id="go-to-summary"></span></p>
       </div>
       <a class="button next-step" id="step-10">Get your final summary</a>
     </section>
 
     <section id="section-11" class="hidden">
       <h2>We’re all done!</h2>
-      <p>Here are my final estimations:</p>
+      <label>Here are my final estimations:</label>
       <p>Averaged over a year, each therapy session could cost you: <span class="strong">$</span><span class="strong" id="final-session-rate"></span></p>
       <p>A year of therapy could cost you: <span class="strong">$</span><span class="strong" <span id="final-yearly-cost"></span>
       <p id="but">
@@ -291,32 +345,33 @@
       </p>
       <label id="summary-tips-label">A few practical tips based on your situation:</label>
       <ul id="summary-tips" class="ul-padded">
-      <ul>
+      </ul>
     </section>
 
     <div class="footer">
+    <hr/>
       <div class="faq">
         <h2>Frequently asked questions</h2>
         <div class="faq-wrapper">
           <div class="faq-col">
             <div>
               <h3>How does this work?</h3>
-              <p>This is a calculator that walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
+              <p>This calculator walks you through three ways to make therapy more affordable: sliding-scale fees, insurance options (even if your therapist doesn't accept insurance!), and tax deductions.</p>
             </div>
             <div>
               <h3>Do you save my data?</h3>
-              <p>Nope. None of the forms here send your numbers anywhere beyond this page. They only use them to do some math.</p>
+              <p>Nope. None of the forms here send your numbers anywhere beyond this page. We're just doing some math for you.</p>
             </div>
             <div>
               <h3>Is this calculator correct?</h3>
-              <p>Like I mentioned in the disclaimer, I’m not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn’t necessarily what you’re stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later this calculator was born.</p>
-              <p>Please think of this is an exploration into your options, and talk to your insurance and tax professionals for verified expert advice.</p>
+              <p>As I mentioned in the disclaimer, I’m not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn’t necessarily what you’re stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later, this calculator was born.</p>
+              <p>Please think of this is an exploration of your options, and talk to your insurance and tax professionals for verified expert advice.</p>
             </div>
           </div>
           <div class="faq-col">
             <div>
               <h3>Should I go to therapy?</h3>
-              <p>That’s a big question, and it’s completely up to you and your doctors! They’ll give you better advice than I can. But clearly, I'm a fan.</p>
+              <p>That’s a big question, and it’s completely up to you and your doctors! They’ll give you better advice than I can. But clearly I'm a fan, and I want to destigmatize getting help if you decide you want it.</p>
             </div>
             <div>
               <h3>This is still too expensive. Do I have other options?</h3>
@@ -324,8 +379,8 @@
             </div>
             <div>
               <h3>Can I help make this better?</h3>
-              <p>Of course! If you think something could be improved about this project, drop me an email at lauren [at] laurenhallden [dot] com. You can also see and contribute directly to <a taget="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project’s code</a>&mdash;it’s open source.</p>
-              <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View the repo<span></a></p>
+              <p>Of course! If you think something could be improved, drop me an email at lauren [at] laurenhallden [dot] com, or find me on twitter @<a target="_blank" href="https://twitter.com/phillylauren">phillylauren</a>. You can also contribute directly to <a target="_blank" href="https://github.com/laurenhallden/therapy-calculator">this project’s code</a>&mdash;it’s open source.</p>
+              <p><a class="repo-link" target="_blank" href="https://github.com/laurenhallden/therapy-calculator"><i class="fa fa-github"></i><span>View it on GitHub</span><span class="arrow">➞</span></a></p>
             </div>
           </div>
         </div>
@@ -347,17 +402,17 @@
   <script>
     // Start with a bunch of assumptions and zeros until told otherwise
     $( document ).ready(function(){
-        window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
-        window.globalInsuranceDiscount = 0;
-        window.globalTaxDiscount = 0;
-        window.globalTrackingReceipts = 'no';
+      window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
+      window.globalInsuranceDiscount = 0;
+      window.globalTaxDiscount = 0;
+      window.globalTrackingReceipts = 'no';
     });
 
     // Update progress bar based on current section
     os.on('enter', 'section', (element, event) => {
-        var id = $(element).attr('id').replace(/section-/, '');
-        var progress = (id/10.99);
-        NProgress.set(progress);
+      var scrollId = $(element).attr('id').replace(/section-/, '');
+      var progress = (scrollId/10.99);
+      NProgress.set(progress);
     });
 
     // Stop forms from posting on form submit
@@ -366,10 +421,16 @@
       e.preventDefault();
     });
 
+    // Whenever a button is clicked, log its section to the DOM
+    $('.button').click(function(){
+      var start = $(this).closest('section').attr('id');
+      window.start = start;
+    });
+
     // Calculate baserate
     $('#income-form').on('formvalid.zf.abide', function(e){
       var income = $('#income-field').val();
-      income = income.replace(/\,/g,''); // we have to do this in case they enter commas
+      income = income.replace(/\,/g,''); // we have to keeping doing this in case they enter commas
       income = parseInt(income,10);
       window.globalIncome = income;
       stepOne(income);
@@ -387,23 +448,33 @@
       }
     });
 
+    $('#frequency').change(function(){
+      var frequency = $('#frequency :selected').val();
+      var currentSliderValue = $('#sliderOutput1').val();
+      var updatedYearlyCost = currentSliderValue*frequency;
+      window.globalNumberOfSessions = frequency;
+      $('#yearly-cost-span').html(updatedYearlyCost);
+    });
+
     // Grab the value of the slider and set the new yearly cost
     $('.step-two').click(function(){
-      var id = this.id;
+      var theId = this.id;
       var currentSliderValue = $('#sliderOutput1').val();
+      window.globalSessionRate = currentSliderValue;
       var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
       window.globalYearlyCost = updatedYearlyCost;
       // Then pick a next step
       $('#slider-form').on('formvalid.zf.abide', function(e){
-        if (id == 'step-two-yes') {
-          var location = '#section-3';
-          scrollTo(location);
+        if (theId == 'step-two-yes'){
+          var end = '#section-3';
+          scrollTo(end);
         }
-        else {
-          var location = '#section-6';
-          scrollTo(location);
+        else if (theId == 'step-two-no'){
+          var end = '#section-6';
+          scrollTo(end);
         }
       });
+
     });
 
     // Check insurance
@@ -458,6 +529,8 @@
 
     // Check FSA or HSA...
     $('#step-six-yes').click(function(){
+      var taxBracket = $('#tax-bracket :selected').val();
+      window.taxBracket = taxBracket;
       var taxVehicle = $('#tax-vehicle :selected').val();
       if ( taxVehicle == 'fsa') {
         setFSA();
@@ -466,8 +539,8 @@
         setHSA();
       }
       else {
-        var location = '#section-9';
-        scrollTo(location);
+        var end = '#section-9';
+        scrollTo(end);
         checkItemized();
       }
     });
@@ -482,12 +555,13 @@
       var contribution = $('#fsa-field').val();
       var fromWhere = 'fsa';
       doTaxes(contribution, fromWhere);
+      window.globalUsedTaxAccount = "yes";
     });
 
     // Skip forward if they decide not to use an FSA
     $('#step-seven-no').click(function(){
-        var location = '#section-9';
-        scrollTo(location);
+        var end = '#section-9';
+        scrollTo(end);
         checkItemized();
     });
 
@@ -496,12 +570,13 @@
       var contribution = $('#hsa-field').val();
       var fromWhere = 'hsa';
       doTaxes(contribution, fromWhere);
+      window.globalUsedTaxAccount = "yes";
     });
 
     // Skip forward if they decide not to use an HSA
     $('#step-eight-no').click(function(){
-        var location = '#section-9';
-        scrollTo(location);
+        var end = '#section-9';
+        scrollTo(end);
         checkItemized();
     });
 

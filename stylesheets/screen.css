@@ -94,17 +94,30 @@ html, body {
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
+@media screen and (max-width: 767px) {
+  /* line 5, ../sass/_components.scss */
+  html, body {
+    font-size: 16px;
+    margin: 0 0.5rem;
+  }
+}
 
 /* Content container */
-/* line 18, ../sass/_components.scss */
+/* line 23, ../sass/_components.scss */
 .container {
   width: 40rem;
   margin: 0 auto;
 }
+@media screen and (max-width: 767px) {
+  /* line 23, ../sass/_components.scss */
+  .container {
+    max-width: 100%;
+  }
+}
 
-/* line 23, ../sass/_components.scss */
+/* line 32, ../sass/_components.scss */
 section {
-  padding: 3rem;
+  padding: 3em;
   display: block;
   opacity: 1;
   background: #fff;
@@ -114,123 +127,164 @@ section {
   display: block;
   opacity: 1;
 }
-/* line 34, ../sass/_components.scss */
+/* line 43, ../sass/_components.scss */
 section.hidden {
   display: none;
   opacity: 0;
 }
+@media screen and (max-width: 767px) {
+  /* line 32, ../sass/_components.scss */
+  section {
+    padding: 2rem 1.5rem;
+  }
+}
 
-/* line 40, ../sass/_components.scss */
+/* line 53, ../sass/_components.scss */
 section + section {
   margin-top: 4em;
 }
 
-/* line 44, ../sass/_components.scss */
+/* line 57, ../sass/_components.scss */
 section h2 {
   margin-top: -100px;
   padding-top: 100px;
 }
 
 /* Responsive Columns */
-/* line 51, ../sass/_components.scss */
-.col-wrapper {
+/* line 65, ../sass/_components.scss */
+.flex-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+/* line 70, ../sass/_components.scss */
+.flex-wrapper.slider-wrapper {
+  align-items: flex-start;
   margin: 30px 0 20px;
   padding: 10px 0;
   border-top: 1px solid #eaeaea;
   border-bottom: 1px solid #eaeaea;
 }
-
-/* line 58, ../sass/_components.scss */
-.col {
-  display: inline-block;
-  vertical-align: top;
-  padding: 10px;
+/* line 77, ../sass/_components.scss */
+.flex-wrapper.slider-wrapper .left-content {
+  flex-grow: 8;
 }
-/* line 63, ../sass/_components.scss */
-.col.col-8 {
-  width: 73%;
+/* line 81, ../sass/_components.scss */
+.flex-wrapper.slider-wrapper .right-content {
+  width: 8em;
+  padding: 20px 0 0 20px;
 }
-/* line 67, ../sass/_components.scss */
-.col.col-4 {
-  width: 24%;
+@media screen and (max-width: 767px) {
+  /* line 87, ../sass/_components.scss */
+  .flex-wrapper.frequency-wrapper {
+    display: block;
+  }
 }
-/* line 71, ../sass/_components.scss */
-.col.col-2 {
-  width: 49%;
+/* line 93, ../sass/_components.scss */
+.flex-wrapper.frequency-wrapper .left-content {
+  flex-grow: 0;
 }
-/* line 75, ../sass/_components.scss */
-.col.middle {
-  vertical-align: middle;
+@media screen and (max-width: 767px) {
+  /* line 93, ../sass/_components.scss */
+  .flex-wrapper.frequency-wrapper .left-content {
+    width: 100%;
+    display: block;
+  }
+}
+/* line 102, ../sass/_components.scss */
+.flex-wrapper.frequency-wrapper .right-content {
+  flex-grow: 2;
+  padding-left: 20px;
+}
+@media screen and (max-width: 767px) {
+  /* line 102, ../sass/_components.scss */
+  .flex-wrapper.frequency-wrapper .right-content {
+    width: 100%;
+    display: block;
+    padding-left: 0;
+  }
+}
+/* line 113, ../sass/_components.scss */
+.flex-wrapper.frequency-wrapper .right-content select {
+  width: 100%;
 }
 
 /* ===================
 Type
 ====================*/
-/* line 84, ../sass/_components.scss */
+/* line 126, ../sass/_components.scss */
 h1 {
   font-size: 3rem;
-  line-height: 3rem;
+  line-height: 3.5rem;
+}
+@media screen and (max-width: 767px) {
+  /* line 126, ../sass/_components.scss */
+  h1 {
+    font-size: 2.5rem;
+    line-height: 2.75rem;
+  }
 }
 
-/* line 89, ../sass/_components.scss */
+/* line 137, ../sass/_components.scss */
 h2 {
   font-size: 1.4rem;
-  line-height: 2rem;
-  margin-bottom: 1rem;
+  line-height: 1.8rem;
+  margin-bottom: 1.5rem;
   font-weight: 600;
 }
 
-/* line 96, ../sass/_components.scss */
+/* line 144, ../sass/_components.scss */
 h3 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #fff;
   opacity: 0.6;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.2;
   margin-bottom: 0.5em;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
-/* line 106, ../sass/_components.scss */
+/* line 154, ../sass/_components.scss */
 p {
   margin-bottom: 1em;
   line-height: 1.4;
 }
 
-/* line 111, ../sass/_components.scss */
+/* line 159, ../sass/_components.scss */
 p.subhead {
   margin: 1rem 0;
   font-size: 1.3rem;
 }
 
-/* line 116, ../sass/_components.scss */
+/* line 164, ../sass/_components.scss */
 p.help-text {
   color: #999999;
   font-size: 0.85rem;
   font-style: normal;
   line-height: 1.25;
 }
-/* line 122, ../sass/_components.scss */
+/* line 170, ../sass/_components.scss */
 p.help-text a {
   color: #999999;
 }
 
-/* line 127, ../sass/_components.scss */
+/* line 175, ../sass/_components.scss */
 a {
   color: #1f7ea3;
   text-decoration: none;
+  cursor: pointer;
 }
-/* line 131, ../sass/_components.scss */
-a:hover {
+/* line 180, ../sass/_components.scss */
+a:hover, a:active, a:focus {
   text-decoration: underline;
 }
 
-/* line 136, ../sass/_components.scss */
+/* line 187, ../sass/_components.scss */
 em {
   font-style: italic;
 }
 
-/* line 140, ../sass/_components.scss */
+/* line 191, ../sass/_components.scss */
 span.strong {
   font-weight: bold;
   color: #0ea257;
@@ -238,32 +292,39 @@ span.strong {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 147, ../sass/_components.scss */
+/* line 198, ../sass/_components.scss */
 strong {
   font-weight: bold;
 }
 
-/* line 151, ../sass/_components.scss */
+/* line 202, ../sass/_components.scss */
 ul {
   list-style-type: disc;
   list-style-position: inside;
 }
 
-/* line 156, ../sass/_components.scss */
+/* line 207, ../sass/_components.scss */
 ol {
   list-style-type: decimal;
   list-style-position: inside;
 }
 
-/* line 161, ../sass/_components.scss */
+/* line 212, ../sass/_components.scss */
 ul,
 ol {
   margin-bottom: 1em;
   line-height: 1.4;
   padding-left: 1em;
 }
+@media screen and (max-width: 767px) {
+  /* line 212, ../sass/_components.scss */
+  ul,
+  ol {
+    padding-left: 0.5em;
+  }
+}
 
-/* line 168, ../sass/_components.scss */
+/* line 224, ../sass/_components.scss */
 ul ul,
 ol ul {
   list-style-type: circle;
@@ -271,7 +332,7 @@ ol ul {
   margin-left: 15px;
 }
 
-/* line 175, ../sass/_components.scss */
+/* line 231, ../sass/_components.scss */
 ol ol,
 ul ol {
   list-style-type: lower-latin;
@@ -279,7 +340,7 @@ ul ol {
   margin-left: 15px;
 }
 
-/* line 182, ../sass/_components.scss */
+/* line 238, ../sass/_components.scss */
 ul li,
 ol li {
   list-style-position: inside;
@@ -287,7 +348,7 @@ ol li {
   padding-left: 1em;
 }
 
-/* line 190, ../sass/_components.scss */
+/* line 246, ../sass/_components.scss */
 .ul-padded li {
   margin-bottom: 1em;
 }
@@ -295,18 +356,18 @@ ol li {
 /* ===================
 Form elements
 ====================*/
-/* line 199, ../sass/_components.scss */
+/* line 255, ../sass/_components.scss */
 form,
 input {
   color: #444;
 }
 
-/* line 204, ../sass/_components.scss */
+/* line 260, ../sass/_components.scss */
 label {
   line-height: 1.4;
 }
 
-/* line 208, ../sass/_components.scss */
+/* line 264, ../sass/_components.scss */
 form label,
 form label span,
 label {
@@ -316,25 +377,29 @@ label {
   display: block;
 }
 
-/* line 217, ../sass/_components.scss */
+/* line 273, ../sass/_components.scss */
 .form-error,
 .help-text {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* line 222, ../sass/_components.scss */
+/* line 278, ../sass/_components.scss */
 form label span {
   margin-bottom: 10px;
 }
 
-/* line 226, ../sass/_components.scss */
+/* line 282, ../sass/_components.scss */
 form label {
   padding: 20px 0 0;
-  /* This keeps our fields from jumping when we show and hide them
-  height: 105px;*/
+}
+@media screen and (max-width: 767px) {
+  /* line 282, ../sass/_components.scss */
+  form label {
+    padding: 0.5rem 0 0;
+  }
 }
 
-/* line 233, ../sass/_components.scss */
+/* line 290, ../sass/_components.scss */
 input,
 [type='text'],
 [type='number'] {
@@ -347,14 +412,14 @@ input,
   background: #f7f8f8;
   height: auto;
 }
-/* line 245, ../sass/_components.scss */
+/* line 302, ../sass/_components.scss */
 input.focus,
 [type='text'].focus,
 [type='number'].focus {
   border: 1px solid #eb0162;
 }
 
-/* line 250, ../sass/_components.scss */
+/* line 307, ../sass/_components.scss */
 select {
   height: auto;
   padding: 0.75em;
@@ -363,11 +428,11 @@ select {
   background-color: #f7f8f8;
 }
 
-/* line 258, ../sass/_components.scss */
+/* line 315, ../sass/_components.scss */
 .radio-button {
   display: block;
 }
-/* line 261, ../sass/_components.scss */
+/* line 318, ../sass/_components.scss */
 .radio-button [type='radio'],
 .radio-button label {
   display: inline-block;
@@ -375,18 +440,39 @@ select {
   margin-bottom: 1em;
   cursor: pointer;
 }
-/* line 268, ../sass/_components.scss */
+@media screen and (max-width: 767px) {
+  /* line 318, ../sass/_components.scss */
+  .radio-button [type='radio'],
+  .radio-button label {
+    vertical-align: top;
+  }
+}
+@media screen and (max-width: 767px) {
+  /* line 331, ../sass/_components.scss */
+  .radio-button [type='radio'] {
+    margin-top: 0.3rem;
+  }
+}
+/* line 336, ../sass/_components.scss */
 .radio-button label {
   /* I know, I know */
   cursor: default !important;
 }
-
-/* line 276, ../sass/_components.scss */
-fieldset legend {
-  margin-bottom: 2em;
+@media screen and (max-width: 767px) {
+  /* line 336, ../sass/_components.scss */
+  .radio-button label {
+    width: 90%;
+    margin-right: 0;
+  }
 }
 
-/* line 281, ../sass/_components.scss */
+/* line 349, ../sass/_components.scss */
+fieldset legend {
+  margin-bottom: 2em;
+  line-height: 1.4;
+}
+
+/* line 355, ../sass/_components.scss */
 button,
 .button {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -404,34 +490,52 @@ button,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 298, ../sass/_components.scss */
+/* line 372, ../sass/_components.scss */
 button.outline,
 .button.outline {
   background-color: transparent;
   color: #0ea257;
   border: 2px solid #0ea257;
 }
-/* line 303, ../sass/_components.scss */
-button.outline:hover,
-.button.outline:hover {
+/* line 377, ../sass/_components.scss */
+button.outline:hover, button.outline:active, button.outline:focus,
+.button.outline:hover,
+.button.outline:active,
+.button.outline:focus {
   background-color: transparent;
   color: #128857;
   border: 2px solid #128857;
 }
-/* line 310, ../sass/_components.scss */
-button:hover,
-.button:hover {
+/* line 386, ../sass/_components.scss */
+button:hover, button:active, button:focus,
+.button:hover,
+.button:active,
+.button:focus {
   background-color: #128857;
   border: 2px solid #128857;
   cursor: pointer;
 }
+@media screen and (max-width: 767px) {
+  /* line 355, ../sass/_components.scss */
+  button,
+  .button {
+    width: 100%;
+    display: block;
+  }
+}
 
-/* line 317, ../sass/_components.scss */
+/* line 400, ../sass/_components.scss */
 .button + .button {
   margin-left: 0.5em;
 }
+@media screen and (max-width: 767px) {
+  /* line 400, ../sass/_components.scss */
+  .button + .button {
+    margin-left: 0;
+  }
+}
 
-/* line 321, ../sass/_components.scss */
+/* line 408, ../sass/_components.scss */
 .error {
   color: #eb0162;
   font-size: 0.8rem;
@@ -440,31 +544,38 @@ button:hover,
 /* ===================
 Page elements
 ====================*/
-/* line 331, ../sass/_components.scss */
+/* line 418, ../sass/_components.scss */
 .intro,
 .footer {
   color: #fff;
   padding: 4em 0 2em;
   text-align: center;
 }
-/* line 337, ../sass/_components.scss */
+/* line 424, ../sass/_components.scss */
 .intro p,
 .intro p a,
 .footer p,
 .footer p a {
   color: rgba(255, 255, 255, 0.6);
 }
-/* line 342, ../sass/_components.scss */
+/* line 429, ../sass/_components.scss */
 .intro a,
 .footer a {
   text-decoration: underline;
+}
+/* line 432, ../sass/_components.scss */
+.intro a:hover, .intro a:active, .intro a:focus,
+.footer a:hover,
+.footer a:active,
+.footer a:focus {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* ===================
 Specific sections
 ====================*/
 /* 1 */
-/* line 354, ../sass/_components.scss */
+/* line 447, ../sass/_components.scss */
 .disclaimer {
   background-color: rgba(31, 126, 161, 0.075);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -475,7 +586,7 @@ Specific sections
   color: #1f7ea3;
   margin: 30px 0;
 }
-/* line 364, ../sass/_components.scss */
+/* line 457, ../sass/_components.scss */
 .disclaimer a {
   color: #1f7ea3;
   text-decoration: underline;
@@ -483,7 +594,7 @@ Specific sections
 
 /* 6 */
 /* We want this hidden in case the person doesn't have insurance */
-/* line 373, ../sass/_components.scss */
+/* line 466, ../sass/_components.scss */
 #insurance-results,
 #tax-results {
   display: none;
@@ -492,56 +603,118 @@ Specific sections
   margin-bottom: 2em;
 }
 
-/* line 381, ../sass/_components.scss */
+/* line 474, ../sass/_components.scss */
 p.border-bottom {
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 387, ../sass/_components.scss */
+/* line 480, ../sass/_components.scss */
+p.border-top {
+  border-top: 1px solid #eaeaea;
+  padding-bottom: 2em;
+  margin-bottom: 2em;
+}
+
+/* line 486, ../sass/_components.scss */
 hr {
   border: 1px solid #eaeaea;
   margin: 2em 0;
 }
 
 /* Final summary */
-/* line 393, ../sass/_components.scss */
-#but,
-#insurance-saved,
-#taxes-saved,
-#and,
-#summary-tips-label,
-#itemized-tax-results {
+/* line 495, ../sass/_components.scss */
+#section-11 label,
+#section-11 p,
+#section-11 span {
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+/* line 502, ../sass/_components.scss */
+#section-11 #summary-tips-label {
+  margin-top: 40px;
+}
+/* line 506, ../sass/_components.scss */
+#section-11 #but,
+#section-11 #insurance-saved,
+#section-11 #taxes-saved,
+#section-11 #and,
+#section-11 #summary-tips-label,
+#section-11 #itemized-tax-results {
   display: none;
 }
 
 /* FAQ */
-/* line 405, ../sass/_components.scss */
+@media screen and (max-width: 767px) {
+  /* line 519, ../sass/_components.scss */
+  .footer {
+    text-align: left;
+  }
+}
+/* line 525, ../sass/_components.scss */
+.footer hr {
+  opacity: 0.3;
+  border-top: 1px solid #fff;
+  border-bottom: 0;
+  margin: 1em 0 4em;
+}
+
+@media screen and (max-width: 767px) {
+  /* line 533, ../sass/_components.scss */
+  .faq {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+/* line 539, ../sass/_components.scss */
 .faq .faq-wrapper {
   display: flex;
   margin-top: 2em;
 }
-/* line 409, ../sass/_components.scss */
+@media screen and (max-width: 767px) {
+  /* line 539, ../sass/_components.scss */
+  .faq .faq-wrapper {
+    display: block;
+  }
+}
+/* line 547, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col {
   width: 50%;
   text-align: left;
 }
-/* line 413, ../sass/_components.scss */
+@media screen and (max-width: 767px) {
+  /* line 547, ../sass/_components.scss */
+  .faq .faq-wrapper .faq-col {
+    width: 100%;
+    display: block;
+  }
+}
+/* line 556, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col div {
   margin: 0 20px 2em;
 }
-/* line 418, ../sass/_components.scss */
+@media screen and (max-width: 767px) {
+  /* line 556, ../sass/_components.scss */
+  .faq .faq-wrapper .faq-col div {
+    margin: 0 0 2em;
+  }
+}
+/* line 565, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
-/* line 422, ../sass/_components.scss */
+/* line 569, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span, .faq .faq-wrapper .repo-link i {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 427, ../sass/_components.scss */
+/* line 573, ../sass/_components.scss */
+.faq .faq-wrapper .repo-link span.arrow, .faq .faq-wrapper .repo-link i.arrow {
+  margin-left: 6px;
+}
+/* line 578, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link i {
   margin-right: 10px;
   font-size: 2rem;
