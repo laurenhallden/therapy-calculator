@@ -42,7 +42,7 @@ function stepOne(income){
 	var $slider = new Foundation.Slider($('.slider'), {
 	  initialStart : baserate,
 	  start: 20,
-	  end: 150,
+	  end: 250,
 	  step: 5,
 	});
 }
