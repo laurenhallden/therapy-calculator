@@ -506,7 +506,25 @@ button.outline:hover, button.outline:active, button.outline:focus,
   color: #128857;
   border: 2px solid #128857;
 }
-/* line 386, ../sass/_components.scss */
+/* line 385, ../sass/_components.scss */
+button.outline.disabled,
+.button.outline.disabled {
+  background-color: transparent;
+  color: #0ea257;
+  border: 2px solid #0ea257;
+  opacity: 0.5;
+}
+/* line 391, ../sass/_components.scss */
+button.outline.disabled:hover, button.outline.disabled:active, button.outline.disabled:focus,
+.button.outline.disabled:hover,
+.button.outline.disabled:active,
+.button.outline.disabled:focus {
+  background-color: transparent;
+  color: #0ea257;
+  border: 2px solid #0ea257;
+  opacity: 0.5;
+}
+/* line 403, ../sass/_components.scss */
 button:hover, button:active, button:focus,
 .button:hover,
 .button:active,
@@ -514,6 +532,23 @@ button:hover, button:active, button:focus,
   background-color: #128857;
   border: 2px solid #128857;
   cursor: pointer;
+}
+/* line 411, ../sass/_components.scss */
+button.disabled,
+.button.disabled {
+  background-color: #0ea257;
+  border: 2px solid #0ea257;
+  opacity: 0.5;
+  cursor: default;
+}
+/* line 417, ../sass/_components.scss */
+button.disabled:hover, button.disabled:active, button.disabled:focus,
+.button.disabled:hover,
+.button.disabled:active,
+.button.disabled:focus {
+  background-color: #0ea257;
+  border: 2px solid #0ea257;
+  opacity: 0.5;
 }
 @media screen and (max-width: 767px) {
   /* line 355, ../sass/_components.scss */
@@ -524,18 +559,18 @@ button:hover, button:active, button:focus,
   }
 }
 
-/* line 400, ../sass/_components.scss */
+/* line 432, ../sass/_components.scss */
 .button + .button {
   margin-left: 0.5em;
 }
 @media screen and (max-width: 767px) {
-  /* line 400, ../sass/_components.scss */
+  /* line 432, ../sass/_components.scss */
   .button + .button {
     margin-left: 0;
   }
 }
 
-/* line 408, ../sass/_components.scss */
+/* line 440, ../sass/_components.scss */
 .error {
   color: #eb0162;
   font-size: 0.8rem;
@@ -544,26 +579,26 @@ button:hover, button:active, button:focus,
 /* ===================
 Page elements
 ====================*/
-/* line 418, ../sass/_components.scss */
+/* line 450, ../sass/_components.scss */
 .intro,
 .footer {
   color: #fff;
   padding: 4em 0 2em;
   text-align: center;
 }
-/* line 424, ../sass/_components.scss */
+/* line 456, ../sass/_components.scss */
 .intro p,
 .intro p a,
 .footer p,
 .footer p a {
   color: rgba(255, 255, 255, 0.6);
 }
-/* line 429, ../sass/_components.scss */
+/* line 461, ../sass/_components.scss */
 .intro a,
 .footer a {
   text-decoration: underline;
 }
-/* line 432, ../sass/_components.scss */
+/* line 464, ../sass/_components.scss */
 .intro a:hover, .intro a:active, .intro a:focus,
 .footer a:hover,
 .footer a:active,
@@ -575,7 +610,7 @@ Page elements
 Specific sections
 ====================*/
 /* 1 */
-/* line 447, ../sass/_components.scss */
+/* line 479, ../sass/_components.scss */
 .disclaimer {
   background-color: rgba(31, 126, 161, 0.075);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -586,7 +621,7 @@ Specific sections
   color: #1f7ea3;
   margin: 30px 0;
 }
-/* line 457, ../sass/_components.scss */
+/* line 489, ../sass/_components.scss */
 .disclaimer a {
   color: #1f7ea3;
   text-decoration: underline;
@@ -594,7 +629,7 @@ Specific sections
 
 /* 6 */
 /* We want this hidden in case the person doesn't have insurance */
-/* line 466, ../sass/_components.scss */
+/* line 498, ../sass/_components.scss */
 #insurance-results,
 #tax-results {
   display: none;
@@ -603,39 +638,39 @@ Specific sections
   margin-bottom: 2em;
 }
 
-/* line 474, ../sass/_components.scss */
+/* line 506, ../sass/_components.scss */
 p.border-bottom {
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 480, ../sass/_components.scss */
+/* line 512, ../sass/_components.scss */
 p.border-top {
   border-top: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 486, ../sass/_components.scss */
+/* line 518, ../sass/_components.scss */
 hr {
   border: 1px solid #eaeaea;
   margin: 2em 0;
 }
 
 /* Final summary */
-/* line 495, ../sass/_components.scss */
+/* line 527, ../sass/_components.scss */
 #section-11 label,
 #section-11 p,
 #section-11 span {
   line-height: 1.4;
   margin-bottom: 10px;
 }
-/* line 502, ../sass/_components.scss */
+/* line 534, ../sass/_components.scss */
 #section-11 #summary-tips-label {
   margin-top: 40px;
 }
-/* line 506, ../sass/_components.scss */
+/* line 538, ../sass/_components.scss */
 #section-11 #but,
 #section-11 #insurance-saved,
 #section-11 #taxes-saved,
@@ -647,12 +682,12 @@ hr {
 
 /* FAQ */
 @media screen and (max-width: 767px) {
-  /* line 519, ../sass/_components.scss */
+  /* line 551, ../sass/_components.scss */
   .footer {
     text-align: left;
   }
 }
-/* line 525, ../sass/_components.scss */
+/* line 557, ../sass/_components.scss */
 .footer hr {
   opacity: 0.3;
   border-top: 1px solid #fff;
@@ -661,60 +696,60 @@ hr {
 }
 
 @media screen and (max-width: 767px) {
-  /* line 533, ../sass/_components.scss */
+  /* line 565, ../sass/_components.scss */
   .faq {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-/* line 539, ../sass/_components.scss */
+/* line 571, ../sass/_components.scss */
 .faq .faq-wrapper {
   display: flex;
   margin-top: 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 539, ../sass/_components.scss */
+  /* line 571, ../sass/_components.scss */
   .faq .faq-wrapper {
     display: block;
   }
 }
-/* line 547, ../sass/_components.scss */
+/* line 579, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col {
   width: 50%;
   text-align: left;
 }
 @media screen and (max-width: 767px) {
-  /* line 547, ../sass/_components.scss */
+  /* line 579, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col {
     width: 100%;
     display: block;
   }
 }
-/* line 556, ../sass/_components.scss */
+/* line 588, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col div {
   margin: 0 20px 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 556, ../sass/_components.scss */
+  /* line 588, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col div {
     margin: 0 0 2em;
   }
 }
-/* line 565, ../sass/_components.scss */
+/* line 597, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
-/* line 569, ../sass/_components.scss */
+/* line 601, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span, .faq .faq-wrapper .repo-link i {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 573, ../sass/_components.scss */
+/* line 605, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span.arrow, .faq .faq-wrapper .repo-link i.arrow {
   margin-left: 6px;
 }
-/* line 578, ../sass/_components.scss */
+/* line 610, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link i {
   margin-right: 10px;
   font-size: 2rem;

@@ -401,7 +401,7 @@
   <!-- All our button functions -->
   <script>
     // Start with a bunch of assumptions and zeros until told otherwise
-    $( document ).ready(function(){
+    $(document).ready(function(){
       window.globalNumberOfSessions = 48; // we assume they see a therapist once a week
       window.globalInsuranceDiscount = 0;
       window.globalTaxDiscount = 0;
@@ -459,22 +459,23 @@
     // Grab the value of the slider and set the new yearly cost
     $('.step-two').click(function(){
       var theId = this.id;
+      window.globalButtonId = theId;
       var currentSliderValue = $('#sliderOutput1').val();
       window.globalSessionRate = currentSliderValue;
       var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
       window.globalYearlyCost = updatedYearlyCost;
-      // Then pick a next step
-      $('#slider-form').on('formvalid.zf.abide', function(e){
-        if (theId == 'step-two-yes'){
-          var end = '#section-3';
-          scrollTo(end);
-        }
-        else if (theId == 'step-two-no'){
-          var end = '#section-6';
-          scrollTo(end);
-        }
-      });
+    });
 
+    // Then pick a next step
+    $('#slider-form').on('formvalid.zf.abide', function(e){
+      if (globalButtonId == 'step-two-yes'){
+        var end = '#section-3';
+        scrollTo(end);
+      }
+      else if (globalButtonId == 'step-two-no'){
+        var end = '#section-6';
+        scrollTo(end);
+      }
     });
 
     // Check insurance

@@ -381,6 +381,23 @@ button,
 			color: $hover-green;
 			border: 2px solid $hover-green;
 		}
+
+		&.disabled {
+			background-color: transparent;
+			color: $green;
+			border: 2px solid $green;
+			opacity: 0.5;	
+
+			&:hover,
+			&:active,
+			&:focus {
+				background-color: transparent;
+				color: $green;
+				border: 2px solid $green;
+				opacity: 0.5;		
+			}
+
+		}
 	}
 
 	&:hover,
@@ -389,6 +406,21 @@ button,
 		background-color: $hover-green;
 		border: 2px solid $hover-green;
 		cursor: pointer;
+	}
+
+	&.disabled {
+		background-color: $green;
+		border: 2px solid $green;
+		opacity: 0.5;
+		cursor: default;
+
+			&:hover,
+			&:active,
+			&:focus {
+				background-color: $green;
+				border: 2px solid $green;
+				opacity: 0.5;		
+			}
 	}
 
 	@media #{$break-mobile-large} {

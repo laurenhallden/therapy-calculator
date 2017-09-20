@@ -19,9 +19,21 @@ function scrollTo(end){
     $('html, body').animate({
       scrollTop: $(heading).offset().top
     }, 800, function(){
+
+      // disable buttons and forms after they're clicked
+      var allButtons = $('.button');
+      var allForms = $('form');
+      $(currentSection).find(allButtons).addClass('disabled');
+      $(currentSection).find(allButtons).attr("disabled", "disabled");
+      $(currentSection).find(allForms).removeAttr('data-abide');
  
       // Add hash (#) to URL when done scrolling (default click behavior)
       window.location.hash = hash;
     });
   } // End if
 };
+
+// I want to stop buttons that are just links from scrolling, but this doesn't seem to work
+$('.disabled').click(function(e){
+  e.preventDefault();
+});
