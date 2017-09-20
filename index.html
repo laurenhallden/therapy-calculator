@@ -15,7 +15,7 @@
   <meta charset="utf-8">
 
   <title>Therapy Calculator</title>
-  <meta name="description" content="Not sure how to pay for therapy? See how sliding-scales, insurance and tax dedictions help make therapy more affordable.">
+  <meta name="description" content="Not sure how to pay for therapy? See how sliding-scales, insurance and tax deductions help make therapy more affordable.">
   <meta name="author" content="Lauren Hallden">
 
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -547,8 +547,15 @@
     });
 
     // ...or skip taxes section completely.
-    $('#step-six-no').click(function(){
-      getSummary();
+    $('#step-six-no').click(function(e){
+      // This is a little hacky but: buttons that are just links been to be manually checked to see if they're diabled.
+      // Not sure why.
+      if ($(this).hasClass('disabled')) {
+        e.preventDefault();
+      }
+      else {
+        getSummary();
+      }
     });
 
     // Do the FSA math
@@ -560,10 +567,15 @@
     });
 
     // Skip forward if they decide not to use an FSA
-    $('#step-seven-no').click(function(){
+    $('#step-seven-no').click(function(e){
+      if ($(this).hasClass('disabled')) {
+        e.preventDefault();
+      }
+      else {
         var end = '#section-9';
         scrollTo(end);
         checkItemized();
+      }
     });
 
     // Do the HSA math
@@ -575,25 +587,40 @@
     });
 
     // Skip forward if they decide not to use an HSA
-    $('#step-eight-no').click(function(){
+    $('#step-eight-no').click(function(e){
+      if ($(this).hasClass('disabled')) {
+        e.preventDefault();
+      }
+      else {
         var end = '#section-9';
         scrollTo(end);
         checkItemized();
+      }
     });
 
     // Get the final summary!
-    $('#step-9').click(function(){
-      var itemizedYesNo = $('#yes-deduction:checked').val();
-       if (itemizedYesNo == 'Yes') {
-        getItemized();
-       }
-       else {
-        getSummary();
-       }
+    $('#step-9').click(function(e){
+      if ($(this).hasClass('disabled')) {
+        e.preventDefault();
+      }
+      else {
+        var itemizedYesNo = $('#yes-deduction:checked').val();
+        if (itemizedYesNo == 'Yes') {
+          getItemized();
+        }
+        else {
+          getSummary();
+        }
+      }
     });
 
-    $('#step-10').click(function(){
-      getSummary();
+    $('#step-10').click(function(e){
+      if ($(this).hasClass('disabled')) {
+        e.preventDefault();
+      }
+      else {
+        getSummary();
+      }
     });
 
   </script>

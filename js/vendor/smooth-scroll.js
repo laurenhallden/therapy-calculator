@@ -36,4 +36,5 @@ function scrollTo(end){
 // I want to stop buttons that are just links from scrolling, but this doesn't seem to work
 $('.disabled').click(function(e){
   e.preventDefault();
+  e.stopPropagation();
 });
