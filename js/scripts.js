@@ -67,9 +67,9 @@ function setBaseRate(baserate){
 // Show and hide additional insurance options based on their coverage status
 $('#covered-or-not').on('change', function(){
 	var coveredYesNo = $('#covered-or-not :selected').val();
-    if (coveredYesNo == 'not-covered') {
-    	$('#network-or-not-label').slideUp();
-    }
+	if (coveredYesNo == 'not-covered') {
+		$('#network-or-not-label').slideUp();
+	}
 	else {
 		$('#network-or-not-label').slideDown();
 	}
@@ -113,8 +113,6 @@ function applyNetworkInsurance(copay,deductible){
 			// The deductible on this insurance is too high to help
 			// That sucks; let's be sympathetic
 			$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can pay slightly more per month for insurance with a lower deductible.</p>");
-			console.log(globalYearlyCost);
-			console.log(deductible);
 		}
 		else if (globalSessionRate <= copay) {
 			// The copays are too hight
@@ -221,6 +219,19 @@ function setHSA(){
 // ************************************************
 // Section NINE: Doing Yer Taxes and reporting the results
 // ************************************************
+
+
+// First, the peple who are ineligible for an FSA/HSA -- we need their tax bracket
+// Show and hide that dropdown
+$('#yes-deduction-2').on('change', function(){
+	var itemizedYesNo = $('#yes-deduction-2:checked').val();
+	if (itemizedYesNo == 'Yes') {
+		$('#tax-bracket-2-label').slideDown();
+	}
+	else {
+		$('#tax-bracket-2-label').slideUp();
+	}
+});
 
 // Let's figure out how much a tax deduction would save them */
 // This function is used by FSA, HSA and Itemized Deductions

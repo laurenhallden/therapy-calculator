@@ -658,19 +658,25 @@ hr {
   margin: 2em 0;
 }
 
+/* 9 */
+/* line 524, ../sass/_components.scss */
+#tax-bracket-2-label {
+  display: none;
+}
+
 /* Final summary */
-/* line 527, ../sass/_components.scss */
+/* line 532, ../sass/_components.scss */
 #section-11 label,
 #section-11 p,
 #section-11 span {
   line-height: 1.4;
   margin-bottom: 10px;
 }
-/* line 534, ../sass/_components.scss */
+/* line 539, ../sass/_components.scss */
 #section-11 #summary-tips-label {
   margin-top: 40px;
 }
-/* line 538, ../sass/_components.scss */
+/* line 543, ../sass/_components.scss */
 #section-11 #but,
 #section-11 #insurance-saved,
 #section-11 #taxes-saved,
@@ -682,12 +688,12 @@ hr {
 
 /* FAQ */
 @media screen and (max-width: 767px) {
-  /* line 551, ../sass/_components.scss */
+  /* line 556, ../sass/_components.scss */
   .footer {
     text-align: left;
   }
 }
-/* line 557, ../sass/_components.scss */
+/* line 562, ../sass/_components.scss */
 .footer hr {
   opacity: 0.3;
   border-top: 1px solid #fff;
@@ -696,60 +702,60 @@ hr {
 }
 
 @media screen and (max-width: 767px) {
-  /* line 565, ../sass/_components.scss */
+  /* line 570, ../sass/_components.scss */
   .faq {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-/* line 571, ../sass/_components.scss */
+/* line 576, ../sass/_components.scss */
 .faq .faq-wrapper {
   display: flex;
   margin-top: 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 571, ../sass/_components.scss */
+  /* line 576, ../sass/_components.scss */
   .faq .faq-wrapper {
     display: block;
   }
 }
-/* line 579, ../sass/_components.scss */
+/* line 584, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col {
   width: 50%;
   text-align: left;
 }
 @media screen and (max-width: 767px) {
-  /* line 579, ../sass/_components.scss */
+  /* line 584, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col {
     width: 100%;
     display: block;
   }
 }
-/* line 588, ../sass/_components.scss */
+/* line 593, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col div {
   margin: 0 20px 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 588, ../sass/_components.scss */
+  /* line 593, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col div {
     margin: 0 0 2em;
   }
 }
-/* line 597, ../sass/_components.scss */
+/* line 602, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
-/* line 601, ../sass/_components.scss */
+/* line 606, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span, .faq .faq-wrapper .repo-link i {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 605, ../sass/_components.scss */
+/* line 610, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span.arrow, .faq .faq-wrapper .repo-link i.arrow {
   margin-left: 6px;
 }
-/* line 610, ../sass/_components.scss */
+/* line 615, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link i {
   margin-right: 10px;
   font-size: 2rem;

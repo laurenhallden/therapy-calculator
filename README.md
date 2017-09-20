@@ -21,11 +21,11 @@ Not much! All of the calculations are done in javascript, with jQuery. Other too
 Check my math and make sure I'm not doing anything goofy! Also, here's a list of issues I'd like to resolve:
 
 - Add the ability to change how often you see your therapist
-- What happens if someone's insurance covers costs completely?
-- WHat happens if someone has an MSA?
+- What happens if someone's insurance covers costs completely? Does this ever happen?
+- What happens if someone has an MSA?
 - WHat happens if someone has Medicare or Medicaid?
 - What happens if someone has a yearly out-of-pocket limit?
-- Different tax calculations based on whether you're the head of household or filing jointly
+- ~~Different tax calculations based on whether you're the head of household or filing jointly~~ DONE
 - Add an option to fill it out with sample numbers
 
 Other ideas welcome!
