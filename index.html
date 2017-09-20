@@ -471,20 +471,19 @@
       window.globalSessionRate = currentSliderValue;
       var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
       window.globalYearlyCost = updatedYearlyCost;
-    });
-
-    // Then pick a next step
-    $('#slider-form').on('formvalid.zf.abide', function(e){
-      if (globalButtonId == 'step-two-yes'){
-        var end = '#section-3';
-        scrollTo(end);
-      }
-      else if (globalButtonId == 'step-two-no'){
-        checkItemized();
-        $('#section-9 h2').html("Let’s talk about taxes (sorry!)"); // change the heading if we skipped insurance
-        var end = '#section-9';
-        scrollTo(end);
-      }
+      // Then pick a next step
+      $('#slider-form').on('formvalid.zf.abide', function(e){
+        if (globalButtonId == 'step-two-yes'){
+          var end = '#section-3';
+          scrollTo(end);
+        }
+        else if (globalButtonId == 'step-two-no'){
+          checkItemized();
+          $('#section-9 h2').html("Let’s talk about taxes (sorry!)"); // change the heading if we skipped insurance
+          var end = '#section-9';
+          scrollTo(end);
+        }
+      });
     });
 
     // Check insurance
