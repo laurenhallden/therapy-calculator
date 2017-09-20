@@ -314,14 +314,21 @@
         <fieldset>
           <legend>So, you tell me: I’ll keep doing the math assuming either...</legend>
           <div class="radio-button">
-            <input type="radio" name="itemized-deductions" value="Yes" id="yes-deduction">
-            <label for="take-deduction">You want to take the medical deduction</label>
-          </div>
-          <div class="radio-button">
-            <input type="radio" name="itemized-deductions" value="No" id="no-deduction" checked="checked">
+            <input type="radio" name="itemized-deductions" value="No" id="no-deduction-2" checked="checked">
             <label for="take-deduction">The medical deduction probably won’t apply to you</label>
           </div>
+          <div class="radio-button">
+            <input type="radio" name="itemized-deductions" value="Yes" id="yes-deduction-2">
+            <label for="take-deduction">You want to take the medical deduction</label>
+          </div>
         </fieldset>
+        <label id="tax-bracket-2-label"><span>And you file taxes:</span>
+          <select id="tax-bracket-2">
+            <option value="single">As a single person</option>
+            <option value="joint">Married, filing jointly</option>
+            <option value="head">As the head of a household</option>
+          </select>
+        </label>
       <a class="button next-step" id="step-9">Next step (you’re almost finished!)</a>
     </section>
 
@@ -473,7 +480,9 @@
         scrollTo(end);
       }
       else if (globalButtonId == 'step-two-no'){
-        var end = '#section-6';
+        checkItemized();
+        $('#section-9 h2').html("Let’s talk about taxes (sorry!)"); // change the heading if we skipped insurance
+        var end = '#section-9';
         scrollTo(end);
       }
     });
@@ -604,8 +613,10 @@
         e.preventDefault();
       }
       else {
-        var itemizedYesNo = $('#yes-deduction:checked').val();
+        var itemizedYesNo = $('#yes-deduction-2:checked').val();
         if (itemizedYesNo == 'Yes') {
+          var taxBracket = $('#tax-bracket-2 :selected').val();
+          window.taxBracket = taxBracket;
           getItemized();
         }
         else {
