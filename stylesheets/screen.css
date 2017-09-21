@@ -2,7 +2,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 5, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 5, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,45 +24,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 22, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 html {
   line-height: 1;
 }
 
-/* line 24, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 26, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 28, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 30, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 32, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 116, ../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../.rvm/gems/ruby-2.3.0/gems/compass-core-1.0.3/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
   display: block;
 }
@@ -384,22 +384,24 @@ label {
 }
 
 /* line 278, ../sass/_components.scss */
-form label span {
+form label span,
+label span {
   margin-bottom: 10px;
+  display: block;
 }
 
-/* line 282, ../sass/_components.scss */
+/* line 284, ../sass/_components.scss */
 form label {
   padding: 20px 0 0;
 }
 @media screen and (max-width: 767px) {
-  /* line 282, ../sass/_components.scss */
+  /* line 284, ../sass/_components.scss */
   form label {
     padding: 0.5rem 0 0;
   }
 }
 
-/* line 290, ../sass/_components.scss */
+/* line 292, ../sass/_components.scss */
 input,
 [type='text'],
 [type='number'] {
@@ -412,14 +414,14 @@ input,
   background: #f7f8f8;
   height: auto;
 }
-/* line 302, ../sass/_components.scss */
+/* line 304, ../sass/_components.scss */
 input.focus,
 [type='text'].focus,
 [type='number'].focus {
   border: 1px solid #eb0162;
 }
 
-/* line 307, ../sass/_components.scss */
+/* line 309, ../sass/_components.scss */
 select {
   height: auto;
   padding: 0.75em;
@@ -428,11 +430,11 @@ select {
   background-color: #f7f8f8;
 }
 
-/* line 315, ../sass/_components.scss */
+/* line 317, ../sass/_components.scss */
 .radio-button {
   display: block;
 }
-/* line 318, ../sass/_components.scss */
+/* line 320, ../sass/_components.scss */
 .radio-button [type='radio'],
 .radio-button label {
   display: inline-block;
@@ -441,25 +443,25 @@ select {
   cursor: pointer;
 }
 @media screen and (max-width: 767px) {
-  /* line 318, ../sass/_components.scss */
+  /* line 320, ../sass/_components.scss */
   .radio-button [type='radio'],
   .radio-button label {
     vertical-align: top;
   }
 }
 @media screen and (max-width: 767px) {
-  /* line 331, ../sass/_components.scss */
+  /* line 333, ../sass/_components.scss */
   .radio-button [type='radio'] {
     margin-top: 0.3rem;
   }
 }
-/* line 336, ../sass/_components.scss */
+/* line 338, ../sass/_components.scss */
 .radio-button label {
   /* I know, I know */
   cursor: default !important;
 }
 @media screen and (max-width: 767px) {
-  /* line 336, ../sass/_components.scss */
+  /* line 338, ../sass/_components.scss */
   .radio-button label {
     width: 90%;
     margin-right: 0;
@@ -467,12 +469,16 @@ select {
 }
 
 /* line 349, ../sass/_components.scss */
+fieldset {
+  margin-bottom: 10px;
+}
+/* line 352, ../sass/_components.scss */
 fieldset legend {
   margin-bottom: 2em;
   line-height: 1.4;
 }
 
-/* line 355, ../sass/_components.scss */
+/* line 358, ../sass/_components.scss */
 button,
 .button {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -490,14 +496,14 @@ button,
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-/* line 372, ../sass/_components.scss */
+/* line 375, ../sass/_components.scss */
 button.outline,
 .button.outline {
   background-color: transparent;
   color: #0ea257;
   border: 2px solid #0ea257;
 }
-/* line 377, ../sass/_components.scss */
+/* line 380, ../sass/_components.scss */
 button.outline:hover, button.outline:active, button.outline:focus,
 .button.outline:hover,
 .button.outline:active,
@@ -506,7 +512,7 @@ button.outline:hover, button.outline:active, button.outline:focus,
   color: #128857;
   border: 2px solid #128857;
 }
-/* line 385, ../sass/_components.scss */
+/* line 388, ../sass/_components.scss */
 button.outline.disabled,
 .button.outline.disabled {
   background-color: transparent;
@@ -514,7 +520,7 @@ button.outline.disabled,
   border: 2px solid #0ea257;
   opacity: 0.5;
 }
-/* line 391, ../sass/_components.scss */
+/* line 394, ../sass/_components.scss */
 button.outline.disabled:hover, button.outline.disabled:active, button.outline.disabled:focus,
 .button.outline.disabled:hover,
 .button.outline.disabled:active,
@@ -524,7 +530,7 @@ button.outline.disabled:hover, button.outline.disabled:active, button.outline.di
   border: 2px solid #0ea257;
   opacity: 0.5;
 }
-/* line 403, ../sass/_components.scss */
+/* line 406, ../sass/_components.scss */
 button:hover, button:active, button:focus,
 .button:hover,
 .button:active,
@@ -533,7 +539,7 @@ button:hover, button:active, button:focus,
   border: 2px solid #128857;
   cursor: pointer;
 }
-/* line 411, ../sass/_components.scss */
+/* line 414, ../sass/_components.scss */
 button.disabled,
 .button.disabled {
   background-color: #0ea257;
@@ -541,7 +547,7 @@ button.disabled,
   opacity: 0.5;
   cursor: default;
 }
-/* line 417, ../sass/_components.scss */
+/* line 420, ../sass/_components.scss */
 button.disabled:hover, button.disabled:active, button.disabled:focus,
 .button.disabled:hover,
 .button.disabled:active,
@@ -551,7 +557,7 @@ button.disabled:hover, button.disabled:active, button.disabled:focus,
   opacity: 0.5;
 }
 @media screen and (max-width: 767px) {
-  /* line 355, ../sass/_components.scss */
+  /* line 358, ../sass/_components.scss */
   button,
   .button {
     width: 100%;
@@ -559,18 +565,18 @@ button.disabled:hover, button.disabled:active, button.disabled:focus,
   }
 }
 
-/* line 432, ../sass/_components.scss */
+/* line 435, ../sass/_components.scss */
 .button + .button {
   margin-left: 0.5em;
 }
 @media screen and (max-width: 767px) {
-  /* line 432, ../sass/_components.scss */
+  /* line 435, ../sass/_components.scss */
   .button + .button {
     margin-left: 0;
   }
 }
 
-/* line 440, ../sass/_components.scss */
+/* line 443, ../sass/_components.scss */
 .error {
   color: #eb0162;
   font-size: 0.8rem;
@@ -579,26 +585,26 @@ button.disabled:hover, button.disabled:active, button.disabled:focus,
 /* ===================
 Page elements
 ====================*/
-/* line 450, ../sass/_components.scss */
+/* line 453, ../sass/_components.scss */
 .intro,
 .footer {
   color: #fff;
   padding: 4em 0 2em;
   text-align: center;
 }
-/* line 456, ../sass/_components.scss */
+/* line 459, ../sass/_components.scss */
 .intro p,
 .intro p a,
 .footer p,
 .footer p a {
   color: rgba(255, 255, 255, 0.6);
 }
-/* line 461, ../sass/_components.scss */
+/* line 464, ../sass/_components.scss */
 .intro a,
 .footer a {
   text-decoration: underline;
 }
-/* line 464, ../sass/_components.scss */
+/* line 467, ../sass/_components.scss */
 .intro a:hover, .intro a:active, .intro a:focus,
 .footer a:hover,
 .footer a:active,
@@ -610,7 +616,7 @@ Page elements
 Specific sections
 ====================*/
 /* 1 */
-/* line 479, ../sass/_components.scss */
+/* line 482, ../sass/_components.scss */
 .disclaimer {
   background-color: rgba(31, 126, 161, 0.075);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -621,7 +627,7 @@ Specific sections
   color: #1f7ea3;
   margin: 30px 0;
 }
-/* line 489, ../sass/_components.scss */
+/* line 492, ../sass/_components.scss */
 .disclaimer a {
   color: #1f7ea3;
   text-decoration: underline;
@@ -629,7 +635,7 @@ Specific sections
 
 /* 6 */
 /* We want this hidden in case the person doesn't have insurance */
-/* line 498, ../sass/_components.scss */
+/* line 501, ../sass/_components.scss */
 #insurance-results,
 #tax-results {
   display: none;
@@ -638,45 +644,45 @@ Specific sections
   margin-bottom: 2em;
 }
 
-/* line 506, ../sass/_components.scss */
+/* line 509, ../sass/_components.scss */
 p.border-bottom {
   border-bottom: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 512, ../sass/_components.scss */
+/* line 515, ../sass/_components.scss */
 p.border-top {
   border-top: 1px solid #eaeaea;
   padding-bottom: 2em;
   margin-bottom: 2em;
 }
 
-/* line 518, ../sass/_components.scss */
+/* line 521, ../sass/_components.scss */
 hr {
   border: 1px solid #eaeaea;
   margin: 2em 0;
 }
 
 /* 9 */
-/* line 524, ../sass/_components.scss */
+/* line 527, ../sass/_components.scss */
 #tax-bracket-2-label {
   display: none;
 }
 
 /* Final summary */
-/* line 532, ../sass/_components.scss */
+/* line 535, ../sass/_components.scss */
 #section-11 label,
 #section-11 p,
 #section-11 span {
   line-height: 1.4;
   margin-bottom: 10px;
 }
-/* line 539, ../sass/_components.scss */
+/* line 542, ../sass/_components.scss */
 #section-11 #summary-tips-label {
   margin-top: 40px;
 }
-/* line 543, ../sass/_components.scss */
+/* line 546, ../sass/_components.scss */
 #section-11 #but,
 #section-11 #insurance-saved,
 #section-11 #taxes-saved,
@@ -688,12 +694,12 @@ hr {
 
 /* FAQ */
 @media screen and (max-width: 767px) {
-  /* line 556, ../sass/_components.scss */
+  /* line 559, ../sass/_components.scss */
   .footer {
     text-align: left;
   }
 }
-/* line 562, ../sass/_components.scss */
+/* line 565, ../sass/_components.scss */
 .footer hr {
   opacity: 0.3;
   border-top: 1px solid #fff;
@@ -702,60 +708,60 @@ hr {
 }
 
 @media screen and (max-width: 767px) {
-  /* line 570, ../sass/_components.scss */
+  /* line 573, ../sass/_components.scss */
   .faq {
     padding-left: 10px;
     padding-right: 10px;
   }
 }
-/* line 576, ../sass/_components.scss */
+/* line 579, ../sass/_components.scss */
 .faq .faq-wrapper {
   display: flex;
   margin-top: 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 576, ../sass/_components.scss */
+  /* line 579, ../sass/_components.scss */
   .faq .faq-wrapper {
     display: block;
   }
 }
-/* line 584, ../sass/_components.scss */
+/* line 587, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col {
   width: 50%;
   text-align: left;
 }
 @media screen and (max-width: 767px) {
-  /* line 584, ../sass/_components.scss */
+  /* line 587, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col {
     width: 100%;
     display: block;
   }
 }
-/* line 593, ../sass/_components.scss */
+/* line 596, ../sass/_components.scss */
 .faq .faq-wrapper .faq-col div {
   margin: 0 20px 2em;
 }
 @media screen and (max-width: 767px) {
-  /* line 593, ../sass/_components.scss */
+  /* line 596, ../sass/_components.scss */
   .faq .faq-wrapper .faq-col div {
     margin: 0 0 2em;
   }
 }
-/* line 602, ../sass/_components.scss */
+/* line 605, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 700;
 }
-/* line 606, ../sass/_components.scss */
+/* line 609, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span, .faq .faq-wrapper .repo-link i {
   display: inline-block;
   vertical-align: middle;
 }
-/* line 610, ../sass/_components.scss */
+/* line 613, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link span.arrow, .faq .faq-wrapper .repo-link i.arrow {
   margin-left: 6px;
 }
-/* line 615, ../sass/_components.scss */
+/* line 618, ../sass/_components.scss */
 .faq .faq-wrapper .repo-link i {
   margin-right: 10px;
   font-size: 2rem;

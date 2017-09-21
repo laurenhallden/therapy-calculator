@@ -275,8 +275,10 @@ label {
 	font-family: $helvetica;
 }
 
-form label span {
+form label span,
+label span {
 	margin-bottom: 10px;
+	display: block;
 }
 
 form label {
@@ -345,6 +347,7 @@ select {
 }
 
 fieldset {
+	margin-bottom: 10px;
 
 	legend {
 		margin-bottom: 2em;

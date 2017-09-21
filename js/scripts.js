@@ -220,12 +220,11 @@ function setHSA(){
 // Section NINE: Doing Yer Taxes and reporting the results
 // ************************************************
 
-
 // First, the peple who are ineligible for an FSA/HSA -- we need their tax bracket
 // Show and hide that dropdown
 $('#yes-deduction-2').on('change', function(){
 	var itemizedYesNo = $('#yes-deduction-2:checked').val();
-	if (itemizedYesNo == 'Yes') {
+	if ((itemizedYesNo == 'Yes') && (taxBracket == 'notSet')){ // get their tax bracket if they didn't tell us already
 		$('#tax-bracket-2-label').slideDown();
 	}
 	else {
