@@ -322,7 +322,7 @@
             <label for="take-deduction">You want to take the medical deduction</label>
           </div>
         </fieldset>
-        <label id="tax-bracket-2-label"><span>And you file taxes:</span>
+        <label id="tax-bracket-2-label" class="hidden"><span>And you file taxes:</span>
           <select id="tax-bracket-2">
             <option value="single">As a single person</option>
             <option value="joint">Married, filing jointly</option>
@@ -413,6 +413,7 @@
       window.globalInsuranceDiscount = 0;
       window.globalTaxDiscount = 0;
       window.globalTrackingReceipts = 'no';
+      window.taxBracket = 'notSet';
     });
 
     // Update progress bar based on current section
