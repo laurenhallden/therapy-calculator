@@ -26,12 +26,12 @@ function scrollTo(end){
       $(currentSection).find(allForms).removeAttr('data-abide');
  
       // Add hash (#) to URL when done scrolling (default click behavior)
-      window.location.hash = hash;
+      // window.location.hash = hash;
     });
   } // End if
 };
 
-// I want to stop buttons that are just links from scrolling, but this doesn't seem to work
+// I want to stop buttons that are just links from scrolling
 $('.disabled').click(function(e){
   e.preventDefault();
   e.stopPropagation();
