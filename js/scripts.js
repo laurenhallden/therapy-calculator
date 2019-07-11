@@ -193,8 +193,8 @@ function setInsurance(yearlyCostWithInsurance){
 
 function setFSA(){
 	// Check to see if the yearly cost of therapy is less than the max allowed FSA contribution
-	if (globalYearlyCost > 2600){
-		$('#fsa-field').val(2600);
+	if (globalYearlyCost > 2700){
+		$('#fsa-field').val(2700);
 	}
 	else {
 		$('#fsa-field').val(globalYearlyCost);
@@ -205,8 +205,8 @@ function setFSA(){
 
 function setHSA(){
 	// Check to see if the yearly cost of therapy is less than the max allowed HSA contribution
-	if (globalYearlyCost > 6750){ // This is a little simplistic -- I'm only checking the family max contribution
-		$('#hsa-field').val(6750);
+	if (globalYearlyCost > 7000){ // This is a little simplistic -- I'm only checking the family max contribution
+		$('#hsa-field').val(7000);
 	}
 	else {
 		$('#hsa-field').val(globalYearlyCost);
@@ -238,35 +238,34 @@ $('#yes-deduction-2').on('change', function(){
 function doTaxes(contribution,fromWhere){
 	// Apply some marginal tax rates, yo!
 	// But first we need to put them in a tax bracket, because that is A Thing.
-	// source: https://taxfoundation.org/2018-tax-brackets/
-	// and https://www.fool.com/taxes/2018/01/05/what-are-the-new-and-improved-2018-tax-brackets.aspx
+	// source: https://taxfoundation.org/2019-tax-brackets
 	if (taxBracket == 'single'){ // Single person rates
-		if (globalIncome > 500000){
+		if (globalIncome > 510300){
 			var taxRate = .37;
 			var baseTaxes = 150689.50;
 			var amountOver = 500000;
 		}
-		else if (globalIncome > 200000){
+		else if (globalIncome > 204100){
 			var taxRate = .35;
 			var baseTaxes = 45689.50;
 			var amountOver = 200000;
 		}
-		else if (globalIncome > 157500){
+		else if (globalIncome > 160725){
 			var taxRate = .32;
 			var baseTaxes = 32089.50;
 			var amountOver = 157500;
 		}
-		else if (globalIncome > 82500){
+		else if (globalIncome > 84200){
 			var taxRate = .24;
 			var baseTaxes = 14089.50;
 			var amountOver = 82500;
 		}
-		else if (globalIncome > 38700){
+		else if (globalIncome > 39475){
 			var taxRate = .22;
 			var baseTaxes = 4453.50;
 			var amountOver = 38700;
 		}
-		else if (globalIncome > 9525){
+		else if (globalIncome > 9700){
 			var taxRate = .12;
 			var baseTaxes = 952.50;
 			var amountOver = 9525;
@@ -278,32 +277,32 @@ function doTaxes(contribution,fromWhere){
 		}
 	}
 	else if (taxBracket == 'joint'){ // Joint filing rates
-		if (globalIncome > 600000){
+		if (globalIncome > 612350){
 			var taxRate = .37;
 			var baseTaxes = 161379;
 			var amountOver = 600000;
 		}
-		else if (globalIncome > 400000){
+		else if (globalIncome > 408200){
 			var taxRate = .35;
 			var baseTaxes = 91379;
 			var amountOver = 400000;
 		}
-		else if (globalIncome > 315000){
+		else if (globalIncome > 321450){
 			var taxRate = .32;
 			var baseTaxes = 64179;
 			var amountOver = 315000;
 		}
-		else if (globalIncome > 165000){
+		else if (globalIncome > 168400){
 			var taxRate = .24;
 			var baseTaxes = 28179;
 			var amountOver = 165000;
 		}
-		else if (globalIncome > 77400){
+		else if (globalIncome > 78950){
 			var taxRate = .22;
 			var baseTaxes = 8907;
 			var amountOver = 77400;
 		}
-		else if (globalIncome > 19050){
+		else if (globalIncome > 19400){
 			var taxRate = .12;
 			var baseTaxes = 1905;
 			var amountOver = 19050;
@@ -315,32 +314,32 @@ function doTaxes(contribution,fromWhere){
 		}
 	}
 	else { // Head of household rates
-		if (globalIncome > 500000){
+		if (globalIncome > 510300){
 			var taxRate = .37;
 			var baseTaxes = 149298;
 			var amountOver = 500000;
 		}
-		else if (globalIncome > 200000){
+		else if (globalIncome > 204100){
 			var taxRate = .35;
 			var baseTaxes = 44298;
 			var amountOver = 200000;
 		}
-		else if (globalIncome > 157500){
+		else if (globalIncome > 160700){
 			var taxRate = .32;
 			var baseTaxes = 30698;
 			var amountOver = 157500;
 		}
-		else if (globalIncome > 82500){
+		else if (globalIncome > 84200){
 			var taxRate = .24;
 			var baseTaxes = 12698;
 			var amountOver = 82500;
 		}
-		else if (globalIncome > 51800){
+		else if (globalIncome > 52850){
 			var taxRate = .22;
 			var baseTaxes = 5944;
 			var amountOver = 51800;
 		}
-		else if (globalIncome > 13600){
+		else if (globalIncome > 13850){
 			var taxRate = .12;
 			var baseTaxes = 1360;
 			var amountOver = 13600;
