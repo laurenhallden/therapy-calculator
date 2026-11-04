@@ -23,10 +23,10 @@ var TAX_YEARS = {
 			head:   [[0, .10], [17700, .12], [67450, .22], [105700, .24], [201750, .32], [256200, .35], [640600, .37]]
 		},
 
-		// Source: IRS Rev. Proc. 2025-32, section 4.14
+		// Source: IRS Rev. Proc. 2025-32, "Standard Deduction" section
 		standardDeduction: { single: 16100, joint: 32200, head: 24150 },
 
-		// Source: IRS Rev. Proc. 2025-32, section 4.29 (health FSA salary reduction limit)
+		// Source: IRS Rev. Proc. 2025-32, "Cafeteria Plans" section (health FSA salary reduction limit)
 		fsaLimit: 3400,
 
 		// Source: IRS Rev. Proc. 2025-19 (HSA limits, released May 2025)

@@ -23,7 +23,7 @@ Not much! All of the calculations are done in javascript, with jQuery. Other too
 - `js/scripts.js`: connects the math to the page.
 - `test/calc.test.js`: worked examples with the math written out. Run them with `npm test` (or `node test/calc.test.js`).
 
-To add a new year, copy the latest entry in `js/tax-years.js`, update the numbers and sources, and run the tests.
+To add a new year, follow the checklist in [UPDATING.md](UPDATING.md).
 
 ## How to contribute
 Check my math and make sure I'm not doing anything goofy! Also, here's a list of issues I'd still like to work on:
