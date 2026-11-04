@@ -17,6 +17,14 @@ Not much! All of the calculations are done in javascript, with jQuery. Other too
 - There's a progress bar based on [NProgress](https://github.com/rstacruz/nprogress) and [onScreen](https://github.com/silvestreh/onScreen)
 - CSS uses Sass
 
+## Where things live
+- `js/tax-years.js`: every number that changes from year to year (tax brackets, standard deduction, FSA and HSA limits, the medical deduction floor, Social Security wage base), each with its source. The page text reads from here too.
+- `js/calc.js`: all of the math, with no page code mixed in.
+- `js/scripts.js`: connects the math to the page.
+- `test/calc.test.js`: worked examples with the math written out. Run them with `npm test` (or `node test/calc.test.js`).
+
+To add a new year, follow the checklist in [UPDATING.md](UPDATING.md).
+
 ## How to contribute
 Check my math and make sure I'm not doing anything goofy! Also, here's a list of issues I'd still like to work on:
 
@@ -24,7 +32,7 @@ Check my math and make sure I'm not doing anything goofy! Also, here's a list of
 - What happens if someone's insurance covers costs completely? Does this ever happen?
 - What happens if someone has an MSA?
 - What happens if someone has Medicare or Medicaid?
-- What happens if someone has a yearly out-of-pocket limit?
+- ~~What happens if someone has a yearly out-of-pocket limit?~~ DONE
 - ~~Different tax calculations based on whether you're the head of household or filing jointly~~ DONE
 - Add an option to fill it out with sample numbers
 

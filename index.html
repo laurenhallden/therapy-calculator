@@ -66,7 +66,7 @@
   <div class="container">
   <div class="intro">
     <h1>How much can I expect to pay for therapy?</h1>
-    <p class="subhead">*in 2018 America</p>
+    <p class="subhead">*in <span data-year-value="year">2026</span> America</p>
   </div>
 
     <section id="section-0">
@@ -79,6 +79,10 @@
       </p>
       <p>The first question is an awkward one (sorry!): how much money does your household make in a year?</p>
       <form id="income-form" class="section-form" data-abide novalidate>
+        <label><span>Planning for the tax year:</span>
+          <select id="tax-year"></select>
+        </label>
+        <p class="help-text" id="projected-year-note" style="display:none">Heads up: the IRS hasn’t published every number for <span data-year-value="year"></span> yet, so some of the tax math uses estimates.</p>
         <label><span>Your household income:</span>
           <input id="income-field" type="text" aria-describedby="income-help-text" required pattern="number">
           <span class="form-error">
@@ -100,7 +104,7 @@
         <div class="flex-wrapper slider-wrapper">
           <div class="left-content">
             <label>Set your rate to:</label>
-            <div class="slider" data-slider data-options="start: 20; end: 150; step: 5;">
+            <div class="slider" data-slider data-options="start: 20; end: 300; step: 5;">
               <span class="slider-handle"  data-slider-handle role="slider" tabindex="1" aria-controls="sliderOutput1"></span>
               <span class="slider-fill" data-slider-fill></span>
             </div>
@@ -182,6 +186,13 @@
           </span>
         </label>
         <p class="help-text" id="deductible-help-text-innetwork">You may not have one, but if you do, enter it here.</p>
+        <label><span>Your out-of-pocket maximum:</span>
+          <input type="text" id="oop-max-field-innetwork" aria-describedby="oop-max-help-text-innetwork" pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        </label>
+        <p class="help-text" id="oop-max-help-text-innetwork">The most your plan will make you pay in a year, after which it covers everything. If you have other medical bills, you can enter what’s left of it. Leave this blank if you don’t know.</p>
         <button class="button next-step" id="step-four">Apply it!</button>
       </form>
     </section>
@@ -222,6 +233,14 @@
           </span>
         </label>
         <p class="help-text" id="approved-amount-help-text">This is annoying, but your insurance can put a limit on what they think an hour of therapy <em>should</em> cost. For example, your therapist may charge you $100 an hour, but your insurance may decide this service is only worth $80. If you know you have an approved amount limit, enter it here. Otherwise we’ll assume you don’t.</p>
+
+        <label><span>Your out-of-network out-of-pocket maximum:</span>
+          <input type="text" id="oop-max-field-outofnetwork" value="" aria-describedby="oop-max-help-text-outofnetwork" pattern="number">
+          <span class="form-error">
+            Enter a number.
+          </span>
+        </label>
+        <p class="help-text" id="oop-max-help-text-outofnetwork">The most your plan will make you pay in a year for out-of-network care. It’s often separate from (and higher than) your in-network one. Anything your therapist charges above the approved amount usually doesn’t count toward it. Leave this blank if you don’t know.</p>
         <button class="button next-step" id="step-five">Looks good!</button>
       </form>
     </section>
@@ -259,7 +278,7 @@
       <h2>Set your FSA contribution.</h2>
       <p>The more you contribute here, the more you can lower your tax burden. But there's a few things to keep in mind:</p>
       <ul class="ul-padded">
-        <li>The maximum allowed in 2018 is <strong>$2,650</strong>.</li>
+        <li>The maximum allowed in <span data-year-value="year"></span> is <strong data-year-value="fsaLimit"></strong>.</li>
         <li>You can’t change your FSA contributions mid-year. You'll have to wait for your next open enrollment period. This part of the calculation is only useful for future planning.</li>
       </ul>
       <p>If you’re already using an FSA, you may not have enough room left to add the full amount of therapy. In that case, take the maximum if you can.
@@ -282,8 +301,16 @@
       <p>First, let’s make sure you’re in the right place. Some things to keep in mind:</p>
       <ul class="ul-padded">
         <li>You can only have a Health Savings Account if you also have a qualifying <a target="_blank" href="https://www.healthcare.gov/glossary/high-deductible-health-plan/">high-deductible health plan</a>.</li>
-        <li>If you do have an HSA, the maximum amount you’re allowed to contribute in 2018 is <strong>$3,450</strong> for an individual, or <strong>$6,900</strong> for a family. You can change the amount you contribute at any time during the year.</li>
+        <li>As of <span data-year-value="year"></span>, bronze and catastrophic plans from the <a target="_blank" href="https://www.healthcare.gov/">Health Insurance Marketplace</a> count as qualifying plans too.</li>
+        <li>If you do have an HSA, the maximum amount you’re allowed to contribute in <span data-year-value="year"></span> is <strong data-year-value="hsaSelf"></strong> for an individual, or <strong data-year-value="hsaFamily"></strong> for a family. You can change the amount you contribute at any time during the year.</li>
+        <li>I’m assuming your HSA contributions come out of your paycheck. That way they also skip Social Security and Medicare taxes. Money you deposit on your own only skips income tax.</li>
       </ul>
+      <label><span>Your HSA covers:</span>
+        <select id="hsa-coverage">
+          <option value="self">Just you</option>
+          <option value="family">Your family</option>
+        </select>
+      </label>
       <p>If you’re already contributing, you may not have enough room left to add the full amount of therapy to your HSA. In that case, take the maximum if you can.</p>
       <p>Otherwise, let’s assume you can bump up your HSA contribution by:</p>
       <form id="hsa-form" class="section-form" data-abide novalidate>
@@ -302,28 +329,39 @@
     <section id="section-9" class="hidden">
       <div class="variable-content">
         <h2>Let’s keep talking taxes (sorry!)</h2>
-        <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes<span id="used-what"></span>.</p>
+        <p id="tax-results">I think you can save <span class="strong">$</span><span class="strong" id="tax-discount-span"></span> on your taxes<span id="used-what"></span><span id="tax-breakdown"></span>.</p>
       </div>
-      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than 7.5%</strong> of your Adjusted Gross Income in 2018, you may be able to deduct them.</p>
-      <p>Your Adjusted Gross Income is your household income minus any deductions, like student loan payments or mortgage interest.</p>
+      <p>There’s <span id="additional-taxes">a</span> tax trick that might be of use to you: if your medical bills are <strong>more than <span data-year-value="medicalFloor"></span></strong> of your Adjusted Gross Income, you may be able to deduct the part that’s over that amount.</p>
+      <p>Your Adjusted Gross Income is roughly your household income minus pre-tax money like FSA, HSA and 401(k) contributions.</p>
       <p>A few things to know:</p>
       <ul class="ul-padded">
         <li>This only applies to therapy that <a target="_blank" href="https://turbotax.intuit.com/tax-tools/tax-tips/Tax-Deductions-and-Credits/-Can-I-Claim-Medical-Expenses-on-My-Taxes-/INF14196.html">counts as medical care</a>, so you should talk to your therapist during your intake about your diagnosis. Things like marriage counseling may not count.</li>
-        <li>You'll have to <a href="https://www.irs.gov/taxtopics/tc501">itemize your deductions</a> to do this. In 2018, you'll only save money if your medical expenses (plus your other deductions like loan interest and charitable contributions) add up to more than $12,000 for a single person, or $24,000 for a married couple.</li>
-        <li>I can’t know what all of your deductions might be, but I can tell you this: without additional deductions, your therapy bills are currently <strong><span id="income-percentage"></span>%</strong> of your Adjusted Gross Income.</li>
+        <li>You'll have to <a target="_blank" href="https://www.irs.gov/taxtopics/tc501">itemize your deductions</a> to do this. In <span data-year-value="year"></span>, you'll only save money if the deductible part of your medical expenses (plus your other deductions like mortgage interest, state and local taxes, and charitable contributions) adds up to more than <span data-year-value="standardSingle"></span> for a single person, <span data-year-value="standardHead"></span> for a head of household, or <span data-year-value="standardJoint"></span> for a married couple.</li>
+        <li>Anything you pay from an FSA or HSA doesn’t count here, since that money already skipped taxes.</li>
+        <li>I can’t know what all of your deductions might be, but I can tell you this: the therapy bills you pay with after-tax money are currently <strong><span id="income-percentage"></span>%</strong> of your Adjusted Gross Income. Only medical bills above about <strong>$<span id="medical-floor-amount"></span></strong> would count.</li>
       </ul>
         <fieldset>
           <legend>So, you tell me: I’ll keep doing the math assuming either...</legend>
           <div class="radio-button">
             <input type="radio" name="itemized-deductions" value="No" id="no-deduction-2" checked="checked">
-            <label for="take-deduction">The medical deduction probably won’t apply to you</label>
+            <label for="no-deduction-2">The medical deduction probably won’t apply to you</label>
           </div>
           <div class="radio-button">
             <input type="radio" name="itemized-deductions" value="Yes" id="yes-deduction-2">
-            <label for="take-deduction">You want to take the medical deduction</label>
+            <label for="yes-deduction-2">You want to take the medical deduction</label>
           </div>
         </fieldset>
-        <label id="tax-bracket-2-label" class="hidden"><span>And you file taxes:</span>
+        <div id="other-deductions" style="display:none">
+          <label><span>Your other medical bills this year (optional):</span>
+            <input type="text" id="other-medical-field" aria-describedby="other-medical-help-text" pattern="number">
+          </label>
+          <p class="help-text" id="other-medical-help-text">Doctor visits, prescriptions, dental, and so on, as long as you didn’t pay for them from an FSA or HSA. These count toward the floor too.</p>
+          <label><span>Your other itemized deductions (optional):</span>
+            <input type="text" id="other-itemized-field" aria-describedby="other-itemized-help-text" pattern="number">
+          </label>
+          <p class="help-text" id="other-itemized-help-text">Mortgage interest, state and local taxes, charitable donations. Your tax return from last year (Schedule A) is a good place to look.</p>
+        </div>
+        <label id="tax-bracket-2-label" style="display:none"><span>And you file taxes:</span>
           <select id="tax-bracket-2">
             <option value="single">As a single person</option>
             <option value="joint">Married, filing jointly</option>
@@ -346,7 +384,7 @@
       <h2>We’re all done!</h2>
       <label>Here are my final estimations:</label>
       <p>Averaged over a year, each therapy session could cost you: <span class="strong">$</span><span class="strong" id="final-session-rate"></span></p>
-      <p>A year of therapy could cost you: <span class="strong">$</span><span class="strong" <span id="final-yearly-cost"></span>
+      <p>A year of therapy could cost you: <span class="strong">$</span><span class="strong" id="final-yearly-cost"></span></p>
       <p id="but">
         But you’ll have saved 
         <span id="insurance-saved"><strong>$<span id="the-insurance-saved"></span></strong> by using your insurance</span><span id="and"> and </span><span id="taxes-saved"><strong>$<span id="the-taxes-saved"></span></strong> on your taxes</span>.
@@ -404,6 +442,8 @@
     <script src="js/app.js"></script>
     <script src="js/vendor/smooth-scroll.js"></script>
     <script src="js/vendor/nprogress.js"></script>
+    <script src="js/tax-years.js"></script>
+    <script src="js/calc.js"></script>
     <script src="js/scripts.js"></script>
 
   <!-- All our button functions -->
@@ -415,6 +455,10 @@
       window.globalTaxDiscount = 0;
       window.globalTrackingReceipts = 'no';
       window.taxBracket = 'notSet';
+      window.globalPreTaxContribution = 0;
+      window.globalItemize = false;
+      window.globalOtherMedical = 0;
+      window.globalOtherItemized = 0;
     });
 
     // Update progress bar based on current section
@@ -473,6 +517,7 @@
       window.globalSessionRate = currentSliderValue;
       var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
       window.globalYearlyCost = updatedYearlyCost;
+      window.globalCostAfterInsurance = updatedYearlyCost; // starting point for the tax steps if they skip insurance
       // Then pick a next step
       $('#slider-form').on('formvalid.zf.abide', function(e){
         if (globalButtonId == 'step-two-yes'){
@@ -508,7 +553,8 @@
       else {
         deductible = 0;
       }
-      applyNetworkInsurance(copay,deductible);
+      var outOfPocketMax = toNumber($('#oop-max-field-innetwork').val()); // blank means no max
+      applyNetworkInsurance(copay,deductible,outOfPocketMax);
     });
 
     // Apply out-of-network insurance
@@ -533,9 +579,10 @@
         approvedAmount = parseInt(approvedAmount,10);
       }
       else {
-        var approvedAmount = 1000; // Just pick a random high number
+        var approvedAmount = 0; // 0 means no limit
       }
-      applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount);
+      var outOfPocketMax = toNumber($('#oop-max-field-outofnetwork').val()); // blank means no max
+      applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount,outOfPocketMax);
     });
 
     // Check FSA or HSA...
@@ -616,8 +663,10 @@
       else {
         var itemizedYesNo = $('#yes-deduction-2:checked').val();
         if (itemizedYesNo == 'Yes') {
-          var taxBracket = $('#tax-bracket-2 :selected').val();
-          window.taxBracket = taxBracket;
+          // Only ask for filing status here if they skipped the earlier question
+          if (window.taxBracket == 'notSet') {
+            window.taxBracket = $('#tax-bracket-2 :selected').val();
+          }
           getItemized();
         }
         else {

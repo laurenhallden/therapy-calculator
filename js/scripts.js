@@ -1,36 +1,72 @@
 // This is complicated but I'll try to comment it out so you know what's going on!
+//
+// The actual math lives in js/calc.js, and every number that changes yearly
+// lives in js/tax-years.js. This file just connects them to the page.
+
+// ************************************************
+// Tax year helpers
+// ************************************************
+
+window.taxYear = DEFAULT_TAX_YEAR;
+
+function yearData() {
+	return TAX_YEARS[taxYear];
+}
+
+function money(n) {
+	return Math.round(n).toLocaleString('en-US');
+}
+
+function toNumber(value) {
+	if (value === undefined || value === null) return 0;
+	var n = parseFloat(String(value).replace(/[,$\s]/g, ''));
+	return isNaN(n) ? 0 : n;
+}
+
+// Fill in every <span data-year-value="..."> on the page from tax-years.js,
+// so the text never disagrees with the math.
+function fillYearText() {
+	var y = yearData();
+	var values = {
+		'year': taxYear,
+		'fsaLimit': '$' + money(y.fsaLimit),
+		'hsaSelf': '$' + money(y.hsaLimit.self),
+		'hsaFamily': '$' + money(y.hsaLimit.family),
+		'standardSingle': '$' + money(y.standardDeduction.single),
+		'standardJoint': '$' + money(y.standardDeduction.joint),
+		'standardHead': '$' + money(y.standardDeduction.head),
+		'medicalFloor': (y.medicalExpenseFloor * 100) + '%'
+	};
+	$('[data-year-value]').each(function () {
+		$(this).html(values[$(this).attr('data-year-value')]);
+	});
+	$('#projected-year-note').toggle(y.status === 'projected');
+}
+
+// Build the year dropdown from whatever years are in tax-years.js
+$(document).ready(function () {
+	Object.keys(TAX_YEARS).forEach(function (yr) {
+		var label = yr + (TAX_YEARS[yr].status === 'projected' ? ' (some numbers are estimates)' : '');
+		$('#tax-year').append($('<option>').val(yr).text(label).prop('selected', parseInt(yr, 10) === DEFAULT_TAX_YEAR));
+	});
+	fillYearText();
+});
+
+$('#tax-year').on('change', function () {
+	window.taxYear = parseInt($(this).val(), 10);
+	fillYearText();
+});
+
 
 // ************************************************
 // Section ONE: see if a sliding scale payment applies
 // ************************************************
 
 function stepOne(income){
-	// The following ranges are estimates based on a few sliding scales available online,
-	// and my own therapist's sliding scale
-	if (income > 90000 ){
-		var baserate = 125;
-	}
-	else {
+	// The estimates themselves live in SLIDING_SCALE in tax-years.js
+	var baserate = TherapyCalc.estimateSessionRate(income, SLIDING_SCALE);
+	if (income <= SLIDING_SCALE.discountNoteAtOrBelow) {
 		$('#sliding-scale-div').html("<h2>You may qualify for a discount!</h2><p>It may be worth it to seek out a therapist who offers sliding-scale fees.</p>");
-	}
-	if (income > 90000 ){
-	}
-	else if (income > 74999){
-		var baserate = 100;
-	}
-	else if (income > 49999){
-		var baserate = 80;
-	}
-	else if (income > 29000){
-		var baserate = 60;
-	}
-	else if (income < 29001){
-		var baserate = (income/1000*2);
-		baserate = Math.round(baserate);
-		baserate = Math.ceil(baserate/5)*5; // round to $5
-	}
-	if (baserate < 20){
-		var baserate = 20; // set 20 as the lower limit; you probably won't pay less than that
 	}
 	setBaseRate(baserate);
 
@@ -42,7 +78,7 @@ function stepOne(income){
 	var $slider = new Foundation.Slider($('.slider'), {
 	  initialStart : baserate,
 	  start: 20,
-	  end: 250,
+	  end: 300,
 	  step: 5,
 	});
 }
@@ -56,6 +92,7 @@ function setBaseRate(baserate){
 	$('#baserate-span').html(baserate);
 	window.globalSessionRate = baserate; // we're going to push variables we'll need later to the DOM
 	window.globalYearlyCost = (baserate * globalNumberOfSessions);
+	window.globalCostAfterInsurance = globalYearlyCost;
 	$('#yearly-cost-span').html(globalYearlyCost); // Extrapolate a yearly cost
 }
 
@@ -96,71 +133,66 @@ function checkInsurance(coveredYesNo, networkYesNo){
 // Section FOUR: Calculate their in-network insurance benefits
 // ************************************************
 
-function applyNetworkInsurance(copay,deductible){
-	if ((globalYearlyCost > deductible) && (globalSessionRate > copay)){ // If their deductible isn't too high...
-		var sessionsToHitDeductible = (deductible/globalSessionRate); // how many sessions to hit their deductible?
-		sessionsToHitDeductible = Math.ceil(sessionsToHitDeductible); // we want the upper limit of the session it takes
-		var sessionsRemaining = (globalNumberOfSessions - sessionsToHitDeductible);
-		sessionsRemaining = Math.round(sessionsRemaining);
-		yearlyCostWithInsurance = ((sessionsRemaining * copay) + deductible);
+function applyNetworkInsurance(copay, deductible, outOfPocketMax){
+	var yearlyCostWithInsurance = TherapyCalc.inNetworkYearlyCost({
+		rate: toNumber(globalSessionRate),
+		sessions: toNumber(globalNumberOfSessions),
+		copay: copay,
+		deductible: deductible,
+		outOfPocketMax: outOfPocketMax
+	});
+	if (yearlyCostWithInsurance < globalYearlyCost) {
 		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
 		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#section-6 h2').html("Making progress!");
+		$('#insurance-results').show();
+	}
+	else if (globalYearlyCost <= deductible) {
+		// The deductible on this insurance is too high to help
+		// That sucks; let's be sympathetic
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can pay slightly more per month for insurance with a lower deductible.</p>");
 	}
 	else {
-		if (globalYearlyCost <= deductible) {
-			// The deductible on this insurance is too high to help
-			// That sucks; let's be sympathetic
-			$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can pay slightly more per month for insurance with a lower deductible.</p>");
-		}
-		else if (globalSessionRate <= copay) {
-			// The copays are too hight
-			$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can get access to a plan with lower copays.</p>");
-		}
+		// The copays are too high
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can get access to a plan with lower copays.</p>");
 	}
-	$('#insurance-results').show();
 	var end = '#section-6';
 	scrollTo(end);  // Moving on!
 }
 
 
 // ************************************************
-// Section FIVE: Calculate their out-of-netork insurance benefits
+// Section FIVE: Calculate their out-of-network insurance benefits
 // ************************************************
 
-/* This function is a little crazy; bear with me */
-function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount){
-	if (globalYearlyCost > deductible){  // First, let's check to see if their deductible is so high that nothing matters ANYWAY
-		// If not, let's set a variable specifically for this function
-		var yearlyCostForThisFunction = globalYearlyCost;
-		// The first thing we want to know is whether a cap will affect their per-session rate
-		if(approvedAmount < globalSessionRate) { // If yes...
-			// Their insurance only thinks it has to pay this much each year
-			yearlyCostForThisFunction = (approvedAmount * globalNumberOfSessions);
-		}
-		var costOfCopays = (outofnetworkCopay * globalNumberOfSessions); // how much copay cost of the course of a year
-		var yearlyCostAfterDeductions = (yearlyCostForThisFunction - deductible - costOfCopays); // removing whatever insurance won't cover ...
-		var insuranceDiscount = yearlyCostAfterDeductions*((100-coinsurance)/100); // ...and applying the coinsurance to the rest. This is how much cash you save.
-		insuranceDiscount = Math.round(insuranceDiscount);
-		window.globalInsuranceDiscount = insuranceDiscount; // send it to the DOM
-		var yearlyCostWithInsurance = (globalYearlyCost - insuranceDiscount); // This is your yearly amount post-insurance savings
-		setInsurance(yearlyCostWithInsurance);
-	}
-	else {
-		// The deductible on this insurance is too high to help
-		// That sucks; let's be sympathetic
-		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it to see if you can get a plan that costs a little more per month but has a lower deductible.</p>");
-	}
+function applyInsurance(deductible, coinsurance, outofnetworkCopay, approvedAmount, outOfPocketMax){
+	var yearlyCostWithInsurance = TherapyCalc.outOfNetworkYearlyCost({
+		rate: toNumber(globalSessionRate),
+		sessions: toNumber(globalNumberOfSessions),
+		deductible: deductible,
+		coinsurancePercent: coinsurance,
+		copay: outofnetworkCopay,
+		approvedAmount: approvedAmount, // 0 means "no limit"
+		outOfPocketMax: outOfPocketMax
+	});
+	var insuranceDiscount = globalYearlyCost - yearlyCostWithInsurance;
+
 	if (insuranceDiscount > 0) {
+		window.globalInsuranceDiscount = insuranceDiscount;
+		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#insurance-results').show();
 		$('#section-6 h2').html("Making progress!");
 		// Send a tip to the final summary list
 		$('#summary-tips-label').show();
-		$('#summary-tips').append("<li>To use your insurance, you’ll need to save your receipts and submit insurance claims.</li>");
+		$('#summary-tips').append("<li>To use your insurance, you’ll need to save your receipts and submit insurance claims. Many therapists can give you a “superbill” that has everything your insurance needs.</li>");
 		$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
 		window.globalTrackingReceipts = "yes"; // For the tips section at the end, we need to know if this person is submitting receipts
+	}
+	else if (globalYearlyCost <= deductible) {
+		// The deductible on this insurance is too high to help
+		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it to see if you can get a plan that costs a little more per month but has a lower deductible.</p>");
 	}
 	else {
 		// We tried really hard, but their insurance just had too many restrictions to be helpful
@@ -178,12 +210,11 @@ function applyInsurance(deductible,coinsurance,outofnetworkCopay,approvedAmount)
 function setInsurance(yearlyCostWithInsurance){
 	// Let's report how much insurance lowers their yearly cost and session rate:
 	$('#insurance-yearly-span').html(yearlyCostWithInsurance);
-	var sessionRateWithInsurance = (yearlyCostWithInsurance/globalNumberOfSessions);
-	sessionRateWithInsurance = Math.round(sessionRateWithInsurance); // Round the session rate to a whole number
-	sessionRateWithInsurance = parseInt(sessionRateWithInsurance);
+	var sessionRateWithInsurance = Math.round(yearlyCostWithInsurance / globalNumberOfSessions);
 	$('#insurance-baserate-span').html(sessionRateWithInsurance);
 	window.globalSessionRate = sessionRateWithInsurance;
 	window.globalYearlyCost = yearlyCostWithInsurance;
+	window.globalCostAfterInsurance = yearlyCostWithInsurance; // the tax steps all start from this number
 }
 
 
@@ -192,204 +223,101 @@ function setInsurance(yearlyCostWithInsurance){
 // ************************************************
 
 function setFSA(){
-	// Check to see if the yearly cost of therapy is less than the max allowed FSA contribution
-	if (globalYearlyCost > 2600){
-		$('#fsa-field').val(2600);
-	}
-	else {
-		$('#fsa-field').val(globalYearlyCost);
-	}
+	// Suggest whichever is smaller: the yearly cost of therapy, or the FSA limit
+	$('#fsa-field').val(Math.min(globalCostAfterInsurance, yearData().fsaLimit));
 	var end = '#section-7';
 	scrollTo(end); // Moving on!
 }
 
+function hsaLimit() {
+	return yearData().hsaLimit[$('#hsa-coverage :selected').val() || 'self'];
+}
+
 function setHSA(){
-	// Check to see if the yearly cost of therapy is less than the max allowed HSA contribution
-	if (globalYearlyCost > 6750){ // This is a little simplistic -- I'm only checking the family max contribution
-		$('#hsa-field').val(6750);
-	}
-	else {
-		$('#hsa-field').val(globalYearlyCost);
-	}
+	// Suggest whichever is smaller: the yearly cost of therapy, or the HSA limit for their coverage
+	$('#hsa-field').val(Math.min(globalCostAfterInsurance, hsaLimit()));
 	var end = '#section-8';
 	scrollTo(end);
 }
+
+$('#hsa-coverage').on('change', function () {
+	$('#hsa-field').val(Math.min(globalCostAfterInsurance, hsaLimit()));
+});
 
 
 // ************************************************
 // Section NINE: Doing Yer Taxes and reporting the results
 // ************************************************
 
-// First, the peple who are ineligible for an FSA/HSA -- we need their tax bracket
-// Show and hide that dropdown
-$('#yes-deduction-2').on('change', function(){
-	var itemizedYesNo = $('#yes-deduction-2:checked').val();
-	if ((itemizedYesNo == 'Yes') && (taxBracket == 'notSet')){ // get their tax bracket if they didn't tell us already
-		$('#tax-bracket-2-label').slideDown();
+// First, the people who are ineligible for an FSA/HSA -- we need their filing status
+// Show and hide that dropdown, plus the "other deductions" fields
+$('input[name="itemized-deductions"]').on('change', function(){
+	var itemizedYesNo = $('input[name="itemized-deductions"]:checked').val();
+	if (itemizedYesNo == 'Yes') {
+		$('#other-deductions').slideDown();
+		if (taxBracket == 'notSet') { // get their filing status if they didn't tell us already
+			$('#tax-bracket-2-label').slideDown();
+		}
 	}
 	else {
+		$('#other-deductions').slideUp();
 		$('#tax-bracket-2-label').slideUp();
 	}
 });
 
-// Let's figure out how much a tax deduction would save them */
-// This function is used by FSA, HSA and Itemized Deductions
-
-function doTaxes(contribution,fromWhere){
-	// Apply some marginal tax rates, yo!
-	// But first we need to put them in a tax bracket, because that is A Thing.
-	// source: https://taxfoundation.org/2018-tax-brackets/
-	// and https://www.fool.com/taxes/2018/01/05/what-are-the-new-and-improved-2018-tax-brackets.aspx
-	if (taxBracket == 'single'){ // Single person rates
-		if (globalIncome > 500000){
-			var taxRate = .37;
-			var baseTaxes = 150689.50;
-			var amountOver = 500000;
-		}
-		else if (globalIncome > 200000){
-			var taxRate = .35;
-			var baseTaxes = 45689.50;
-			var amountOver = 200000;
-		}
-		else if (globalIncome > 157500){
-			var taxRate = .32;
-			var baseTaxes = 32089.50;
-			var amountOver = 157500;
-		}
-		else if (globalIncome > 82500){
-			var taxRate = .24;
-			var baseTaxes = 14089.50;
-			var amountOver = 82500;
-		}
-		else if (globalIncome > 38700){
-			var taxRate = .22;
-			var baseTaxes = 4453.50;
-			var amountOver = 38700;
-		}
-		else if (globalIncome > 9525){
-			var taxRate = .12;
-			var baseTaxes = 952.50;
-			var amountOver = 9525;
-		}
-		else if (globalIncome > 0){
-			var taxRate = .10;
-			var baseTaxes = 0;
-			var amountOver = 0;
-		}
+// Let's figure out how much a pre-tax account or an itemized deduction would save them.
+// This function is used by FSA, HSA and Itemized Deductions.
+// All of the tax steps are recalculated together every time (see combineTaxSavings in calc.js),
+// so a second step never double-counts the first.
+function doTaxes(contribution, fromWhere){
+	if (fromWhere == 'fsa') {
+		window.globalPreTaxContribution = Math.min(toNumber(contribution), yearData().fsaLimit);
 	}
-	else if (taxBracket == 'joint'){ // Joint filing rates
-		if (globalIncome > 600000){
-			var taxRate = .37;
-			var baseTaxes = 161379;
-			var amountOver = 600000;
-		}
-		else if (globalIncome > 400000){
-			var taxRate = .35;
-			var baseTaxes = 91379;
-			var amountOver = 400000;
-		}
-		else if (globalIncome > 315000){
-			var taxRate = .32;
-			var baseTaxes = 64179;
-			var amountOver = 315000;
-		}
-		else if (globalIncome > 165000){
-			var taxRate = .24;
-			var baseTaxes = 28179;
-			var amountOver = 165000;
-		}
-		else if (globalIncome > 77400){
-			var taxRate = .22;
-			var baseTaxes = 8907;
-			var amountOver = 77400;
-		}
-		else if (globalIncome > 19050){
-			var taxRate = .12;
-			var baseTaxes = 1905;
-			var amountOver = 19050;
-		}
-		else if (globalIncome > 0){
-			var taxRate = .10;
-			var baseTaxes = 0;
-			var amountOver = 0;
-		}
+	else if (fromWhere == 'hsa') {
+		window.globalPreTaxContribution = Math.min(toNumber(contribution), hsaLimit());
 	}
-	else { // Head of household rates
-		if (globalIncome > 500000){
-			var taxRate = .37;
-			var baseTaxes = 149298;
-			var amountOver = 500000;
-		}
-		else if (globalIncome > 200000){
-			var taxRate = .35;
-			var baseTaxes = 44298;
-			var amountOver = 200000;
-		}
-		else if (globalIncome > 157500){
-			var taxRate = .32;
-			var baseTaxes = 30698;
-			var amountOver = 157500;
-		}
-		else if (globalIncome > 82500){
-			var taxRate = .24;
-			var baseTaxes = 12698;
-			var amountOver = 82500;
-		}
-		else if (globalIncome > 51800){
-			var taxRate = .22;
-			var baseTaxes = 5944;
-			var amountOver = 51800;
-		}
-		else if (globalIncome > 13600){
-			var taxRate = .12;
-			var baseTaxes = 1360;
-			var amountOver = 13600;
-		}
-		else if (globalIncome > 0){
-			var taxRate = .10;
-			var baseTaxes = 0;
-			var amountOver = 0;
-		}
+	else if (fromWhere == 'itemized') {
+		window.globalItemize = true;
 	}
 
-	// This is a little simplistic, but we're checking what they would pay in taxes normally...
-	var taxesOwed = ((globalIncome - amountOver)*taxRate)+baseTaxes;
-
-	// ...and then lowering their income by their pre-tax contribution amount, and checking again
-	window.taxableIncome = (globalIncome - contribution); // we'll need this later
-	var taxesOwedWithContribution = ((taxableIncome - amountOver)*taxRate)+baseTaxes;
-	taxesOwedWithContribution = Math.round(taxesOwedWithContribution);
-	var taxDiscount = taxesOwed-taxesOwedWithContribution;
-	taxDiscount = Math.round(taxDiscount);
-	if (globalTaxDiscount == 0) {
-		// if we don't already have a tax discount, this is the whole thing
-		window.globalTaxDiscount = taxDiscount;
-		window.usedTaxSavings = "no"; // we'll need to know we did this later
-	}
-	else {
-		// if we already had a discount from a previous section, add the new one to it
-		window.globalTaxDiscount = globalTaxDiscount + taxDiscount;
-		window.usedTaxSavings = "yes"; // we'll need to know we did this later
-	}
-	var yearlyCostWithContribution = (globalYearlyCost - globalTaxDiscount);
-	globalYearlyCost = yearlyCostWithContribution;
-	globalSessionRate = (globalYearlyCost/globalNumberOfSessions);
-	globalSessionRate = Math.round(globalSessionRate); // Round the session rate to a whole number
-	reportTaxes(fromWhere); // Depending on where they came from, report results as shown below
+	var result = TherapyCalc.combineTaxSavings({
+		income: globalIncome,
+		status: taxBracket,
+		year: yearData(),
+		costAfterInsurance: globalCostAfterInsurance,
+		contribution: globalPreTaxContribution,
+		payroll: true, // assumes FSA/HSA money comes out of a paycheck
+		itemize: globalItemize,
+		otherMedical: globalOtherMedical,
+		otherItemized: globalOtherItemized
+	});
+	window.globalPreTaxContribution = result.contribution;
+	window.globalTaxDiscount = result.totalTaxSavings;
+	window.globalYearlyCost = result.finalYearlyCost;
+	window.globalSessionRate = Math.round(globalYearlyCost / globalNumberOfSessions);
+	reportTaxes(fromWhere, result); // Depending on where they came from, report results as shown below
 }
 
-function reportTaxes(fromWhere){
+function reportTaxes(fromWhere, result){
 	if (fromWhere == "itemized"){
 		var end = "#section-10";
-		$('#itemized-tax-discount-span').html(globalTaxDiscount);
-		$('#section-10 .variable-content #itemized-tax-results').show();
-		$('#go-to-summary').html("And that’s just about everything I can think to check for you. Ready for your results?");
-		if (usedTaxSavings == 'yes') { // if we're combining multiple tax discounts, we need to rework the sentence in this section
-			$('#itemized-first').html("That brought your total tax savings to ");
-			$('#itemized-last').html("");
-			$('#section-10 .variable-content h2').html("It keeps getting better!");
+		var it = result.itemized;
+		if (result.itemizedSavings > 0) {
+			$('#itemized-tax-discount-span').html(money(result.itemizedSavings));
+			$('#section-10 .variable-content #itemized-tax-results').show();
+			$('#go-to-summary').html("And that’s just about everything I can think to check for you. Ready for your results?");
+			if (result.preTax.total > 0) { // if we're combining multiple tax discounts, mention the total too
+				$('#itemized-last').html(" more on your taxes by claiming your medical expenses, for a total tax savings of $" + money(result.totalTaxSavings));
+				$('#section-10 .variable-content h2').html("It keeps getting better!");
+			}
+			$('#summary-tips').append("<li>You asked to claim your medical expenses on your taxes, so you'll need to itemize your deductions. You should also keep a copy of your receipts in case the IRS wants them later.</li>");
 		}
-		$('#summary-tips').append("<li>You asked to claim you medical expenses on your taxes, so you'll need to itemize your deductions. You should also keep a copy of your receipts in case the IRS wants them later.</li>");
+		else if (it.deductibleMedical == 0) {
+			$('#section-10 .variable-content').html("<h2>That one doesn’t help, sorry.</h2><p>Only medical bills above " + (yearData().medicalExpenseFloor * 100) + "% of your Adjusted Gross Income (about $" + money(it.floor) + " for you) can be deducted, and your therapy costs paid with after-tax money don’t get past that. Anything you paid from an FSA or HSA doesn’t count here, since it already skipped taxes.</p>");
+		}
+		else {
+			$('#section-10 .variable-content').html("<h2>That one doesn’t help, sorry.</h2><p>About $" + money(it.deductibleMedical) + " of your medical bills get past the " + (yearData().medicalExpenseFloor * 100) + "% floor, which brings your itemized deductions to about $" + money(it.itemizedTotal) + ". That’s not more than your $" + money(it.standardDeduction) + " standard deduction, so you’d probably pay the same taxes either way.</p>");
+		}
 	}
 	else {
 		if (fromWhere == 'fsa'){
@@ -412,7 +340,8 @@ function reportTaxes(fromWhere){
 				$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
 			}
 		}
-		$('#tax-discount-span').html(globalTaxDiscount);
+		$('#tax-discount-span').html(money(result.preTax.total));
+		$('#tax-breakdown').html(" ($" + money(result.preTax.incomeTax) + " in income tax, and $" + money(result.preTax.payrollTax) + " in Social Security and Medicare taxes)");
 		var end = '#section-9';
 		setTaxResults();
 		checkItemized();
@@ -423,16 +352,19 @@ function reportTaxes(fromWhere){
 
 // Change the content of the tax results div based on their tax savings
 function setTaxResults() {
-	$('#section-9 .variable-content h2').html('<h2>Guess what?</h2>');
+	$('#section-9 .variable-content h2').html('Guess what?');
 	$('#section-9 #additional-taxes').html("another"); // changing a word based on whether we have multiple tax tips
 	$('#section-9 .variable-content #tax-results').show();
 }
 
-// Let's check what percentage of their yearly income is their therapy bills
+// Show them how their therapy bills compare to the 7.5% floor
 function checkItemized(){
-	var percentageOfIncome = globalYearlyCost/globalIncome*100;
-	percentageOfIncome = percentageOfIncome.toFixed(2); // round to 2 decimal places
+	var contribution = globalPreTaxContribution || 0;
+	var agi = globalIncome - contribution;
+	var afterTaxTherapy = Math.max(0, globalCostAfterInsurance - contribution);
+	var percentageOfIncome = (agi > 0) ? (afterTaxTherapy / agi * 100).toFixed(2) : '0';
 	$('#income-percentage').html(percentageOfIncome);
+	$('#medical-floor-amount').html(money(agi * yearData().medicalExpenseFloor));
 }
 
 
@@ -441,9 +373,9 @@ function checkItemized(){
 // ************************************************
 
 function getItemized() {
-	var contribution = globalYearlyCost;
-	var fromWhere = "itemized";
-	doTaxes(contribution,fromWhere);
+	window.globalOtherMedical = toNumber($('#other-medical-field').val());
+	window.globalOtherItemized = toNumber($('#other-itemized-field').val());
+	doTaxes(0, "itemized");
 }
 
 
@@ -453,23 +385,21 @@ function getItemized() {
 
 function getSummary() {
 	$('#final-session-rate').html(globalSessionRate);
-	$('#final-yearly-cost').html(globalYearlyCost);
-		if ((globalInsuranceDiscount>0) || (globalTaxDiscount>0)) {
+	$('#final-yearly-cost').html(money(globalYearlyCost));
+	if ((globalInsuranceDiscount>0) || (globalTaxDiscount>0)) {
 		$('#but').show();
 	}
 	if (globalInsuranceDiscount>0) {
 		$('#insurance-saved').show();
-		$('#the-insurance-saved').html(globalInsuranceDiscount);
+		$('#the-insurance-saved').html(money(globalInsuranceDiscount));
 	}
 	if (globalTaxDiscount>0) {
 		$('#taxes-saved').show();
-		$('#the-taxes-saved').html(globalTaxDiscount);
+		$('#the-taxes-saved').html(money(globalTaxDiscount));
 	}
 	if ((globalInsuranceDiscount>0) && (globalTaxDiscount>0)) {
 		$('#and').show();
 	}
-	if (start !== '#section-6') { // excluding section 6 from this, because it's a link click and it's already headed there.
-		var end = '#section-11';
-		scrollTo(end);
-	}
+	var end = '#section-11';
+	scrollTo(end);
 }
