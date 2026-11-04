@@ -497,7 +497,7 @@
       else {
         var currentSliderValue = $('#sliderOutput1').val();
         var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
-        $('#yearly-cost-span').html(updatedYearlyCost);
+        $('#yearly-cost-span').html(money(updatedYearlyCost));
       }
     });
 
@@ -506,7 +506,7 @@
       var currentSliderValue = $('#sliderOutput1').val();
       var updatedYearlyCost = currentSliderValue*frequency;
       window.globalNumberOfSessions = frequency;
-      $('#yearly-cost-span').html(updatedYearlyCost);
+      $('#yearly-cost-span').html(money(updatedYearlyCost));
     });
 
     // Grab the value of the slider and set the new yearly cost

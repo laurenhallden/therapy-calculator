@@ -89,11 +89,11 @@ function stepOne(income){
 // ************************************************
 
 function setBaseRate(baserate){
-	$('#baserate-span').html(baserate);
+	$('#baserate-span').html(money(baserate));
 	window.globalSessionRate = baserate; // we're going to push variables we'll need later to the DOM
 	window.globalYearlyCost = (baserate * globalNumberOfSessions);
 	window.globalCostAfterInsurance = globalYearlyCost;
-	$('#yearly-cost-span').html(globalYearlyCost); // Extrapolate a yearly cost
+	$('#yearly-cost-span').html(money(globalYearlyCost)); // Extrapolate a yearly cost
 }
 
 
@@ -209,9 +209,9 @@ function applyInsurance(deductible, coinsurance, outofnetworkCopay, approvedAmou
 
 function setInsurance(yearlyCostWithInsurance){
 	// Let's report how much insurance lowers their yearly cost and session rate:
-	$('#insurance-yearly-span').html(yearlyCostWithInsurance);
+	$('#insurance-yearly-span').html(money(yearlyCostWithInsurance));
 	var sessionRateWithInsurance = Math.round(yearlyCostWithInsurance / globalNumberOfSessions);
-	$('#insurance-baserate-span').html(sessionRateWithInsurance);
+	$('#insurance-baserate-span').html(money(sessionRateWithInsurance));
 	window.globalSessionRate = sessionRateWithInsurance;
 	window.globalYearlyCost = yearlyCostWithInsurance;
 	window.globalCostAfterInsurance = yearlyCostWithInsurance; // the tax steps all start from this number
@@ -384,7 +384,7 @@ function getItemized() {
 // ************************************************
 
 function getSummary() {
-	$('#final-session-rate').html(globalSessionRate);
+	$('#final-session-rate').html(money(globalSessionRate));
 	$('#final-yearly-cost').html(money(globalYearlyCost));
 	if ((globalInsuranceDiscount>0) || (globalTaxDiscount>0)) {
 		$('#but').show();
