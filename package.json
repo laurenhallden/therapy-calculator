@@ -1,0 +1,9 @@
+{
+  "name": "therapy-calculator",
+  "private": true,
+  "description": "How much can I expect to pay for therapy?",
+  "scripts": {
+    "test": "node test/calc.test.js"
+  },
+  "license": "GPL-3.0"
+}
