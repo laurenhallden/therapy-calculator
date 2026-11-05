@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
   <!-- Global Site Tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-44119217-3"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4B4MKTZF7L"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments)};
     gtag('js', new Date());
 
-    gtag('config', 'UA-44119217-3');
+    gtag('config', 'G-4B4MKTZF7L');
   </script>
 
   <meta charset="utf-8">
@@ -36,7 +36,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Therapy Calculator" />
-  <meta name="tiwtter:creator" content="@phillylauren" />
+  <meta name="twitter:creator" content="@phillylauren" />
   <meta name="twitter:description" content="Not sure how to pay for a therapist? See how sliding-scales, insurance and tax deductions help make therapy more affordable." />
   <meta name="twitter:url" content="http://laurenhallden.com/therapy-calculator" />
   <meta name="twitter:image" content="http://laurenhallden.com/therapycalculator/images/desk.jpg" />
@@ -216,14 +216,14 @@
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="deductible-help-text-outofnetwork">You can enter your yearly deducible, or if you want to get specific, enter the amount you typically have left after your existing medical expenses. (It might be zero!)</p>
+        <p class="help-text" id="deductible-help-text-outofnetwork">You can enter your yearly deductible, or if you want to get specific, enter the amount you typically have left after your existing medical expenses. (It might be zero!)</p>
         <label><span>Your co-insurance rate:</span>
           <input type="text" id="coinsurance-field" value="30" aria-describedby="coinsurance-help-text" required pattern="number">
           <span class="form-error">
             Enter a number.
           </span>
         </label>
-        <p class="help-text" id="coinsurance-help-text">Your co-insurance rate is the percentage that you have to pay for each session after you’ve met your deductibe. For example, your insurance may cover 70% of each session, so your co-insurance would be 30%.</p>
+        <p class="help-text" id="coinsurance-help-text">Your co-insurance rate is the percentage that you have to pay for each session after you’ve met your deductible. For example, your insurance may cover 70% of each session, so your co-insurance would be 30%.</p>
         <hr />
         <p>There are also a few "advanced options" that are a little more rare:</p>
         <label><span>Your co-payment for out-of-network providers:</span>
@@ -515,7 +515,7 @@
             <div>
               <h3>Is this calculator correct?</h3>
               <p>As I mentioned in the disclaimer, I’m not an expert! I am, however, currently paying for my own therapist with a mix of out-of-network insurance claims and a Flexible Spending Account. I wanted to show people how the sticker price for therapy isn’t necessarily what you’re stuck paying... and then I kept researching insurance and tax deduction combinations... and many hours later, this calculator was born.</p>
-              <p>Please think of this is an exploration of your options, and talk to your insurance and tax professionals for verified expert advice.</p>
+              <p>Please think of this as an exploration of your options, and talk to your insurance and tax professionals for verified expert advice.</p>
             </div>
           </div>
           <div class="faq-col">
@@ -563,6 +563,8 @@
       window.globalItemize = false;
       window.globalOtherMedical = 0;
       window.globalOtherItemized = 0;
+      window.globalTaxAccount = null;
+      window.globalItemizedSavings = 0;
     });
 
     // Update progress bar based on current section
@@ -617,27 +619,25 @@
     $('.step-two').click(function(){
       var theId = this.id;
       window.globalButtonId = theId;
-      var currentSliderValue = $('#sliderOutput1').val();
-      window.globalSessionRate = currentSliderValue;
-      var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
-      window.globalYearlyCost = updatedYearlyCost;
-      window.globalCostAfterInsurance = updatedYearlyCost; // starting point for the tax steps if they skip insurance
-      // Then pick a next step
-      $('#slider-form').on('formvalid.zf.abide', function(e){
-        if (globalButtonId == 'step-two-yes'){
-          var end = '#section-3';
-          scrollTo(end);
-        }
-        else if (globalButtonId == 'step-two-no'){
-          checkItemized();
-          $('#section-9 h2').html("Let’s talk about taxes (sorry!)"); // change the heading if we skipped insurance
-          var end = '#section-9';
-          scrollTo(end);
-        }
-        else if (globalButtonId == 'step-two-compare'){
-          scrollTo('#section-compare');
-        }
-      });
+      window.globalBaseRate = toNumber($('#sliderOutput1').val());
+      resetInsurance();
+    });
+
+    // Then pick a next step
+    $('#slider-form').on('formvalid.zf.abide', function(e){
+      if (globalButtonId == 'step-two-yes'){
+        var end = '#section-3';
+        scrollTo(end);
+      }
+      else if (globalButtonId == 'step-two-no'){
+        checkItemized();
+        $('#section-9 h2').html("Let’s talk about taxes (sorry!)"); // change the heading if we skipped insurance
+        var end = '#section-9';
+        scrollTo(end);
+      }
+      else if (globalButtonId == 'step-two-compare'){
+        scrollTo('#section-compare');
+      }
     });
 
     // Switch between budgeting and comparing plans
@@ -646,7 +646,6 @@
       $(this).addClass('is-active').attr('aria-pressed', 'true');
       $('body').toggleClass('compare-mode', $(this).data('mode') == 'compare');
       $('#section-2').nextAll('section').addClass('hidden');
-      $('#section-2 .button').removeClass('disabled').removeAttr('disabled');
     });
 
     $('.plan-network').change(function(){
@@ -711,6 +710,7 @@
 
     // Check FSA or HSA...
     $('#step-six-yes').click(function(){
+      resetTaxes();
       var taxBracket = $('#tax-bracket :selected').val();
       window.taxBracket = taxBracket;
       var taxVehicle = $('#tax-vehicle :selected').val();
@@ -735,6 +735,7 @@
         e.preventDefault();
       }
       else {
+        resetTaxes();
         getSummary();
       }
     });
@@ -753,6 +754,7 @@
         e.preventDefault();
       }
       else {
+        resetTaxes();
         var end = '#section-9';
         scrollTo(end);
         checkItemized();
@@ -773,6 +775,7 @@
         e.preventDefault();
       }
       else {
+        resetTaxes();
         var end = '#section-9';
         scrollTo(end);
         checkItemized();
@@ -785,10 +788,12 @@
         e.preventDefault();
       }
       else {
+        window.globalItemize = false;
+        recalcTaxes();
         var itemizedYesNo = $('#yes-deduction-2:checked').val();
         if (itemizedYesNo == 'Yes') {
           // Only ask for filing status here if they skipped the earlier question
-          if (window.taxBracket == 'notSet') {
+          if ($('#tax-bracket-2-label').is(':visible')) {
             window.taxBracket = $('#tax-bracket-2 :selected').val();
           }
           getItemized();

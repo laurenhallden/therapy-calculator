@@ -16,18 +16,7 @@ function scrollTo(end){
     // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
     $('html, body').animate({
       scrollTop: $(heading).offset().top
-    }, 800, function(){
-
-      // disable buttons and forms after they're clicked
-      var allButtons = $('.button');
-      var allForms = $('form');
-      $(currentSection).find(allButtons).addClass('disabled');
-      $(currentSection).find(allButtons).attr("disabled", "disabled");
-      $(currentSection).find(allForms).removeAttr('data-abide');
- 
-      // Add hash (#) to URL when done scrolling (default click behavior)
-      // window.location.hash = hash;
-    });
+    }, 800);
   } // End if
 };
 
