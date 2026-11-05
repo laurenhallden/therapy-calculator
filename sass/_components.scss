@@ -728,3 +728,29 @@ body:not(.compare-mode) .compare-only {
 		color: $text-black;
 	}
 }
+
+.frequency-wrapper .left-content {
+	min-width: 12em;
+}
+
+.sessions-wrapper {
+	align-items: flex-start;
+	margin-bottom: 1rem;
+
+	.left-content {
+		padding-top: 2rem;
+	}
+}
+
+.frequency-wrapper {
+	@media #{$break-mobile-large} {
+		.left-content {
+			margin-bottom: 0.5rem;
+			padding-top: 0;
+		}
+
+		label {
+			padding-top: 0;
+		}
+	}
+}

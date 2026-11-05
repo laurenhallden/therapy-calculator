@@ -136,6 +136,16 @@
             </label>
           </p>
         </div>
+        <div class="flex-wrapper frequency-wrapper sessions-wrapper">
+          <p class="left-content" id="sessions-label">Sessions per year:</p>
+          <div class="right-content">
+            <label class="inline">
+              <input type="text" id="sessions-field" value="48" inputmode="numeric" aria-labelledby="sessions-label" aria-describedby="sessions-help-text" required pattern="^[1-9][0-9]*$">
+              <span class="form-error">Enter a whole number of sessions.</span>
+            </label>
+            <p class="help-text" id="sessions-help-text">You can adjust this for vacations and sick days.</p>
+          </div>
+        </div>
         <p>...that’s <span class="strong">$</span><span class="strong" id="yearly-cost-span"></span> over the course of a year.</p>
         <p class="budget-only">But don’t worry just yet&mdash;let’s see if we can lower that. Do you have health insurance? Some therapists don’t accept it, but you may still be able to get some money back.</p>
         <p class="compare-only">Next, let’s see what that would really cost you under each plan you’re choosing between.</p>
@@ -608,11 +618,14 @@
     });
 
     $('#frequency').change(function(){
-      var frequency = $('#frequency :selected').val();
-      var currentSliderValue = $('#sliderOutput1').val();
-      var updatedYearlyCost = currentSliderValue*frequency;
-      window.globalNumberOfSessions = frequency;
-      $('#yearly-cost-span').html(money(updatedYearlyCost));
+      $('#sessions-field').val($(this).val()).trigger('input');
+    });
+
+    $('#sessions-field').on('input', function(){
+      var sessions = Math.round(toNumber($(this).val()));
+      if (sessions < 1) return;
+      window.globalNumberOfSessions = sessions;
+      $('#yearly-cost-span').html(money($('#sliderOutput1').val() * sessions));
     });
 
     // Grab the value of the slider and set the new yearly cost
