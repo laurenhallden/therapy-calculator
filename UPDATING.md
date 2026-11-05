@@ -86,7 +86,7 @@ If you want next year on the site before November, you can estimate the brackets
 
 ## Deploying
 
-Merging to `master` deploys the site automatically (`.github/workflows/deploy.yml`): it uploads the changed files over FTPS, then clears Cloudflare's copy of them. You can also run it by hand from the repo's **Actions** tab → **Deploy** → **Run workflow**.
+Merging to `main` deploys the site automatically (`.github/workflows/deploy.yml`): it uploads the changed files over FTPS, then clears Cloudflare's copy of them. You can also run it by hand from the repo's **Actions** tab → **Deploy** → **Run workflow**.
 
 It needs these repository secrets (**Settings → Secrets and variables → Actions**):
 

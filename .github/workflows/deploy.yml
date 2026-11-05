@@ -1,4 +1,4 @@
-# Uploads the site to laurenhallden.com/therapycalculator/ whenever master changes,
+# Uploads the site to laurenhallden.com/therapycalculator/ whenever main changes,
 # then clears Cloudflare's copy of the changed files so the new versions show up right away.
 # The secrets it uses are listed in UPDATING.md.
 
@@ -6,7 +6,7 @@ name: Deploy
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
