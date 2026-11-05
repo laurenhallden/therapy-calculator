@@ -12,6 +12,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,10 +24,18 @@ jobs:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
           FTP_PATH: ${{ secrets.FTP_PATH }}
+          # The server's public key, so we only ever send the password to the real server
+          SERVER_KEY: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCzkrwDdykdiE4DFMlNxiEk2hehBnYRJfuasxmy753TT/xaxrO1JtZg2ssEZA9BqJHVH0JujChOpV1ogTOk7LUMVo/C5mWc0JEQNPxKtWFXhDUOltxLpVArfn3PogugaIinSF4eBcZAa9Zzwgmw25BahZZtpMQm3oTLvGTHKLibmRf6mF0/z3kikEYGTTBi+52XxYc7Uj+mP+r7tL+eREDEZwMxbNxT7oPhUfgt8sfo8kmCFVZExv0HsZJb2NFZwi3zrgAYCgx1f6sU7U3uyxq3GeRzCsQI8cveKpBj4fpMHmqKCyL5K5qBY/ptZ/y2DCS0ygguHXDUsBOkl6NJ5ZgfqaHYAOi+3s4b9Xw3Z4GhfO2nB2JDTxdOE3jDcY/DHDQRFPS7bHiiZgWVYxdXbGepLvwhTfqMOnYo/9Y93Qx8mBQjOVKSfhxz+C2JNfLKemtXc0n+y1/J5xw6QbEqFxrRePtScssL+LKHGxgpYa52hcz1UkAMhscnz04R6/i7moyB8Us7uStfK1wX9nBMSDxbRFk5ahTzCV9jILETJDExWMFjz5gFZDVkWol5lkb0R/9Ve/suOq7o7jKlQHYShrcQUZm9gRbwaPhjErX649qslSibP7rZzdZlKwIbLm7GOEppJer72rXXh6s174oNN4sK0oqFCpwfKuMcrseXTVQIfw==
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          mkdir -p ~/.ssh
+          echo "[$FTP_SERVER]:2222 $SERVER_KEY" >> ~/.ssh/known_hosts
+          # The server only offers the older ssh-rsa key type, which newer SSH turns off by default
           lftp -c "
-            set sftp:auto-confirm yes;
+            set sftp:connect-program 'ssh -a -x -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa -o StrictHostKeyChecking=yes';
+            set net:timeout 20;
+            set net:max-retries 2;
+            set net:reconnect-interval-base 5;
             open --env-password -u \"$FTP_USERNAME\" -p 2222 \"sftp://$FTP_SERVER\";
             mirror --reverse --verbose \
               --exclude '^\.git' \
@@ -58,7 +67,7 @@ jobs:
           else
             body=$(jq -nc --argjson files "$urls" '{files: $files}')
           fi
-          curl -sf -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+          curl -sS --fail-with-body -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
             -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
             -H "Content-Type: application/json" \
             --data "$body"
