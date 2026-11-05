@@ -59,6 +59,64 @@ $('#tax-year').on('change', function () {
 
 
 // ************************************************
+// Going back: redoing a step clears everything after it,
+// so the later steps start from the new answers instead of the old numbers.
+// ************************************************
+
+$(document).ready(function () {
+	$('.variable-content').each(function () {
+		$(this).data('original', $(this).html());
+	});
+});
+
+function restoreContent(section) {
+	var $content = $(section + ' .variable-content');
+	$content.html($content.data('original'));
+}
+
+function resetInsurance() {
+	window.globalInsuranceDiscount = 0;
+	window.globalTrackingReceipts = 'no';
+	window.globalCostAfterInsurance = globalBaseRate * globalNumberOfSessions;
+	window.taxBracket = 'notSet';
+	restoreContent('#section-6');
+	resetTaxes();
+}
+
+function resetTaxes() {
+	window.globalTaxAccount = null;
+	window.globalPreTaxContribution = 0;
+	window.globalItemize = false;
+	restoreContent('#section-9');
+	restoreContent('#section-10');
+	$('#section-9 #additional-taxes').html('a');
+	recalcTaxes();
+}
+
+// All of the tax steps are recalculated together every time (see combineTaxSavings in calc.js),
+// so a second step never double-counts the first.
+function recalcTaxes() {
+	var result = TherapyCalc.combineTaxSavings({
+		income: globalIncome,
+		status: taxBracket,
+		year: yearData(),
+		costAfterInsurance: globalCostAfterInsurance,
+		contribution: globalPreTaxContribution,
+		payroll: true, // assumes FSA/HSA money comes out of a paycheck
+		itemize: globalItemize,
+		otherMedical: globalOtherMedical,
+		otherItemized: globalOtherItemized
+	});
+	window.globalPreTaxContribution = result.contribution;
+	window.globalTaxDiscount = result.totalTaxSavings;
+	window.globalItemizedSavings = result.itemizedSavings;
+	window.globalYearlyCost = result.finalYearlyCost;
+	window.globalSessionRate = Math.round(globalYearlyCost / globalNumberOfSessions);
+	return result;
+}
+
+
+// ************************************************
 // Section ONE: see if a sliding scale payment applies
 // ************************************************
 
@@ -68,19 +126,27 @@ function stepOne(income){
 	if (income <= SLIDING_SCALE.discountNoteAtOrBelow) {
 		$('#sliding-scale-div').html("<h2>You may qualify for a discount!</h2><p>It may be worth it to seek out a therapist who offers sliding-scale fees.</p>");
 	}
+	else {
+		$('#sliding-scale-div').html("<h2>Your per-session rate:</h2>");
+	}
 	setBaseRate(baserate);
 
 	// Move on to the next section
 	var end = '#section-2';
 	scrollTo(end);
 
-	// Initialize the baserate slider in section two
-	var $slider = new Foundation.Slider($('.slider'), {
-	  initialStart : baserate,
-	  start: 20,
-	  end: 300,
-	  step: 5,
-	});
+	// Initialize the baserate slider in section two, or move it if they changed their income
+	if (window.rateSlider) {
+		$('#sliderOutput1').val(baserate).trigger('change');
+	}
+	else {
+		window.rateSlider = new Foundation.Slider($('.slider'), {
+		  initialStart : baserate,
+		  start: 20,
+		  end: 300,
+		  step: 5,
+		});
+	}
 }
 
 
@@ -113,6 +179,7 @@ $('#covered-or-not').on('change', function(){
 });
 
 function checkInsurance(coveredYesNo, networkYesNo){
+	resetInsurance();
 	if (coveredYesNo == "covered"){
 		// If they're staying in the provider network (or don't have to worry about one)...
 		if (networkYesNo == 'in-network' || networkYesNo == 'no-network'){
@@ -134,21 +201,23 @@ function checkInsurance(coveredYesNo, networkYesNo){
 // ************************************************
 
 function applyNetworkInsurance(copay, deductible, outOfPocketMax){
+	resetInsurance();
+	var yearlyCost = globalCostAfterInsurance;
 	var yearlyCostWithInsurance = TherapyCalc.inNetworkYearlyCost({
-		rate: toNumber(globalSessionRate),
+		rate: toNumber(globalBaseRate),
 		sessions: toNumber(globalNumberOfSessions),
 		copay: copay,
 		deductible: deductible,
 		outOfPocketMax: outOfPocketMax
 	});
-	if (yearlyCostWithInsurance < globalYearlyCost) {
-		window.globalInsuranceDiscount = (globalYearlyCost - yearlyCostWithInsurance);
+	if (yearlyCostWithInsurance < yearlyCost) {
+		window.globalInsuranceDiscount = (yearlyCost - yearlyCostWithInsurance);
 		setInsurance(yearlyCostWithInsurance);
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#section-6 h2').html("Making progress!");
 		$('#insurance-results').show();
 	}
-	else if (globalYearlyCost <= deductible) {
+	else if (yearlyCost <= deductible) {
 		// The deductible on this insurance is too high to help
 		// That sucks; let's be sympathetic
 		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p id='insurance-results'>You didn’t save any money this way. If you have a choice between several insurance plans, it may be worth it for you to see if you can pay slightly more per month for insurance with a lower deductible.</p>");
@@ -167,8 +236,10 @@ function applyNetworkInsurance(copay, deductible, outOfPocketMax){
 // ************************************************
 
 function applyInsurance(deductible, coinsurance, outofnetworkCopay, approvedAmount, outOfPocketMax){
+	resetInsurance();
+	var yearlyCost = globalCostAfterInsurance;
 	var yearlyCostWithInsurance = TherapyCalc.outOfNetworkYearlyCost({
-		rate: toNumber(globalSessionRate),
+		rate: toNumber(globalBaseRate),
 		sessions: toNumber(globalNumberOfSessions),
 		deductible: deductible,
 		coinsurancePercent: coinsurance,
@@ -176,7 +247,7 @@ function applyInsurance(deductible, coinsurance, outofnetworkCopay, approvedAmou
 		approvedAmount: approvedAmount, // 0 means "no limit"
 		outOfPocketMax: outOfPocketMax
 	});
-	var insuranceDiscount = globalYearlyCost - yearlyCostWithInsurance;
+	var insuranceDiscount = yearlyCost - yearlyCostWithInsurance;
 
 	if (insuranceDiscount > 0) {
 		window.globalInsuranceDiscount = insuranceDiscount;
@@ -184,13 +255,9 @@ function applyInsurance(deductible, coinsurance, outofnetworkCopay, approvedAmou
 		// Insurance helped, so let's show the paragraph that says so, and a corresponding heading
 		$('#insurance-results').show();
 		$('#section-6 h2').html("Making progress!");
-		// Send a tip to the final summary list
-		$('#summary-tips-label').show();
-		$('#summary-tips').append("<li>To use your insurance, you’ll need to save your receipts and submit insurance claims. Many therapists can give you a “superbill” that has everything your insurance needs.</li>");
-		$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
 		window.globalTrackingReceipts = "yes"; // For the tips section at the end, we need to know if this person is submitting receipts
 	}
-	else if (globalYearlyCost <= deductible) {
+	else if (yearlyCost <= deductible) {
 		// The deductible on this insurance is too high to help
 		$('#section-6 .variable-content').html("<h2>Ah, bummer.</h2><p class='border-bottom'>You didn’t save any money this way. It may be worth it to see if you can get a plan that costs a little more per month but has a lower deductible.</p>");
 	}
@@ -212,9 +279,8 @@ function setInsurance(yearlyCostWithInsurance){
 	$('#insurance-yearly-span').html(money(yearlyCostWithInsurance));
 	var sessionRateWithInsurance = Math.round(yearlyCostWithInsurance / globalNumberOfSessions);
 	$('#insurance-baserate-span').html(money(sessionRateWithInsurance));
-	window.globalSessionRate = sessionRateWithInsurance;
-	window.globalYearlyCost = yearlyCostWithInsurance;
 	window.globalCostAfterInsurance = yearlyCostWithInsurance; // the tax steps all start from this number
+	recalcTaxes();
 }
 
 
@@ -227,7 +293,7 @@ function readPlan(id) {
 	var network = $plan.find('.plan-network').val();
 	return TherapyCalc.planYearlyCost({
 		network: network,
-		rate: toNumber(globalSessionRate),
+		rate: toNumber(globalBaseRate),
 		sessions: toNumber(globalNumberOfSessions),
 		monthlyPremium: toNumber($plan.find('.plan-premium').val()),
 		deductible: toNumber($plan.find('.plan-deductible').val()),
@@ -292,55 +358,37 @@ $('#hsa-coverage').on('change', function () {
 
 // First, the people who are ineligible for an FSA/HSA -- we need their filing status
 // Show and hide that dropdown, plus the "other deductions" fields
-$('input[name="itemized-deductions"]').on('change', function(){
-	var itemizedYesNo = $('input[name="itemized-deductions"]:checked').val();
-	if (itemizedYesNo == 'Yes') {
-		$('#other-deductions').slideDown();
-		if (taxBracket == 'notSet') { // get their filing status if they didn't tell us already
-			$('#tax-bracket-2-label').slideDown();
-		}
-	}
-	else {
-		$('#other-deductions').slideUp();
-		$('#tax-bracket-2-label').slideUp();
-	}
-});
+function showItemizedFields(){
+	var itemizing = $('input[name="itemized-deductions"]:checked').val() == 'Yes';
+	$('#other-deductions')[itemizing ? 'slideDown' : 'slideUp']();
+	$('#tax-bracket-2-label')[itemizing && taxBracket == 'notSet' ? 'slideDown' : 'slideUp'](); // get their filing status if they didn't tell us already
+}
+
+$('input[name="itemized-deductions"]').on('change', showItemizedFields);
 
 // Let's figure out how much a pre-tax account or an itemized deduction would save them.
 // This function is used by FSA, HSA and Itemized Deductions.
-// All of the tax steps are recalculated together every time (see combineTaxSavings in calc.js),
-// so a second step never double-counts the first.
 function doTaxes(contribution, fromWhere){
 	if (fromWhere == 'fsa') {
+		resetTaxes();
+		window.globalTaxAccount = 'fsa';
 		window.globalPreTaxContribution = Math.min(toNumber(contribution), yearData().fsaLimit);
 	}
 	else if (fromWhere == 'hsa') {
+		resetTaxes();
+		window.globalTaxAccount = 'hsa';
 		window.globalPreTaxContribution = Math.min(toNumber(contribution), hsaLimit());
 	}
 	else if (fromWhere == 'itemized') {
 		window.globalItemize = true;
 	}
-
-	var result = TherapyCalc.combineTaxSavings({
-		income: globalIncome,
-		status: taxBracket,
-		year: yearData(),
-		costAfterInsurance: globalCostAfterInsurance,
-		contribution: globalPreTaxContribution,
-		payroll: true, // assumes FSA/HSA money comes out of a paycheck
-		itemize: globalItemize,
-		otherMedical: globalOtherMedical,
-		otherItemized: globalOtherItemized
-	});
-	window.globalPreTaxContribution = result.contribution;
-	window.globalTaxDiscount = result.totalTaxSavings;
-	window.globalYearlyCost = result.finalYearlyCost;
-	window.globalSessionRate = Math.round(globalYearlyCost / globalNumberOfSessions);
+	var result = recalcTaxes();
 	reportTaxes(fromWhere, result); // Depending on where they came from, report results as shown below
 }
 
 function reportTaxes(fromWhere, result){
 	if (fromWhere == "itemized"){
+		restoreContent('#section-10');
 		var end = "#section-10";
 		var it = result.itemized;
 		if (result.itemizedSavings > 0) {
@@ -351,7 +399,6 @@ function reportTaxes(fromWhere, result){
 				$('#itemized-last').html(" more on your taxes by claiming your medical expenses, for a total tax savings of $" + money(result.totalTaxSavings));
 				$('#section-10 .variable-content h2').html("It keeps getting better!");
 			}
-			$('#summary-tips').append("<li>You asked to claim your medical expenses on your taxes, so you'll need to itemize your deductions. You should also keep a copy of your receipts in case the IRS wants them later.</li>");
 		}
 		else if (it.deductibleMedical == 0) {
 			$('#section-10 .variable-content').html("<h2>That one doesn’t help, sorry.</h2><p>Only medical bills above " + (yearData().medicalExpenseFloor * 100) + "% of your Adjusted Gross Income (about $" + money(it.floor) + " for you) can be deducted, and your therapy costs paid with after-tax money don’t get past that. Anything you paid from an FSA or HSA doesn’t count here, since it already skipped taxes.</p>");
@@ -361,33 +408,13 @@ function reportTaxes(fromWhere, result){
 		}
 	}
 	else {
-		if (fromWhere == 'fsa'){
-			$('#section-9 .variable-content #used-what').html(" by using your FSA");
-			if (globalTrackingReceipts == "yes"){ // If this person is submitting manual claims, give these tips
-				$('#summary-tips').append("<li>After your insurance claims are processed, you can pay for the remaining balance with your FSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
-			}
-			else { // if not, give these ones
-				$('#summary-tips').append("<li>To use your Flexible Spending Account, you’ll need to save your receipts and submit claims with your FSA.</li>");
-				$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
-			}
-		}
-		else if (fromWhere == 'hsa'){
-			$('#section-9 .variable-content #used-what').html(" by using your HSA");
-			if (globalTrackingReceipts == 'yes'){ // If this person is submitting manual claims, give these tips
-				$('#summary-tips').append("<li>After your insurance claims are processed, you can pay for the remaining balance with your HSA. Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.</li>");
-			}
-			else { // if not, give these ones
-				$('#summary-tips').append("<li>To use your Health Savings Account, you’ll need to save your receipts and submit claims with your HSA.</li>");
-				$('#summary-tips').append("<li>I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.</li>");
-			}
-		}
+		$('#section-9 .variable-content #used-what').html(" by using your " + fromWhere.toUpperCase());
 		$('#tax-discount-span').html(money(result.preTax.total));
 		$('#tax-breakdown').html(" ($" + money(result.preTax.incomeTax) + " in income tax, and $" + money(result.preTax.payrollTax) + " in Social Security and Medicare taxes)");
 		var end = '#section-9';
 		setTaxResults();
 		checkItemized();
 	}
-	$('#summary-tips-label').show();
 	scrollTo(end);
 }
 
@@ -400,6 +427,7 @@ function setTaxResults() {
 
 // Show them how their therapy bills compare to the 7.5% floor
 function checkItemized(){
+	showItemizedFields();
 	var contribution = globalPreTaxContribution || 0;
 	var agi = globalIncome - contribution;
 	var afterTaxTherapy = Math.max(0, globalCostAfterInsurance - contribution);
@@ -424,23 +452,46 @@ function getItemized() {
 // Section ELEVEN: We're done! Let's report our findings:
 // ************************************************
 
+var photoTip = "I highly recommend taking pictures of your receipts and saving them in an album on your phone, or backing them up to a service like Dropbox or Google Photos.";
+
+function summaryTips() {
+	var tips = [];
+	if (globalTrackingReceipts == 'yes') {
+		tips.push("To use your insurance, you’ll need to save your receipts and submit insurance claims. Many therapists can give you a “superbill” that has everything your insurance needs.", photoTip);
+	}
+	if (globalTaxAccount && globalPreTaxContribution > 0) {
+		var shortName = globalTaxAccount.toUpperCase();
+		var longName = (globalTaxAccount == 'fsa') ? 'Flexible Spending Account' : 'Health Savings Account';
+		if (globalTrackingReceipts == 'yes') {
+			tips.push("After your insurance claims are processed, you can pay for the remaining balance with your " + shortName + ". Yep, it's a two-step process. You can submit the Explanation of Benefits from your insurance claims once they’re complete, and copies of your original receipts.");
+		}
+		else {
+			tips.push("To use your " + longName + ", you’ll need to save your receipts and submit claims with your " + shortName + ".", photoTip);
+		}
+	}
+	if (globalItemizedSavings > 0) {
+		tips.push("You asked to claim your medical expenses on your taxes, so you'll need to itemize your deductions. You should also keep a copy of your receipts in case the IRS wants them later.");
+	}
+	return tips;
+}
+
 function getSummary() {
 	$('#final-session-rate').html(money(globalSessionRate));
 	$('#final-yearly-cost').html(money(globalYearlyCost));
-	if ((globalInsuranceDiscount>0) || (globalTaxDiscount>0)) {
-		$('#but').show();
-	}
-	if (globalInsuranceDiscount>0) {
-		$('#insurance-saved').show();
-		$('#the-insurance-saved').html(money(globalInsuranceDiscount));
-	}
-	if (globalTaxDiscount>0) {
-		$('#taxes-saved').show();
-		$('#the-taxes-saved').html(money(globalTaxDiscount));
-	}
-	if ((globalInsuranceDiscount>0) && (globalTaxDiscount>0)) {
-		$('#and').show();
-	}
+	$('#but').toggle(globalInsuranceDiscount > 0 || globalTaxDiscount > 0);
+	$('#insurance-saved').toggle(globalInsuranceDiscount > 0);
+	$('#the-insurance-saved').html(money(globalInsuranceDiscount));
+	$('#taxes-saved').toggle(globalTaxDiscount > 0);
+	$('#the-taxes-saved').html(money(globalTaxDiscount));
+	$('#and').toggle(globalInsuranceDiscount > 0 && globalTaxDiscount > 0);
+
+	var tips = summaryTips();
+	$('#summary-tips').empty();
+	tips.forEach(function (tip) {
+		$('#summary-tips').append($('<li>').html(tip));
+	});
+	$('#summary-tips-label').toggle(tips.length > 0);
+
 	var end = '#section-11';
 	scrollTo(end);
 }

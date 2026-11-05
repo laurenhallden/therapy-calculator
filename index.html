@@ -563,6 +563,8 @@
       window.globalItemize = false;
       window.globalOtherMedical = 0;
       window.globalOtherItemized = 0;
+      window.globalTaxAccount = null;
+      window.globalItemizedSavings = 0;
     });
 
     // Update progress bar based on current section
@@ -617,11 +619,8 @@
     $('.step-two').click(function(){
       var theId = this.id;
       window.globalButtonId = theId;
-      var currentSliderValue = $('#sliderOutput1').val();
-      window.globalSessionRate = currentSliderValue;
-      var updatedYearlyCost = currentSliderValue*globalNumberOfSessions;
-      window.globalYearlyCost = updatedYearlyCost;
-      window.globalCostAfterInsurance = updatedYearlyCost; // starting point for the tax steps if they skip insurance
+      window.globalBaseRate = toNumber($('#sliderOutput1').val());
+      resetInsurance();
     });
 
     // Then pick a next step
@@ -647,7 +646,6 @@
       $(this).addClass('is-active').attr('aria-pressed', 'true');
       $('body').toggleClass('compare-mode', $(this).data('mode') == 'compare');
       $('#section-2').nextAll('section').addClass('hidden');
-      $('#section-2 .button').removeClass('disabled').removeAttr('disabled');
     });
 
     $('.plan-network').change(function(){
@@ -712,6 +710,7 @@
 
     // Check FSA or HSA...
     $('#step-six-yes').click(function(){
+      resetTaxes();
       var taxBracket = $('#tax-bracket :selected').val();
       window.taxBracket = taxBracket;
       var taxVehicle = $('#tax-vehicle :selected').val();
@@ -736,6 +735,7 @@
         e.preventDefault();
       }
       else {
+        resetTaxes();
         getSummary();
       }
     });
@@ -754,6 +754,7 @@
         e.preventDefault();
       }
       else {
+        resetTaxes();
         var end = '#section-9';
         scrollTo(end);
         checkItemized();
@@ -774,6 +775,7 @@
         e.preventDefault();
       }
       else {
+        resetTaxes();
         var end = '#section-9';
         scrollTo(end);
         checkItemized();
@@ -786,10 +788,12 @@
         e.preventDefault();
       }
       else {
+        window.globalItemize = false;
+        recalcTaxes();
         var itemizedYesNo = $('#yes-deduction-2:checked').val();
         if (itemizedYesNo == 'Yes') {
           // Only ask for filing status here if they skipped the earlier question
-          if (window.taxBracket == 'notSet') {
+          if ($('#tax-bracket-2-label').is(':visible')) {
             window.taxBracket = $('#tax-bracket-2 :selected').val();
           }
           getItemized();
