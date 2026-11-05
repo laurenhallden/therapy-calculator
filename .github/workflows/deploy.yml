@@ -12,10 +12,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Check the server is reachable
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        run: |
+          timeout 10 bash -c "</dev/tcp/$FTP_SERVER/2222" && echo "Port 2222 is open"
+          ssh-keyscan -T 10 -p 2222 "$FTP_SERVER"
 
       - name: Upload the site over SFTP
         env:
@@ -26,7 +34,11 @@ jobs:
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq lftp
           lftp -c "
+            debug 3;
             set sftp:auto-confirm yes;
+            set net:timeout 20;
+            set net:max-retries 2;
+            set net:reconnect-interval-base 5;
             open --env-password -u \"$FTP_USERNAME\" -p 2222 \"sftp://$FTP_SERVER\";
             mirror --reverse --verbose \
               --exclude '^\.git' \
