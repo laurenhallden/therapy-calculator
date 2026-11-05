@@ -219,6 +219,47 @@ function setInsurance(yearlyCostWithInsurance){
 
 
 // ************************************************
+// Compare mode: two plans side by side
+// ************************************************
+
+function readPlan(id) {
+	var $plan = $('#plan-' + id);
+	var network = $plan.find('.plan-network').val();
+	return TherapyCalc.planYearlyCost({
+		network: network,
+		rate: toNumber(globalSessionRate),
+		sessions: toNumber(globalNumberOfSessions),
+		monthlyPremium: toNumber($plan.find('.plan-premium').val()),
+		deductible: toNumber($plan.find('.plan-deductible').val()),
+		copay: network === 'in-network' ? toNumber($plan.find('.plan-copay').val()) : 0,
+		coinsurancePercent: toNumber($plan.find('.plan-coinsurance').val()),
+		approvedAmount: toNumber($plan.find('.plan-approved').val()),
+		outOfPocketMax: toNumber($plan.find('.plan-oop-max').val())
+	});
+}
+
+function comparePlans() {
+	var plans = { a: readPlan('a'), b: readPlan('b') };
+	['a', 'b'].forEach(function (id) {
+		$('#' + id + '-therapy').html('$' + money(plans[id].therapy));
+		$('#' + id + '-premiums').html('$' + money(plans[id].premiums));
+		$('#' + id + '-total').html('$' + money(plans[id].total));
+	});
+	var difference = Math.abs(plans.a.total - plans.b.total);
+	if (difference < 1) {
+		$('#compare-headline').html('They come out about the same.');
+		$('#compare-summary').html('Counting premiums, both plans cost about $' + money(plans.a.total) + ' for a year of therapy.');
+	}
+	else {
+		var cheaper = plans.a.total < plans.b.total ? 'Plan A' : 'Plan B';
+		$('#compare-headline').html(cheaper + ' looks like the better deal.');
+		$('#compare-summary').html('Counting premiums, it would cost you about <strong>$' + money(difference) + ' less</strong> over a year of therapy.');
+	}
+	scrollTo('#section-compare-results');
+}
+
+
+// ************************************************
 // Section SEVEN and EIGHT: How much can they put in an FSA or HSA?
 // ************************************************
 

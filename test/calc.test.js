@@ -139,6 +139,25 @@ test('out-of-network: max caps your share, but not charges above the approved am
 	assert.strictEqual(C.outOfNetworkYearlyCost({ rate: 200, sessions: 48, deductible: 1000, coinsurancePercent: 30, approvedAmount: 150, outOfPocketMax: 2500 }), 4900);
 });
 
+console.log('Comparing plans');
+
+test('a plan adds twelve months of premiums to its therapy cost', function () {
+	// in-network therapy capped at 2,000 (above) + 12 x 250 = 3,000  -> 5,000
+	var p = C.planYearlyCost({ network: 'in-network', monthlyPremium: 250, rate: 150, sessions: 48, copay: 30, deductible: 1000, outOfPocketMax: 2000 });
+	assert.deepStrictEqual(p, { therapy: 2000, premiums: 3000, total: 5000 });
+});
+
+test('a cheaper premium can lose to better therapy coverage', function () {
+	// out-of-network: 5,260 (above) + 12 x 100 = 1,200  -> 6,460
+	var p = C.planYearlyCost({ network: 'out-of-network', monthlyPremium: 100, rate: 200, sessions: 48, deductible: 1000, coinsurancePercent: 30, approvedAmount: 150 });
+	assert.strictEqual(p.total, 6460);
+});
+
+test('not covered: you pay the full rate', function () {
+	// 150 x 48 = 7,200 + 12 x 80 = 960  -> 8,160
+	assert.strictEqual(C.planYearlyCost({ network: 'not-covered', monthlyPremium: 80, rate: 150, sessions: 48 }).total, 8160);
+});
+
 console.log('Sliding scale');
 
 test('estimates by income', function () {

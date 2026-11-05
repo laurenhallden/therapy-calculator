@@ -766,3 +766,96 @@ hr {
   margin-right: 10px;
   font-size: 2rem;
 }
+
+/* Compare insurance plans (hand-written to match sass/_components.scss) */
+.mode-toggle {
+  display: inline-flex;
+  margin-top: 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+}
+@media screen and (max-width: 767px) {
+  .mode-toggle {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+button.mode-button {
+  margin: 0;
+  padding: 0.8em 20px;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: #fff;
+}
+button.mode-button:hover, button.mode-button:focus {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 0;
+}
+button.mode-button.is-active {
+  background-color: #fff;
+  color: #257dab;
+}
+
+.compare-mode .budget-only,
+body:not(.compare-mode) .compare-only {
+  display: none;
+}
+
+.button.compare-only {
+  margin-left: 0;
+}
+
+.compare-plans {
+  display: flex;
+  gap: 3em;
+}
+@media screen and (max-width: 767px) {
+  .compare-plans {
+    flex-direction: column;
+    gap: 1em;
+  }
+}
+
+.plan {
+  flex: 1;
+  min-width: 0;
+}
+.plan legend {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 1.5em 0 0;
+}
+.plan[data-network="in-network"] .out-of-network-only, .plan[data-network="out-of-network"] .in-network-only, .plan[data-network="not-covered"] .covered-only {
+  display: none;
+}
+
+.compare-table {
+  margin: 2em 0 1.5em;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.compare-table th,
+.compare-table td {
+  text-align: right;
+}
+.compare-table th:first-child,
+.compare-table td:first-child {
+  text-align: left;
+}
+.compare-table .compare-total td {
+  font-weight: bold;
+}
+
+.mode-heading {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #098cb3;
+  opacity: 1;
+  margin-top: 1.5em;
+}
+.mode-heading span {
+  color: #444;
+}
