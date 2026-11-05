@@ -86,7 +86,7 @@ If you want next year on the site before November, you can estimate the brackets
 
 ## Deploying
 
-Merging to `main` deploys the site automatically (`.github/workflows/deploy.yml`): it uploads the changed files over FTPS, then clears Cloudflare's copy of them. You can also run it by hand from the repo's **Actions** tab → **Deploy** → **Run workflow**.
+Merging to `main` deploys the site automatically (`.github/workflows/deploy.yml`): it uploads the site over SFTP (port 2222), then clears Cloudflare's copy of the changed files. You can also run it by hand from the repo's **Actions** tab → **Deploy** → **Run workflow**.
 
 It needs these repository secrets (**Settings → Secrets and variables → Actions**):
 
@@ -99,4 +99,4 @@ It needs these repository secrets (**Settings → Secrets and variables → Acti
 | `CLOUDFLARE_API_TOKEN` | A Cloudflare API token with only the **Zone → Cache Purge** permission for laurenhallden.com |
 | `CLOUDFLARE_ZONE_ID` | On the laurenhallden.com overview page in Cloudflare, bottom right |
 
-The first run uploads everything; after that, only what changed.
+Each run uploads every site file (the site is small) and never deletes anything on the server.

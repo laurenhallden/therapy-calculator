@@ -17,25 +17,27 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Upload changed files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_PATH }}
-          protocol: ftps
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.DS_Store
-            .sass-cache/**
-            .github/**
-            sass/**
-            test/**
-            package.json
-            README.md
-            UPDATING.md
+      - name: Upload the site over SFTP
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_PATH: ${{ secrets.FTP_PATH }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq lftp
+          lftp -c "
+            set sftp:auto-confirm yes;
+            open --env-password -u \"$FTP_USERNAME\" -p 2222 \"sftp://$FTP_SERVER\";
+            mirror --reverse --verbose \
+              --exclude '^\.git' \
+              --exclude '^\.github/' \
+              --exclude '^\.sass-cache/' \
+              --exclude '^sass/' \
+              --exclude '^test/' \
+              --exclude '(^|/)\.DS_Store$' \
+              --exclude '^(package\.json|README\.md|UPDATING\.md)$' \
+              ./ \"$FTP_PATH\"
+          "
 
       - name: Clear Cloudflare's cache of the changed files
         env:
