@@ -83,3 +83,20 @@ If you want next year on the site before November, you can estimate the brackets
 
 - **Sliding-scale estimates** (`SLIDING_SCALE` in `js/tax-years.js`): these are rough guesses, not official numbers. They were last raised in 2026. Bump them when they start to feel low compared with what therapists in your area charge.
 - **Links in `index.html`**: the healthcare.gov, IRS and TurboTax links occasionally move. Click through them once a year.
+
+## Deploying
+
+Merging to `main` deploys the site automatically (`.github/workflows/deploy.yml`): it uploads the changed files over FTPS, then clears Cloudflare's copy of them. You can also run it by hand from the repo's **Actions** tab → **Deploy** → **Run workflow**.
+
+It needs these repository secrets (**Settings → Secrets and variables → Actions**):
+
+| Secret | What it is |
+| --- | --- |
+| `FTP_SERVER` | Your FTP host from Network Solutions, e.g. `ftp.laurenhallden.com` |
+| `FTP_USERNAME` | Your FTP username |
+| `FTP_PASSWORD` | Your FTP password |
+| `FTP_PATH` | The folder the calculator lives in, as your FTP manager shows it, ending in `/`, e.g. `/htdocs/therapycalculator/` |
+| `CLOUDFLARE_API_TOKEN` | A Cloudflare API token with only the **Zone → Cache Purge** permission for laurenhallden.com |
+| `CLOUDFLARE_ZONE_ID` | On the laurenhallden.com overview page in Cloudflare, bottom right |
+
+The first run uploads everything; after that, only what changed.
