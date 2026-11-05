@@ -95,7 +95,7 @@ It needs these repository secrets (**Settings → Secrets and variables → Acti
 | `FTP_SERVER` | Your FTP host from Network Solutions, e.g. `ftp.laurenhallden.com` |
 | `FTP_USERNAME` | Your FTP username |
 | `FTP_PASSWORD` | Your FTP password |
-| `FTP_PATH` | The folder the calculator lives in, as your FTP manager shows it, ending in `/`, e.g. `/htdocs/therapycalculator/` |
+| `FTP_PATH` | The folder the calculator lives in, as your FTP manager shows it, starting and ending in `/`, e.g. `/therapycalculator/` |
 | `CLOUDFLARE_API_TOKEN` | A Cloudflare API token with only the **Zone → Cache Purge** permission for laurenhallden.com |
 | `CLOUDFLARE_ZONE_ID` | On the laurenhallden.com overview page in Cloudflare, bottom right |
 
