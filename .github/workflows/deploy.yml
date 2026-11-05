@@ -1,0 +1,62 @@
+# Uploads the site to laurenhallden.com/therapycalculator/ whenever master changes,
+# then clears Cloudflare's copy of the changed files so the new versions show up right away.
+# The secrets it uses are listed in UPDATING.md.
+
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Upload changed files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_PATH }}
+          protocol: ftps
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.DS_Store
+            .sass-cache/**
+            .github/**
+            sass/**
+            test/**
+            package.json
+            README.md
+            UPDATING.md
+
+      - name: Clear Cloudflare's cache of the changed files
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          BEFORE: ${{ github.event.before }}
+        run: |
+          site=https://laurenhallden.com/therapycalculator
+          if git cat-file -e "$BEFORE" 2>/dev/null; then
+            changed=$(git diff --name-only "$BEFORE" HEAD)
+          else
+            changed=$(git ls-files)
+          fi
+          urls=$( (echo "$site/"; echo "$changed" | sed "s|^|$site/|") | jq -R . | jq -sc .)
+          # Cloudflare takes at most 30 URLs per purge; past that, clear the whole site
+          if [ "$(echo "$urls" | jq length)" -gt 30 ]; then
+            body='{"purge_everything":true}'
+          else
+            body=$(jq -nc --argjson files "$urls" '{files: $files}')
+          fi
+          curl -sf -X POST "https://api.cloudflare.com/client/v4/zones/$CLOUDFLARE_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "$body"
