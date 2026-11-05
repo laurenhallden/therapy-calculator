@@ -859,3 +859,24 @@ body:not(.compare-mode) .compare-only {
 .mode-heading span {
   color: #444;
 }
+
+.frequency-wrapper .left-content {
+  min-width: 12em;
+}
+
+.sessions-wrapper {
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+.sessions-wrapper .left-content {
+  padding-top: 2rem;
+}
+@media screen and (max-width: 767px) {
+  .frequency-wrapper .left-content {
+    margin-bottom: 0.5rem;
+    padding-top: 0;
+  }
+  .frequency-wrapper label {
+    padding-top: 0;
+  }
+}
