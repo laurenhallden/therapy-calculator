@@ -64,6 +64,17 @@ var TherapyCalc = (function () {
 		return Math.round(total);
 	}
 
+	// One plan's cost for a year of therapy: twelve months of premiums plus your
+	// share of each session. network is 'in-network', 'out-of-network' or 'not-covered'.
+	function planYearlyCost(o) {
+		var therapy;
+		if (o.network === 'in-network') therapy = inNetworkYearlyCost(o);
+		else if (o.network === 'out-of-network') therapy = outOfNetworkYearlyCost(o);
+		else therapy = Math.round(o.rate * o.sessions);
+		var premiums = Math.round((o.monthlyPremium || 0) * 12);
+		return { therapy: therapy, premiums: premiums, total: therapy + premiums };
+	}
+
 
 	// ---------- Taxes ----------
 
@@ -182,6 +193,7 @@ var TherapyCalc = (function () {
 		estimateSessionRate: estimateSessionRate,
 		inNetworkYearlyCost: inNetworkYearlyCost,
 		outOfNetworkYearlyCost: outOfNetworkYearlyCost,
+		planYearlyCost: planYearlyCost,
 		incomeTax: incomeTax,
 		taxableIncome: taxableIncome,
 		preTaxSavings: preTaxSavings,

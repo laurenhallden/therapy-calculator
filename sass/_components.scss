@@ -623,3 +623,108 @@ hr {
 		
 	}
 }
+
+/* ===================
+Compare insurance plans
+====================*/
+
+.mode-toggle {
+	display: inline-flex;
+	margin-top: 1.5rem;
+	border: 2px solid rgba(255,255,255,0.6);
+	border-radius: 3px;
+
+	@media #{$break-mobile-large} {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+button.mode-button {
+	margin: 0;
+	padding: 0.8em 20px;
+	border: 0;
+	border-radius: 0;
+	background-color: transparent;
+	color: $white;
+
+	&:hover,
+	&:focus {
+		background-color: rgba(255,255,255,0.15);
+		border: 0;
+	}
+
+	&.is-active {
+		background-color: $white;
+		color: $blue;
+	}
+}
+
+.compare-mode .budget-only,
+body:not(.compare-mode) .compare-only {
+	display: none;
+}
+
+.button.compare-only {
+	margin-left: 0;
+}
+
+.compare-plans {
+	display: flex;
+	gap: 3em;
+
+	@media #{$break-mobile-large} {
+		flex-direction: column;
+		gap: 1em;
+	}
+}
+
+.plan {
+	flex: 1;
+	min-width: 0;
+
+	legend {
+		font-family: $helvetica;
+		font-weight: bold;
+		font-size: 1.2rem;
+		margin: 1.5em 0 0;
+	}
+
+	&[data-network="in-network"] .out-of-network-only,
+	&[data-network="out-of-network"] .in-network-only,
+	&[data-network="not-covered"] .covered-only {
+		display: none;
+	}
+}
+
+.compare-table {
+	margin: 2em 0 1.5em;
+	font-family: $helvetica;
+
+	th,
+	td {
+		text-align: right;
+	}
+
+	th:first-child,
+	td:first-child {
+		text-align: left;
+	}
+
+	.compare-total td {
+		font-weight: bold;
+	}
+}
+
+.mode-heading {
+	font-family: $helvetica;
+	font-weight: bold;
+	font-size: 1.1rem;
+	color: $bright-blue;
+	opacity: 1;
+	margin-top: 1.5em;
+
+	span {
+		color: $text-black;
+	}
+}
